@@ -8,21 +8,30 @@ using UnityEngine.Networking;
 
 public class GoogleMapAPIQuery : MonoBehaviour
 {
+    GPSLocation GPSLocation;
     //import api key from .config file
-    private string APIKey = GlobalConfig.GoogleMapAPIKey;
+    private string APIKey;
     private string keyword = "busstop";
     //set by dragging object
     public Text latitudeValue;
     public Text longitudeValue;
     public Text resultValue;
     private string radius = "150";
-    // Start is called before the first frame update
-    public void APIQuery()
-    {
-        StartCoroutine (GetJSON ());
+
+    void  Start(){
+        GPSLocation = GetComponent<GPSLocation>();
+        APIKey = GlobalConfig.GoogleMapAPIKey;
+        latitudeValue = GPSLocation.latitudeValue;
+        longitudeValue = GPSLocation.longitudeValue;
     }
 
-    IEnumerator GetJSON() {
+    public void RouteQuery()
+    {
+        StartCoroutine (GetBusStationJSON ());
+        StartCoroutine (GetRouteJSON ());
+    }
+
+    IEnumerator GetBusStationJSON() {
 		string baseURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
 		string keyword = "keyword="+this.keyword;
         string location = "location="+latitudeValue.text+"%2C"+longitudeValue.text;
@@ -39,19 +48,41 @@ public class GoogleMapAPIQuery : MonoBehaviour
 			// Show results as text
 			string result = www.downloadHandler.text;
 			Debug.Log (result);
-            //parse the result using JSONParser in Utils
-            string parsedResult = JSONParser.MapAPIQueryParser(result);
-            resultValue.text = parsedResult;
-
-			// geoCoded g = JsonUtility.FromJson<geoCoded>(result);
-			// leg l = g.routes [0].legs [0];
-			// Debug.Log (l.end_location.lat);
-			// Debug.Log (l.end_location.lng);
-			// // countText.text = Jsonwww.downloadHandler.text;
-			// List<step> steps = l.steps;
+            //parse the result
+            attribution attr = JsonUtility.FromJson<attribution>(result);
+            //resultValue.text = attr.stations[0].name;
 		}
 
 	}
 
-
+    IEnumerator GetRouteJSON() {
+        string baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
+        //string origin = "origin=" + "45.5219%2C9.2216939";
+		string origin = "origin="+ latitudeValue.text+"%2C"+longitudeValue.text;
+        //TODO: set the dest
+        string dest = "destination=" + "45.522714%2C9.2216527";
+		string mode = "mode="+"walking";
+		string apiKey = "key="+APIKey;
+		string api = baseURL + origin + "&" + dest + "&" + mode + "&" + apiKey;
+        Debug.Log(api);
+		UnityWebRequest www = UnityWebRequest.Get(api);
+		yield return www.Send();
+		if(www.isNetworkError) {
+			Debug.Log(www.error);
+		}
+		else {
+			string result = www.downloadHandler.text;
+			Debug.Log (result);
+			geoCoded g = JsonUtility.FromJson<geoCoded>(result);
+			leg l = g.routes [0].legs [0];
+			Debug.Log (l.end_location.lat);
+			Debug.Log (l.end_location.lng);
+			// countText.text = Jsonwww.downloadHandler.text;
+			var steps = new List<step>(l.steps);
+            
+			Debug.Log (steps[0].end_location.lng);
+			Debug.Log (steps[0].end_location.lat);
+            resultValue.text = steps[0].end_location.lng + "  "+steps[0].end_location.lat;
+        }
+    }
 }
