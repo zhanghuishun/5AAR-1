@@ -6,12 +6,23 @@ using UnityEngine.UI;
 public class GPSLocation : MonoBehaviour
 {
     public Text GPSStatus;
-    public Text latitudeValue;
-    public Text longitudeValue;
-    public Text altitudeValue;
-    public Text horizontalAccuracyValue;
-    public Text timestampValue;
+    public float lat;
+    public float lon;
+    public string status;
+    private static GPSLocation _instance;
 
+    public static GPSLocation Instance { get { return _instance; } }
+
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        } else {
+            _instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -31,15 +42,15 @@ public class GPSLocation : MonoBehaviour
         }
         //service didn't init in 20 sec
         if(maxWait < 1){
-            GPSStatus.text = "Time out";
+            status = "Time out";
             yield break;
         }
         //connection failed
         if(Input.location.status == LocationServiceStatus.Failed){
-            GPSStatus.text = "Unable to determin device location";
+            status = "Unable to determin device location";
             yield break;
         }else{
-            GPSStatus.text = "Running";
+            status = "Running";
             print("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
             InvokeRepeating("UpdateGPSData", 0.5f, 1f);
         }
@@ -47,17 +58,18 @@ public class GPSLocation : MonoBehaviour
     private void UpdateGPSData(){
         if(Input.location.status == LocationServiceStatus.Running){
             //Access granted to gps values and it has been init
-            GPSStatus.text = "Running";
-            print("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
-            latitudeValue.text = Input.location.lastData.latitude.ToString();
-            longitudeValue.text = Input.location.lastData.longitude.ToString();
-            altitudeValue.text = Input.location.lastData.altitude.ToString();
-            horizontalAccuracyValue.text = Input.location.lastData.horizontalAccuracy.ToString();
-            timestampValue.text = Input.location.lastData.timestamp.ToString();
-            
+            status = "Running";
+            // latitudeValue.text = Input.location.lastData.latitude.ToString();
+            // longitudeValue.text = Input.location.lastData.longitude.ToString();
+            // altitudeValue.text = Input.location.lastData.altitude.ToString();
+            // horizontalAccuracyValue.text = Input.location.lastData.horizontalAccuracy.ToString();
+            // timestampValue.text = Input.location.lastData.timestamp.ToString();
+            lat = Input.location.lastData.latitude;
+            lon = Input.location.lastData.longitude;
+            Debug.Log(lat+"  "+lon);
         }else{
             // service is stopped
-            GPSStatus.text = "Stop";
+            status = "Stop";
         }
     }
 }
