@@ -8,7 +8,7 @@ public class ArrowPointer : MonoBehaviour
 {
     public GameObject panelPrefab;
     public Transform directionsPanel;
-    public GPSLocation GPSInstance;
+    GPSLocation GPSInstance;
     float lat;
     float lon;
 	float destLat;
@@ -18,36 +18,35 @@ public class ArrowPointer : MonoBehaviour
 
     float brng;
     float compassBrng;
-    GameObject[] panels = new GameObject[1];
+    GameObject panel;
     Text[] texts;
 
     private GoogleMapAPIQuery googleapiScript;
 
     void Awake(){
         googleapiScript = GetComponent<GoogleMapAPIQuery>();
-        Debug.Log("-------------------------------------arrow awake");
     }
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("-------------------------------------arrow start");
-        GPSInstance = GPSLocation.Instance;
-        panels[0] = Instantiate(panelPrefab) as GameObject;
+        //not be called
     }
 
     private bool flag = true;
     public void ClickToGetStepsInformation(){
         try{
+        GPSInstance = GPSLocation.Instance;
         steps = googleapiScript.steps;
+        foreach(var x in steps){
+            Debug.Log(x.end_location.lat+","+x.end_location.lng);
+        }
         if(steps == null) return;
-        Debug.Log(steps.Count);
-        Debug.Log("-------------------------------------");
-        panels[0] = Instantiate(panelPrefab) as GameObject;
-        texts = panels[0].GetComponentsInChildren<Text>();
+        panel = Instantiate(panelPrefab) as GameObject;
+        texts = panel.GetComponentsInChildren<Text>();
         texts[0].text = "Distance here";
         //texts[1].text = steps[count].maneuver; // description
-        //texts[2].text = "Step " + (count+1) + " / " + steps.Count;
-        //texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
+        texts[2].text = "Step " + (count+1) + " / " + steps.Count;
+        texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
         //open compass
         Input.compass.enabled = true;
         }
@@ -55,8 +54,8 @@ public class ArrowPointer : MonoBehaviour
             Debug.LogException(e, this);
             Debug.Log("function Exception");
         }
-
-        InvokeRepeating("StepsLoop", 1.0f, 0.5f);
+        //StepLoop starts in 0.1s and repeating running every 0.5s
+        InvokeRepeating("StepsLoop", 0.1f, 0.5f);
     }
 
     public void StepsLoop()
@@ -65,45 +64,45 @@ public class ArrowPointer : MonoBehaviour
         
         lat = GPSInstance.lat;
         lon = GPSInstance.lon;
-        if(steps != null){
-            destLat = steps[count].end_location.lat;
-            destLon = steps[count].end_location.lng;
-            Debug.Log("----------tempdest"+destLat+"   "+destLon+"--------------");
-            float λ = destLon - lon;
+        Debug.Log("step into");
+        destLat = steps[count].end_location.lat;
+        destLon = steps[count].end_location.lng;
+        Debug.Log("----------tempdest"+destLat+"   "+destLon+"--------------");
+        float λ = destLon - lon;
 
-            var y = Mathf.Sin(λ) * Mathf.Cos(destLat);
-            var x = Mathf.Cos(lat) * Mathf.Sin(destLat) -
-                Mathf.Sin(lat) * Mathf.Cos(destLat) * Mathf.Cos(λ);
-            brng = Mathf.Rad2Deg * Mathf.Atan2(y, x);
-            if (brng < 0)
-            {
-                brng = 360 + brng;
-            }
-            compassBrng = Input.compass.trueHeading;
+        var y = Mathf.Sin(λ) * Mathf.Cos(destLat);
+        var x = Mathf.Cos(lat) * Mathf.Sin(destLat) -
+            Mathf.Sin(lat) * Mathf.Cos(destLat) * Mathf.Cos(λ);
+        brng = Mathf.Rad2Deg * Mathf.Atan2(y, x);
+        if (brng < 0)
+        {
+            brng = 360 + brng;
+        }
+        compassBrng = Input.compass.trueHeading;
 
-            int distance = Mathf.RoundToInt(distance_metres(lat, lon, destLat, destLon));
-            Debug.Log("-----------------"+distance+"-----------------");
-            // constantly update distance shown
-            texts[0].text = distance.ToString() + "m";
+        int distance = Mathf.RoundToInt(distance_metres(lat, lon, destLat, destLon));
+        Debug.Log("-----------------"+distance+"-----------------");
+        // constantly update distance shown
+        texts[0].text = distance.ToString() + "m";
 
-            }
         
 
         if (isCollide())
                     {
-                        Destroy(panels[0]);
+                        Destroy(panel);
                         //panels count = panels[count+1]?
                         count++;
                         if (count < steps.Count)
                         {
-                            panels[0] = Instantiate(panelPrefab);//,directionsPanel
-                            texts = panels[0].GetComponentsInChildren<Text>();
+                            panel = Instantiate(panelPrefab);//,directionsPanel
+                            texts = panel.GetComponentsInChildren<Text>();
                             //texts[1].text = steps[count].maneuver; // description
-                            //texts[2].text = "Step " + (count+1) + " / " + steps.Count;
-                            //texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
+                            texts[2].text = "Step " + (count+1) + " / " + steps.Count;
+                            texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
                         }
                     }
-					if (count == steps.Count){}
+                    //when arriving the dest, cancel this invokerepeating. 
+					if (count == steps.Count){CancelInvoke();}
 				
 	}
     
@@ -111,8 +110,9 @@ public class ArrowPointer : MonoBehaviour
     bool isCollide() {
 		lat = Input.location.lastData.latitude;
 		lon = Input.location.lastData.longitude;
-		if (lat - destLat <= 0.0005f && lat - destLat >= -0.0005f) {
-			if (lon - destLon <= 0.0005f && lon - destLon >= -0.0005f) {
+        //collide within 10m
+		if (lat - destLat <= 0.0001f && lat - destLat >= -0.0001f) {
+			if (lon - destLon <= 0.0001f && lon - destLon >= -0.0001f) {
 				return true;
 			}
 		}

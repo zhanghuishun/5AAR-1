@@ -15,7 +15,6 @@ public class GoogleMapAPIQuery : MonoBehaviour
     public Text resultValue;
     private string radius = "150";
     public List<step> steps;
-    public GameObject panelPrefab;
     
     void Awake(){
     }
@@ -63,7 +62,6 @@ public class GoogleMapAPIQuery : MonoBehaviour
 		string mode = "mode="+"walking";
 		string apiKey = "key="+APIKey;
 		string api = baseURL + origin + "&" + dest + "&" + mode + "&" + apiKey;
-        Debug.Log(api);
 		UnityWebRequest www = UnityWebRequest.Get(api);
 		yield return www.Send();
 		if(www.isNetworkError) {
@@ -71,17 +69,9 @@ public class GoogleMapAPIQuery : MonoBehaviour
 		}
 		else {
 			string result = www.downloadHandler.text;
-			//Debug.Log (result);
 			geoCoded g = JsonUtility.FromJson<geoCoded>(result);
 			leg l = g.routes [0].legs [0];
-			Debug.Log (l.end_location.lat);
-			Debug.Log (l.end_location.lng);
-			// countText.text = Jsonwww.downloadHandler.text;
 			steps = new List<step>(l.steps);
-            
-			Debug.Log (steps[0].end_location.lng);
-			Debug.Log (steps[0].end_location.lat);
-            resultValue.text = steps[0].end_location.lng + "  "+steps[0].end_location.lat;
         }
     }
 }
