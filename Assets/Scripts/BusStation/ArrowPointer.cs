@@ -10,7 +10,7 @@ public class ArrowPointer : MonoBehaviour
     private GPSLocation GPSInstance;
     private GoogleMapAPIQuery GoogleAPIScript;
 
-    [SerializeField] private GameObject CompassObject;
+    [SerializeField] private GameObject CompassPerfab;
     [SerializeField] private UnityARCompass.ARCompassIOS ARCompassIOS;
 
     
@@ -27,6 +27,10 @@ public class ArrowPointer : MonoBehaviour
 
     
     //compass related 
+    GameObject compass;
+    public GameObject ARCamera;
+    private int forwardOffset = 1;
+    private int upOffset = 1;
 
     void Awake(){
         GoogleAPIScript = GetComponent<GoogleMapAPIQuery>();
@@ -49,8 +53,8 @@ public class ArrowPointer : MonoBehaviour
         }
         if(steps == null) return;
         //active compass
-        //ARCompass.SetActive(true);
-        CompassObject.SetActive(true);
+        //CompassObject.SetActive(true);
+        compass = Instantiate(CompassPerfab) as GameObject;
 
         panel = Instantiate(PanelPrefab) as GameObject;
         texts = panel.GetComponentsInChildren<Text>();
@@ -111,7 +115,7 @@ public class ArrowPointer : MonoBehaviour
                     //when arriving the dest, cancel this invokerepeating. 
 					if (count == steps.Count)
                     {
-                        CompassObject.SetActive(false);
+                        Destroy(compass);
                         //Destroy(CompassObject);
                         CancelInvoke();
                     }
@@ -145,6 +149,12 @@ public class ArrowPointer : MonoBehaviour
     }
 
 	// Update is called once per frame
-	void Update () {         
+	void Update () {      
+        if(compass != null)
+        {   
+            compass.transform.rotation = ARCompassIOS.TrueHeadingRotation;
+            //the position is always on the front of camera with a offset
+            compass.transform.position = ARCamera.transform.position + ARCamera.transform.forward * forwardOffset;
+        }
     }
 }

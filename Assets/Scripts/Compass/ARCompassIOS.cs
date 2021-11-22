@@ -10,9 +10,13 @@ namespace UnityARCompass
         private float tempDirection = 0.0f;
 
         public Quaternion TrueHeadingRotation { get; private set; } = Quaternion.identity;
+        [HideInInspector]
         public float startLat;
+        [HideInInspector]
         public float startLon;
+        [HideInInspector]
         public float endLat;
+        [HideInInspector]
         public float endLon;
         
         #region Unity Callback
