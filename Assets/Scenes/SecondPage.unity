@@ -703,7 +703,7 @@ PrefabInstance:
     - target: {fileID: 5017248536127686435, guid: 93a09aa6d61f34d02a8f7edfebdf6a93,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: BlankAR
+      value: ARRecognition
       objectReference: {fileID: 0}
     - target: {fileID: 5017248536127686435, guid: 93a09aa6d61f34d02a8f7edfebdf6a93,
         type: 3}

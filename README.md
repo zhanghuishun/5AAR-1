@@ -3,14 +3,25 @@
 
 ## Functions
 
+### ARRecognition Scene
+
+1. recognize the object which scanned by [arkit scanner](https://developer.apple.com/documentation/arkit/content_anchors/scanning_and_detecting_3d_objects)
+
+2. add visual help arrow aside (within 2 sec)
+
+### FindBusStation Scene
+
 1. find near bus station
 2. return the route to the station with steps
-3. show and update step information while the user is walking ([the default precision of unity location api is 10m](https://docs.unity3d.com/ScriptReference/LocationService.Start.html))
+3. show and update step information while the user is walking [we set it 5m accuracy](https://docs.unity3d.com/ScriptReference/LocationService.Start.html)
+4. add arrow toward the temp destination
 
 #### TODO: 
 
-1. decide which station is our target
-2. add a compass and maneuver
+- [ ] decide which station is our target
+- [ ] fix the bug that it only works when entering the FindBusStation scene the second time
+- [ ] scan the bus ticket validator and test the effect
+- [ ] add visual reward when users achieve the temp destination
 
  ## Config file
 

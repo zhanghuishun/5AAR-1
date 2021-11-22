@@ -740,6 +740,7 @@ GameObject:
   - component: {fileID: 1019532193}
   - component: {fileID: 1019532192}
   - component: {fileID: 1019532194}
+  - component: {fileID: 1019532196}
   - component: {fileID: 1019532195}
   m_Layer: 0
   m_Name: GoogleMapAPIQuery
@@ -805,10 +806,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PanelPrefab: {fileID: 4887792132456741807, guid: 5c1cbd364f30f4bfea23f89a7eba8d94,
     type: 3}
-  CompassPerfab: {fileID: 700442952607112969, guid: 509705d23f5c5451994e6dc8ae23418b,
-    type: 3}
+  CompassPerfab: {fileID: 100002, guid: c727ce61e2724410897958bc77ecf21c, type: 3}
   ARCompassIOS: {fileID: 1172372856}
   ARCamera: {fileID: 1470371345}
+--- !u!114 &1019532196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019532191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985f023b6e7824166a71a8038c6710f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tempWords: access to distance calculator
 --- !u!1 &1045742712
 GameObject:
   m_ObjectHideFlags: 0

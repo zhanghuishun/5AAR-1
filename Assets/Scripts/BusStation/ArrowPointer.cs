@@ -9,6 +9,7 @@ public class ArrowPointer : MonoBehaviour
     [SerializeField] private GameObject PanelPrefab;
     private GPSLocation GPSInstance;
     private GoogleMapAPIQuery GoogleAPIScript;
+    private DistanceCalculator DistanceCalculatorInstance;
 
     [SerializeField] private GameObject CompassPerfab;
     [SerializeField] private UnityARCompass.ARCompassIOS ARCompassIOS;
@@ -34,8 +35,8 @@ public class ArrowPointer : MonoBehaviour
 
     void Awake(){
         GoogleAPIScript = GetComponent<GoogleMapAPIQuery>();
-        //DistanceCalculatorInstance = DistanceCalculator.Instance;
-        //Debug.Log("Distancecalculator-----------"+DistanceCalculatorInstance.tempWords);
+        DistanceCalculatorInstance = DistanceCalculator.Instance;
+        Debug.Log("Distancecalculator-----------"+DistanceCalculatorInstance.tempWords);
         GPSInstance = GPSLocation.Instance;
         Debug.Log("GPSInstance-----------"+GPSInstance.status);
 
@@ -43,6 +44,7 @@ public class ArrowPointer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
     }
 
     public void ClickToGetStepsInformation(){
@@ -75,20 +77,20 @@ public class ArrowPointer : MonoBehaviour
     public void StepsLoop()
     {
         Debug.Log("stepsloop");
-        
+        Debug.Log("GPSInstance"+GPSInstance.lat);
         lat = GPSInstance.lat;
         lon = GPSInstance.lon;
         destLat = steps[count].end_location.lat;
         destLon = steps[count].end_location.lng;
         //update compass direction
-        //Debug.Log("ARCompassIOS :" + ARCompassIOS.startLat);
+        Debug.Log("ARCompassIOS :" + ARCompassIOS.startLat);
         ARCompassIOS.startLat = lat;
         ARCompassIOS.startLon = lon;
         ARCompassIOS.endLat = destLat;
         ARCompassIOS.endLon = destLon;
 
         Debug.Log("----------tempdest"+destLat+"   "+destLon+"--------------");
-        //Debug.Log("DistanceInstance :" + DistanceCalculatorInstance.CalculateDistanceMeters(lat, lon, destLat, destLon));
+        Debug.Log("DistanceInstance :" + DistanceCalculatorInstance.CalculateDistanceMeters(lat, lon, destLat, destLon));
 
         //int distance = Mathf.RoundToInt(DistanceCalculatorInstance.CalculateDistanceMeters(lat, lon, destLat, destLon));
         int distance = Mathf.RoundToInt(CalculateDistanceMeters(lat, lon, destLat, destLon));

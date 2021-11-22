@@ -682,7 +682,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -265, y: 731}
+  m_AnchoredPosition: {x: -265, y: 409}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1602764382
@@ -790,6 +790,7 @@ GameObject:
   - component: {fileID: 1659859599}
   - component: {fileID: 1659859598}
   - component: {fileID: 1659859600}
+  - component: {fileID: 1659859601}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -834,14 +835,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1659859597}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f07ca66ce5514fb7a26ab1e51e9bfec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ReferenceLibrary: {fileID: 11400000, guid: 2632f6f273dc34b0ea07b327fa5470fb, type: 2}
+  m_TrackedObjectPrefab: {fileID: 100002, guid: 0a7a63847ed20472eb993354259dc654,
+    type: 3}
+--- !u!114 &1659859601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659859597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4dea56a9eaadd1c439095de4f9a371cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SerializedLibrary: {fileID: 11400000, guid: c08aeb0d4a1a1f94582d3495d211d842,
+  m_SerializedLibrary: {fileID: 11400000, guid: 8a888b5a9446646e1b3c00234c4f7b0c,
     type: 2}
   m_MaxNumberOfMovingImages: 1
-  m_TrackedImagePrefab: {fileID: 6641270356264317715, guid: eb82fe35d80326b47ac6707fd57ac2ca,
-    type: 3}
+  m_TrackedImagePrefab: {fileID: 100002, guid: 0a7a63847ed20472eb993354259dc654, type: 3}
 --- !u!1 &1873610393
 GameObject:
   m_ObjectHideFlags: 0
