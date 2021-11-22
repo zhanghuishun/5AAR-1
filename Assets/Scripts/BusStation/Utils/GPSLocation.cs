@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class GPSLocation : MonoBehaviour
 {
-    public Text GPSStatus;
+    [HideInInspector]
     public float lat;
+    [HideInInspector]
     public float lon;
+    [HideInInspector]
     public string status;
     private static GPSLocation _instance;
 
@@ -32,7 +34,7 @@ public class GPSLocation : MonoBehaviour
     IEnumerator GPSLoc(){
         if(!Input.location.isEnabledByUser) yield break;
 
-        Input.location.Start();
+        Input.location.Start(5.0f);
 
         int maxWait = 20;
 
@@ -51,7 +53,7 @@ public class GPSLocation : MonoBehaviour
             yield break;
         }else{
             status = "Running";
-            print("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
+            //print("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
             InvokeRepeating("UpdateGPSData", 0.5f, 1f);
         }
     }

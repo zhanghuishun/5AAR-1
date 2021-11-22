@@ -6,49 +6,59 @@ using System;
 
 public class ArrowPointer : MonoBehaviour
 {
-    public GameObject panelPrefab;
-    public Transform directionsPanel;
-    GPSLocation GPSInstance;
+    [SerializeField] private GameObject PanelPrefab;
+    private GPSLocation GPSInstance;
+    private GoogleMapAPIQuery GoogleAPIScript;
+
+    [SerializeField] private GameObject CompassObject;
+    [SerializeField] private UnityARCompass.ARCompassIOS ARCompassIOS;
+
+    
     float lat;
     float lon;
 	float destLat;
 	float destLon;
 	int count;
 	List<step> steps;
-
     float brng;
     float compassBrng;
     GameObject panel;
     Text[] texts;
 
-    private GoogleMapAPIQuery googleapiScript;
+    
+    //compass related 
 
     void Awake(){
-        googleapiScript = GetComponent<GoogleMapAPIQuery>();
+        GoogleAPIScript = GetComponent<GoogleMapAPIQuery>();
+        //DistanceCalculatorInstance = DistanceCalculator.Instance;
+        //Debug.Log("Distancecalculator-----------"+DistanceCalculatorInstance.tempWords);
+        GPSInstance = GPSLocation.Instance;
+        Debug.Log("GPSInstance-----------"+GPSInstance.status);
+
     }
     // Start is called before the first frame update
     void Start()
     {
-        //not be called
     }
 
-    private bool flag = true;
     public void ClickToGetStepsInformation(){
         try{
-        GPSInstance = GPSLocation.Instance;
-        steps = googleapiScript.steps;
+        steps = GoogleAPIScript.steps;
         foreach(var x in steps){
             Debug.Log(x.end_location.lat+","+x.end_location.lng);
         }
         if(steps == null) return;
-        panel = Instantiate(panelPrefab) as GameObject;
+        //active compass
+        //ARCompass.SetActive(true);
+        CompassObject.SetActive(true);
+
+        panel = Instantiate(PanelPrefab) as GameObject;
         texts = panel.GetComponentsInChildren<Text>();
         texts[0].text = "Distance here";
         //texts[1].text = steps[count].maneuver; // description
         texts[2].text = "Step " + (count+1) + " / " + steps.Count;
         texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
-        //open compass
-        Input.compass.enabled = true;
+        
         }
         catch(Exception e){
             Debug.LogException(e, this);
@@ -64,23 +74,20 @@ public class ArrowPointer : MonoBehaviour
         
         lat = GPSInstance.lat;
         lon = GPSInstance.lon;
-        Debug.Log("step into");
         destLat = steps[count].end_location.lat;
         destLon = steps[count].end_location.lng;
+        //update compass direction
+        //Debug.Log("ARCompassIOS :" + ARCompassIOS.startLat);
+        ARCompassIOS.startLat = lat;
+        ARCompassIOS.startLon = lon;
+        ARCompassIOS.endLat = destLat;
+        ARCompassIOS.endLon = destLon;
+
         Debug.Log("----------tempdest"+destLat+"   "+destLon+"--------------");
-        float λ = destLon - lon;
+        //Debug.Log("DistanceInstance :" + DistanceCalculatorInstance.CalculateDistanceMeters(lat, lon, destLat, destLon));
 
-        var y = Mathf.Sin(λ) * Mathf.Cos(destLat);
-        var x = Mathf.Cos(lat) * Mathf.Sin(destLat) -
-            Mathf.Sin(lat) * Mathf.Cos(destLat) * Mathf.Cos(λ);
-        brng = Mathf.Rad2Deg * Mathf.Atan2(y, x);
-        if (brng < 0)
-        {
-            brng = 360 + brng;
-        }
-        compassBrng = Input.compass.trueHeading;
-
-        int distance = Mathf.RoundToInt(distance_metres(lat, lon, destLat, destLon));
+        //int distance = Mathf.RoundToInt(DistanceCalculatorInstance.CalculateDistanceMeters(lat, lon, destLat, destLon));
+        int distance = Mathf.RoundToInt(CalculateDistanceMeters(lat, lon, destLat, destLon));
         Debug.Log("-----------------"+distance+"-----------------");
         // constantly update distance shown
         texts[0].text = distance.ToString() + "m";
@@ -94,7 +101,7 @@ public class ArrowPointer : MonoBehaviour
                         count++;
                         if (count < steps.Count)
                         {
-                            panel = Instantiate(panelPrefab);//,directionsPanel
+                            panel = Instantiate(PanelPrefab);//,directionsPanel
                             texts = panel.GetComponentsInChildren<Text>();
                             //texts[1].text = steps[count].maneuver; // description
                             texts[2].text = "Step " + (count+1) + " / " + steps.Count;
@@ -102,7 +109,12 @@ public class ArrowPointer : MonoBehaviour
                         }
                     }
                     //when arriving the dest, cancel this invokerepeating. 
-					if (count == steps.Count){CancelInvoke();}
+					if (count == steps.Count)
+                    {
+                        CompassObject.SetActive(false);
+                        //Destroy(CompassObject);
+                        CancelInvoke();
+                    }
 				
 	}
     
@@ -120,7 +132,7 @@ public class ArrowPointer : MonoBehaviour
 		return false;
 	}
 
-    float distance_metres (float lat1, float lon1, float lat2, float lon2)
+    public float CalculateDistanceMeters (float lat1, float lon1, float lat2, float lon2)
     {
         float R = 6378.137f; // Radius of Earth in KM
         float dLat = lat2 * Mathf.PI / 180 - lat1 * Mathf.PI / 180;
@@ -133,6 +145,6 @@ public class ArrowPointer : MonoBehaviour
     }
 
 	// Update is called once per frame
-	void Update () {
+	void Update () {         
     }
 }

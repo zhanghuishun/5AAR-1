@@ -12,8 +12,10 @@ public class GoogleMapAPIQuery : MonoBehaviour
     //import api key from .config file
     private string APIKey;
     private string keyword = "busstop";
+    [HideInInspector]
     public Text resultValue;
     private string radius = "150";
+    [HideInInspector]
     public List<step> steps;
     
     void Awake(){
@@ -58,7 +60,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
         //string origin = "origin=" + "45.5219%2C9.2216939";
 		string origin = "origin="+GPSInstance.lat.ToString()+"%2C"+GPSInstance.lon.ToString();
         //TODO: set the dest
-        string dest = "destination=" + "45.522714%2C9.2216527";
+        string dest = "destination=" + "45.5206998%2C9.2369783";
 		string mode = "mode="+"walking";
 		string apiKey = "key="+APIKey;
 		string api = baseURL + origin + "&" + dest + "&" + mode + "&" + apiKey;
