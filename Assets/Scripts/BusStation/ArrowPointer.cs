@@ -104,6 +104,7 @@ public class ArrowPointer : MonoBehaviour
 					if (count == steps.Count)
                     {
                         Destroy(compass);
+                        Destroy(panel);
                         //Destroy(CompassObject);
                         CancelInvoke();
                     }

@@ -6,6 +6,7 @@
 ### ARRecognition Scene
 
 1. recognize the object which scanned by [arkit scanner](https://developer.apple.com/documentation/arkit/content_anchors/scanning_and_detecting_3d_objects)
+2. recognize the tabacchi sign by image recognition
 
 2. add visual help arrow aside (within 2 sec)
 
@@ -21,6 +22,7 @@
 - [ ] decide which station is our target
 - [ ] scan the bus ticket validator and test the effect
 - [ ] add visual reward when users achieve the temp destination
+- [ ] add reaction after recognition
 
  ## Config file
 

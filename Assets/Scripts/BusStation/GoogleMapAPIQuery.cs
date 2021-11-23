@@ -61,7 +61,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
         //string origin = "origin=" + "45.5219%2C9.2216939";
 		string origin = "origin="+GPSInstance.lat.ToString()+"%2C"+GPSInstance.lon.ToString();
         //TODO: set the dest
-        string dest = "destination=" + "45.522714%2C9.2216527";
+        string dest = "destination=" + "45.523368%2C9.227676";
 		string mode = "mode="+"walking";
 		string apiKey = "key="+APIKey;
 		string api = baseURL + origin + "&" + dest + "&" + mode + "&" + apiKey;
