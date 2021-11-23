@@ -70,8 +70,6 @@ public class ArrowPointer : MonoBehaviour
 
     public void StepsLoop()
     {
-        Debug.Log("stepsloop");
-        Debug.Log("GPSInstance"+GPSInstance.lat);
         lat = GPSInstance.lat;
         lon = GPSInstance.lon;
         destLat = steps[count].end_location.lat;
@@ -82,10 +80,7 @@ public class ArrowPointer : MonoBehaviour
         ARCompassIOS.endLat = destLat;
         ARCompassIOS.endLon = destLon;
 
-        Debug.Log("----------tempdest"+destLat+"   "+destLon+"--------------");
-        //int distance = Mathf.RoundToInt(DistanceCalculatorInstance.CalculateDistanceMeters(lat, lon, destLat, destLon));
-        int distance = Mathf.RoundToInt(CalculateDistanceMeters(lat, lon, destLat, destLon));
-        Debug.Log("-----------------"+distance+"-----------------");
+        int distance = Mathf.RoundToInt(DistanceCalculatorInstance.CalculateDistanceMeters(lat, lon, destLat, destLon));
         // constantly update distance shown
         texts[0].text = distance.ToString() + "m";
 
@@ -128,18 +123,6 @@ public class ArrowPointer : MonoBehaviour
 
 		return false;
 	}
-
-    public float CalculateDistanceMeters (float lat1, float lon1, float lat2, float lon2)
-    {
-        float R = 6378.137f; // Radius of Earth in KM
-        float dLat = lat2 * Mathf.PI / 180 - lat1 * Mathf.PI / 180;
-        float dLon = lon2 * Mathf.PI / 180 - lon1 * Mathf.PI / 180;
-        float a = Mathf.Sin(dLat / 2) * Mathf.Sin(dLat / 2) + Mathf.Cos(lat1 * Mathf.PI / 180) * Mathf.Cos(lat2 * Mathf.PI / 180) * Mathf.Sin(dLon / 2)
-            * Mathf.Sin(dLon / 2);
-        float c = 2 * Mathf.Atan2(Mathf.Sqrt(a), Mathf.Sqrt(1 - a));
-        float d = R * c;
-        return d * 1000f;
-    }
 
 	// Update is called once per frame
 	void Update () {      
