@@ -19,6 +19,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
     public List<step> steps;
     
     void Awake(){
+
     }
     void  Start(){
         GPSInstance = GPSLocation.Instance;

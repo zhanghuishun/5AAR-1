@@ -34,30 +34,29 @@ public class ArrowPointer : MonoBehaviour
     private int upOffset = 1;
 
     void Awake(){
-        GoogleAPIScript = GetComponent<GoogleMapAPIQuery>();
-        DistanceCalculatorInstance = DistanceCalculator.Instance;
-        Debug.Log("Distancecalculator-----------"+DistanceCalculatorInstance.tempWords);
-        GPSInstance = GPSLocation.Instance;
-        Debug.Log("GPSInstance-----------"+GPSInstance.status);
-
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+        GoogleAPIScript = GetComponent<GoogleMapAPIQuery>();
+        DistanceCalculatorInstance = DistanceCalculator.Instance;
+        GPSInstance = GPSLocation.Instance;
     }
-
-    public void ClickToGetStepsInformation(){
-        try{
-        steps = GoogleAPIScript.steps;
-        foreach(var x in steps){
-            Debug.Log(x.end_location.lat+","+x.end_location.lng);
+    public void StepsInformationWrap()
+    {
+        StartCoroutine(ClickToGetStepsInformation());
+    }
+    IEnumerator ClickToGetStepsInformation()
+    {
+        int maxWait = 3;
+        while(GoogleAPIScript.steps.Count == 0 && maxWait > 0){
+            yield return new WaitForSeconds(1);
+            maxWait--;
         }
-        if(steps == null) return;
-        //active compass
-        //CompassObject.SetActive(true);
+        if(maxWait <= 0) yield return 0;
+        steps = GoogleAPIScript.steps;
+        //instantiate prefab
         compass = Instantiate(CompassPerfab) as GameObject;
-
         panel = Instantiate(PanelPrefab) as GameObject;
         texts = panel.GetComponentsInChildren<Text>();
         texts[0].text = "Distance here";
@@ -65,11 +64,6 @@ public class ArrowPointer : MonoBehaviour
         texts[2].text = "Step " + (count+1) + " / " + steps.Count;
         texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
         
-        }
-        catch(Exception e){
-            Debug.LogException(e, this);
-            Debug.Log("function Exception");
-        }
         //StepLoop starts in 0.1s and repeating running every 0.5s
         InvokeRepeating("StepsLoop", 0.1f, 0.5f);
     }
@@ -83,15 +77,12 @@ public class ArrowPointer : MonoBehaviour
         destLat = steps[count].end_location.lat;
         destLon = steps[count].end_location.lng;
         //update compass direction
-        Debug.Log("ARCompassIOS :" + ARCompassIOS.startLat);
         ARCompassIOS.startLat = lat;
         ARCompassIOS.startLon = lon;
         ARCompassIOS.endLat = destLat;
         ARCompassIOS.endLon = destLon;
 
         Debug.Log("----------tempdest"+destLat+"   "+destLon+"--------------");
-        Debug.Log("DistanceInstance :" + DistanceCalculatorInstance.CalculateDistanceMeters(lat, lon, destLat, destLon));
-
         //int distance = Mathf.RoundToInt(DistanceCalculatorInstance.CalculateDistanceMeters(lat, lon, destLat, destLon));
         int distance = Mathf.RoundToInt(CalculateDistanceMeters(lat, lon, destLat, destLon));
         Debug.Log("-----------------"+distance+"-----------------");

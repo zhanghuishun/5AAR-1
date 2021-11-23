@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DistanceCalculator : MonoBehaviour
 {
-    public string tempWords = "access to distance calculator";
     private static DistanceCalculator _instance;
 
     public static DistanceCalculator Instance { get { return _instance; } }

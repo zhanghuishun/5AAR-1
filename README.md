@@ -19,7 +19,6 @@
 #### TODO: 
 
 - [ ] decide which station is our target
-- [ ] fix the bug that it only works when entering the FindBusStation scene the second time
 - [ ] scan the bus ticket validator and test the effect
 - [ ] add visual reward when users achieve the temp destination
 
