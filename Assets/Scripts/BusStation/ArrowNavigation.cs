@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class ArrowPointer : MonoBehaviour
+public class ArrowNavigation : MonoBehaviour
 {
     [SerializeField] private GameObject PanelPrefab;
     private GPSLocation GPSInstance;
@@ -21,7 +21,6 @@ public class ArrowPointer : MonoBehaviour
 	float destLon;
 	int count;
 	List<innerStep> steps;
-    transitDetails busInformation;
     float brng;
     float compassBrng;
     GameObject panel;
@@ -56,7 +55,6 @@ public class ArrowPointer : MonoBehaviour
         }
         if(maxWait <= 0) yield return 0;
         steps = GoogleAPIScript.walkingSteps;
-        busInformation = GoogleAPIScript.busInformation;
         //instantiate prefab
         compass = Instantiate(CompassPerfab) as GameObject;
         panel = Instantiate(PanelPrefab) as GameObject;
@@ -86,8 +84,6 @@ public class ArrowPointer : MonoBehaviour
         // constantly update distance shown
         texts[0].text = distance.ToString() + "m";
 
-        
-
         if (isCollide())
                     {
                         Destroy(panel);
@@ -109,11 +105,9 @@ public class ArrowPointer : MonoBehaviour
                         Destroy(panel);
                         //Destroy(CompassObject);
                         CancelInvoke();
-                        
                     }
 				
 	}
-    
 
     bool isCollide() {
 		lat = Input.location.lastData.latitude;
@@ -127,7 +121,7 @@ public class ArrowPointer : MonoBehaviour
 
 		return false;
 	}
-
+    
 	// Update is called once per frame
 	void Update () {      
         if(compass != null)
