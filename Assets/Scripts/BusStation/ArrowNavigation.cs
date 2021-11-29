@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class ArrowPointer : MonoBehaviour
+public class ArrowNavigation : MonoBehaviour
 {
     [SerializeField] private GameObject PanelPrefab;
     private GPSLocation GPSInstance;
@@ -20,7 +20,7 @@ public class ArrowPointer : MonoBehaviour
 	float destLat;
 	float destLon;
 	int count;
-	List<step> steps;
+	List<innerStep> steps;
     float brng;
     float compassBrng;
     GameObject panel;
@@ -49,18 +49,18 @@ public class ArrowPointer : MonoBehaviour
     IEnumerator ClickToGetStepsInformation()
     {
         int maxWait = 3;
-        while(GoogleAPIScript.steps.Count == 0 && maxWait > 0){
+        while(GoogleAPIScript.walkingSteps.Count == 0 && maxWait > 0){
             yield return new WaitForSeconds(1);
             maxWait--;
         }
         if(maxWait <= 0) yield return 0;
-        steps = GoogleAPIScript.steps;
+        steps = GoogleAPIScript.walkingSteps;
         //instantiate prefab
         compass = Instantiate(CompassPerfab) as GameObject;
         panel = Instantiate(PanelPrefab) as GameObject;
         texts = panel.GetComponentsInChildren<Text>();
         texts[0].text = "Distance here";
-        //texts[1].text = steps[count].maneuver; // description
+        //texts[1].text = "Default"; // description
         texts[2].text = "Step " + (count+1) + " / " + steps.Count;
         texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
         
@@ -83,8 +83,6 @@ public class ArrowPointer : MonoBehaviour
         int distance = Mathf.RoundToInt(DistanceCalculatorInstance.CalculateDistanceMeters(lat, lon, destLat, destLon));
         // constantly update distance shown
         texts[0].text = distance.ToString() + "m";
-
-        
 
         if (isCollide())
                     {
@@ -110,7 +108,6 @@ public class ArrowPointer : MonoBehaviour
                     }
 				
 	}
-    
 
     bool isCollide() {
 		lat = Input.location.lastData.latitude;
@@ -124,7 +121,7 @@ public class ArrowPointer : MonoBehaviour
 
 		return false;
 	}
-
+    
 	// Update is called once per frame
 	void Update () {      
         if(compass != null)
