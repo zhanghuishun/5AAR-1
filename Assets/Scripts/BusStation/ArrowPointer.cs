@@ -20,7 +20,8 @@ public class ArrowPointer : MonoBehaviour
 	float destLat;
 	float destLon;
 	int count;
-	List<step> steps;
+	List<innerStep> steps;
+    transitDetails busInformation;
     float brng;
     float compassBrng;
     GameObject panel;
@@ -49,18 +50,19 @@ public class ArrowPointer : MonoBehaviour
     IEnumerator ClickToGetStepsInformation()
     {
         int maxWait = 3;
-        while(GoogleAPIScript.steps.Count == 0 && maxWait > 0){
+        while(GoogleAPIScript.walkingSteps.Count == 0 && maxWait > 0){
             yield return new WaitForSeconds(1);
             maxWait--;
         }
         if(maxWait <= 0) yield return 0;
-        steps = GoogleAPIScript.steps;
+        steps = GoogleAPIScript.walkingSteps;
+        busInformation = GoogleAPIScript.busInformation;
         //instantiate prefab
         compass = Instantiate(CompassPerfab) as GameObject;
         panel = Instantiate(PanelPrefab) as GameObject;
         texts = panel.GetComponentsInChildren<Text>();
         texts[0].text = "Distance here";
-        //texts[1].text = steps[count].maneuver; // description
+        //texts[1].text = "Default"; // description
         texts[2].text = "Step " + (count+1) + " / " + steps.Count;
         texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
         
@@ -107,6 +109,7 @@ public class ArrowPointer : MonoBehaviour
                         Destroy(panel);
                         //Destroy(CompassObject);
                         CancelInvoke();
+                        
                     }
 				
 	}
