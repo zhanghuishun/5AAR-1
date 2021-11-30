@@ -16,11 +16,11 @@ public class ArrowNavigation : MonoBehaviour
 
     
     float lat;
-    float lon;
+    float lng;
 	float destLat;
-	float destLon;
+	float destLng;
 	int count;
-	List<innerStep> steps;
+	List<step> steps;
     float brng;
     float compassBrng;
     GameObject panel;
@@ -71,16 +71,16 @@ public class ArrowNavigation : MonoBehaviour
     public void StepsLoop()
     {
         lat = GPSInstance.lat;
-        lon = GPSInstance.lon;
+        lng = GPSInstance.lng;
         destLat = steps[count].end_location.lat;
-        destLon = steps[count].end_location.lng;
+        destLng = steps[count].end_location.lng;
         //update compass direction
         ARCompassIOS.startLat = lat;
-        ARCompassIOS.startLon = lon;
+        ARCompassIOS.startLng = lng;
         ARCompassIOS.endLat = destLat;
-        ARCompassIOS.endLon = destLon;
+        ARCompassIOS.endLng = destLng;
 
-        int distance = Mathf.RoundToInt(DistanceCalculatorInstance.CalculateDistanceMeters(lat, lon, destLat, destLon));
+        int distance = Mathf.RoundToInt(DistanceCalculatorInstance.CalculateDistanceMeters(lat, lng, destLat, destLng));
         // constantly update distance shown
         texts[0].text = distance.ToString() + "m";
 
@@ -111,10 +111,10 @@ public class ArrowNavigation : MonoBehaviour
 
     bool isCollide() {
 		lat = Input.location.lastData.latitude;
-		lon = Input.location.lastData.longitude;
+		lng = Input.location.lastData.longitude;
         //collide within 10m
 		if (lat - destLat <= 0.0001f && lat - destLat >= -0.0001f) {
-			if (lon - destLon <= 0.0001f && lon - destLon >= -0.0001f) {
+			if (lng - destLng <= 0.0001f && lng - destLng >= -0.0001f) {
 				return true;
 			}
 		}
@@ -124,11 +124,12 @@ public class ArrowNavigation : MonoBehaviour
     
 	// Update is called once per frame
 	void Update () {      
-        if(compass != null)
-        {   
+        if(compass != null) {
             compass.transform.rotation = ARCompassIOS.TrueHeadingRotation;
             //the position is always on the front of camera with a offset
             compass.transform.position = ARCamera.transform.position + ARCamera.transform.forward * forwardOffset;
+            //Debug.Log("compass rotation"+compass.transform.rotation);
+            
         }
     }
 }

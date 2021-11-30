@@ -34,8 +34,8 @@ public class OnBusStationLogic : MonoBehaviour
         //check if user is near bus station
         //Debug.Log("stationInfo"+ JsonUtility.ToJson(busInformation, true));
         float stopLat = busInformation.departure_stop.location.lat;
-        float stopLon = busInformation.departure_stop.location.lng;
-        int stopDistance = Mathf.RoundToInt(DistanceCalculatorInstance.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lon, stopLat, stopLon));
+        float stoplng = busInformation.departure_stop.location.lng;
+        int stopDistance = Mathf.RoundToInt(DistanceCalculatorInstance.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, stopLat, stoplng));
         Debug.Log("distance of user to the bus station"+stopDistance);
         if(stopDistance <= 15){
             OnBusStation();
