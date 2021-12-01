@@ -48,7 +48,10 @@ public class GoogleMapAPIQuery : MonoBehaviour
     }
     public void RouteToBusStationQuery()
     {
-        StartCoroutine (GetBusRouteJSON (45.5168268f, 9.2166683f));
+        //get value from settings scene
+        float destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0]);
+        float destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1]);
+        StartCoroutine (GetBusRouteJSON (destLat, destLng));//45.5168268f, 9.2166683f
     }
 
     IEnumerator GetTabacchiJSON() {
