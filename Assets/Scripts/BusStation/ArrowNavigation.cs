@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using TMPro;
 
 public class ArrowNavigation : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class ArrowNavigation : MonoBehaviour
     float brng;
     float compassBrng;
     GameObject panel;
-    Text[] texts;
+    TextMeshProUGUI[] texts;
 
     
     //compass related 
@@ -58,11 +59,12 @@ public class ArrowNavigation : MonoBehaviour
         //instantiate prefab
         compass = Instantiate(CompassPerfab) as GameObject;
         panel = Instantiate(PanelPrefab) as GameObject;
-        texts = panel.GetComponentsInChildren<Text>();
+        texts = panel.GetComponentsInChildren<TextMeshProUGUI>();
+        Debug.Log(texts[0].text);
         texts[0].text = "Distance here";
         //texts[1].text = "Default"; // description
-        texts[2].text = "Step " + (count+1) + " / " + steps.Count;
-        texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
+        //texts[2].text = "Step " + (count+1) + " / " + steps.Count;
+        //texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
         
         //StepLoop starts in 0.1s and repeating running every 0.5s
         InvokeRepeating("StepsLoop", 0.1f, 0.5f);
@@ -82,6 +84,7 @@ public class ArrowNavigation : MonoBehaviour
 
         int distance = Mathf.RoundToInt(DistanceCalculatorInstance.CalculateDistanceMeters(lat, lng, destLat, destLng));
         // constantly update distance shown
+        //texts[0].text = distance.ToString() + "m";
         texts[0].text = distance.ToString() + "m";
 
         if (isCollide())
@@ -91,11 +94,11 @@ public class ArrowNavigation : MonoBehaviour
                         count++;
                         if (count < steps.Count)
                         {
-                            panel = Instantiate(PanelPrefab);//,directionsPanel
-                            texts = panel.GetComponentsInChildren<Text>();
+                            //panel = Instantiate(PanelPrefab);//,directionsPanel
+                            //texts = panel.GetComponentsInChildren<TextMeshPro>();
                             //texts[1].text = steps[count].maneuver; // description
-                            texts[2].text = "Step " + (count+1) + " / " + steps.Count;
-                            texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
+                            //texts[2].text = "Step " + (count+1) + " / " + steps.Count;
+                            //texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
                         }
                     }
                     //when arriving the dest, cancel this invokerepeating. 
