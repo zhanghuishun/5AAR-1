@@ -8,16 +8,14 @@ public class OnBusStationLogic : MonoBehaviour
     transitDetails busInformation;
     private GPSLocation GPSInstance;
     private GoogleMapAPIQuery GoogleAPIScript;
-    private DistanceCalculator DistanceCalculatorInstance;
-    private TimeParser TimeParseInstance;
+    private Utils utils;
 
     // Start is called before the first frame update
     void Start()
     {
         GoogleAPIScript = GetComponent<GoogleMapAPIQuery>();
-        DistanceCalculatorInstance = DistanceCalculator.Instance;
         GPSInstance = GPSLocation.Instance;
-        TimeParseInstance = TimeParser.Instance;
+        utils = Utils.Instance;
     }
     public void LogicWrap(){
         StartCoroutine(Logic());
@@ -35,7 +33,7 @@ public class OnBusStationLogic : MonoBehaviour
         //Debug.Log("stationInfo"+ JsonUtility.ToJson(busInformation, true));
         float stopLat = busInformation.departure_stop.location.lat;
         float stoplng = busInformation.departure_stop.location.lng;
-        int stopDistance = Mathf.RoundToInt(DistanceCalculatorInstance.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, stopLat, stoplng));
+        int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, stopLat, stoplng));
         Debug.Log("distance of user to the bus station"+stopDistance);
         if(stopDistance <= 15){
             OnBusStation();
@@ -48,7 +46,7 @@ public class OnBusStationLogic : MonoBehaviour
     {
         //CA: The bus is arrving in XX time, 
         DateTime datevalue1 = DateTime.Now;
-        DateTime datevalue2 = TimeParseInstance.TimeParse(busInformation.departure_time.text);
+        DateTime datevalue2 = utils.TimeParse(busInformation.departure_time.text);
         //Debug.Log("current time:" + DateTime.Now);
         double minutesDouble = (datevalue2 - datevalue1).TotalMinutes;
         int minutes = Mathf.RoundToInt((float)minutesDouble);

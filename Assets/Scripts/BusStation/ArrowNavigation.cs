@@ -10,7 +10,7 @@ public class ArrowNavigation : MonoBehaviour
     [SerializeField] private GameObject PanelPrefab;
     private GPSLocation GPSInstance;
     private GoogleMapAPIQuery GoogleAPIScript;
-    private DistanceCalculator DistanceCalculatorInstance;
+    private Utils utils;
 
     [SerializeField] private GameObject CompassPerfab;
     [SerializeField] private UnityARCompass.ARCompassIOS ARCompassIOS;
@@ -40,7 +40,7 @@ public class ArrowNavigation : MonoBehaviour
     void Start()
     {
         GoogleAPIScript = GetComponent<GoogleMapAPIQuery>();
-        DistanceCalculatorInstance = DistanceCalculator.Instance;
+        utils = Utils.Instance;
         GPSInstance = GPSLocation.Instance;
     }
     public void StepsInformationWrap()
@@ -82,7 +82,7 @@ public class ArrowNavigation : MonoBehaviour
         ARCompassIOS.endLat = destLat;
         ARCompassIOS.endLng = destLng;
 
-        int distance = Mathf.RoundToInt(DistanceCalculatorInstance.CalculateDistanceMeters(lat, lng, destLat, destLng));
+        int distance = Mathf.RoundToInt(utils.CalculateDistanceMeters(lat, lng, destLat, destLng));
         // constantly update distance shown
         //texts[0].text = distance.ToString() + "m";
         texts[0].text = distance.ToString() + "m";

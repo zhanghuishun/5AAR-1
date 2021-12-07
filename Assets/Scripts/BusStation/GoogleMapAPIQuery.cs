@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 public class GoogleMapAPIQuery : MonoBehaviour
 {
     GPSLocation GPSInstance;
-    StepConverter StepConverterInstance;
+    Utils utils;
     //import api key from .config file
     private string APIKey;
     private string keyword = "tabacchi";
@@ -29,7 +29,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
     }
     void  Start(){
         GPSInstance = GPSLocation.Instance;
-        StepConverterInstance = StepConverter.Instance;
+        utils = Utils.Instance;
         APIKey = GlobalConfig.GoogleMapAPIKey;
     }
     public void RouteToTabacchiShopQuery()
@@ -112,7 +112,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
             {
                 if(step.travel_mode == "WALKING"){
                     //convert innnerstep type to step
-                    walkingSteps = StepConverterInstance.Convert(step.steps);
+                    walkingSteps = utils.Convert(step.steps);
                 }
                 else if(step.travel_mode == "TRANSIT"){
                     busInformation = step.transit_details;
