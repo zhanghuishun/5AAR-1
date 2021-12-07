@@ -14,7 +14,7 @@ public class ArrowNavigation : MonoBehaviour
 
     [SerializeField] private GameObject CompassPerfab;
     [SerializeField] private UnityARCompass.ARCompassIOS ARCompassIOS;
-
+    [SerializeField] private TextMeshProUGUI Instruction;
     
     float lat;
     float lng;
@@ -60,7 +60,8 @@ public class ArrowNavigation : MonoBehaviour
         compass = Instantiate(CompassPerfab) as GameObject;
         panel = Instantiate(PanelPrefab) as GameObject;
         texts = panel.GetComponentsInChildren<TextMeshProUGUI>();
-        Debug.Log(texts[0].text);
+        Debug.Log(JsonUtility.ToJson(steps, true));
+        Instruction.text = utils.RemoveSpecialCharacters(steps[count].html_instructions);
         texts[0].text = "Distance here";
         //texts[1].text = "Default"; // description
         //texts[2].text = "Step " + (count+1) + " / " + steps.Count;
@@ -89,11 +90,12 @@ public class ArrowNavigation : MonoBehaviour
 
         if (isCollide())
                     {
-                        Destroy(panel);
+                        //Destroy(panel);
                         //panels count = panels[count+1]?
                         count++;
                         if (count < steps.Count)
                         {
+                            Instruction.text = utils.RemoveSpecialCharacters(steps[count].html_instructions);
                             //panel = Instantiate(PanelPrefab);//,directionsPanel
                             //texts = panel.GetComponentsInChildren<TextMeshPro>();
                             //texts[1].text = steps[count].maneuver; // description

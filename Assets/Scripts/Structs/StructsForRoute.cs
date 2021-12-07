@@ -33,6 +33,8 @@ public struct innerStep {
 	public string travel_mode;
 	public distance dis;
 	public duration dur;
+	public string html_instructions;
+
 }
 [System.Serializable]
 public struct transitDetails {
@@ -49,7 +51,7 @@ public struct step {
 	public string travel_mode;
 	public distance dis;
 	public duration dur;
-	public string maneuver;
+	public string html_instructions;
 	public List<innerStep> steps;
 	public transitDetails transit_details;
 }

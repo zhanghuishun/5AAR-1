@@ -46,6 +46,7 @@ public class Utils : MonoBehaviour
             newStep.travel_mode = step.travel_mode;
             newStep.dis = step.dis;
             newStep.dur = step.dur;
+            newStep.html_instructions = step.html_instructions;
             newSteps.Add(newStep);
         }
             Debug.Log(JsonUtility.ToJson(newSteps, true));
@@ -64,4 +65,12 @@ public class Utils : MonoBehaviour
         return d * 1000f;
     }
 
+    public string RemoveSpecialCharacters(string str)
+    {
+        if(str == null) {
+            return "the instruction is null";
+        }
+        else 
+            return Regex.Replace(str, "\\<.*?\\>", "", RegexOptions.Compiled);
+    }
 }

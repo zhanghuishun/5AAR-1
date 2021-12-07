@@ -594,6 +594,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 828352716}
   m_CullTransparentMesh: 1
+--- !u!114 &905736478 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1687273385543900186, guid: 033d0a26aaa5140c0b45894fa20c1df4,
+    type: 3}
+  m_PrefabInstance: {fileID: 825242339}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1019532191
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,6 +706,7 @@ MonoBehaviour:
     type: 3}
   CompassPerfab: {fileID: 100002, guid: c727ce61e2724410897958bc77ecf21c, type: 3}
   ARCompassIOS: {fileID: 1172372856}
+  Instruction: {fileID: 905736478}
   ARCamera: {fileID: 1470371345}
 --- !u!114 &1019532196
 MonoBehaviour:
