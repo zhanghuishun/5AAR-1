@@ -10,7 +10,7 @@ public class ConversationController : MonoBehaviour
 {
     private static DialogFlowV2Client client;
 
-    //TODO implement a way to get session name
+    //TODO implement a way to get session name (UUID)
     public static string sessionName = "123456789";
 
     private static List<Text> textOutputFields;
