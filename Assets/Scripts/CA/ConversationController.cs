@@ -8,16 +8,22 @@ using UnityEngine.UI;
 
 public class ConversationController : MonoBehaviour
 {
-    private static DialogFlowV2Client client;
+    public static ConversationController istance { private set; get; }
+
+    private  DialogFlowV2Client client;
 
     //TODO implement a way to get session name (UUID)
-    public static string sessionName = "123456789";
+    public  string sessionName = "123456789";
 
-    private static List<Text> textOutputFields;
-    private static List<TextMeshProUGUI> textPROOutputFields;
+    private  List<Text> textOutputFields;
+    private  List<TextMeshProUGUI> textPROOutputFields;
+
+    public  bool textFieldsCanBeOverwritten { private set; get;}
 
     private void Awake()
     {
+        istance = this;
+
         DontDestroyOnLoad(transform.gameObject);
 
         client = GetComponent<DialogFlowV2Client>();
@@ -31,7 +37,7 @@ public class ConversationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        textFieldsCanBeOverwritten = true;
     }
 
     // Update is called once per frame
@@ -40,56 +46,72 @@ public class ConversationController : MonoBehaviour
 
     }
 
-    public static void SendTextIntent(string text)
+    public void SendTextIntent(string text)
     {
         client.DetectIntentFromText(text, sessionName);
     }
 
-    public static void SendAudioIntent(AudioClip clip)
+    public void SendAudioIntent(AudioClip clip)
     {
         byte[] audioBytes = WavUtility.FromAudioClip(clip);
         string audioString = Convert.ToBase64String(audioBytes);
         client.DetectIntentFromAudio(audioString, sessionName);
     }
 
-    public static void SendEventIntent(string eventName, Dictionary<string, object> parameters)
+    public void SendEventIntent(string eventName, Dictionary<string, object> parameters)
     {
         client.DetectIntentFromEvent(eventName, parameters, sessionName);
     }
 
-    public static void SendEventIntent(string eventName)
+    public void SendEventIntent(string eventName)
     {
         SendEventIntent(eventName, new Dictionary<string, object>());
     }
 
-    public static void RegisterTextOutputField(Text field)
+    public void RegisterTextOutputField(Text field)
     {
         textOutputFields.Add(field);
     }
 
-    public static void UnregisterTextOutputField(Text field)
+    public void UnregisterTextOutputField(Text field)
     {
         textOutputFields.Remove(field);
     }
 
-    public static void RegisterTextOutputField(TextMeshProUGUI field)
+    public void RegisterTextOutputField(TextMeshProUGUI field)
     {
         textPROOutputFields.Add(field);
     }
 
-    public static void UnregisterTextOutputField(TextMeshProUGUI field)
+    public void UnregisterTextOutputField(TextMeshProUGUI field)
     {
         textPROOutputFields.Remove(field);
     }
 
     private void OnResponse(DF2Response response)
     {
-        Debug.Log(name + " said: \"" + response.queryResult.fulfillmentText + "\"");
+        StartCoroutine(_ChangeTextFields(response.queryResult.fulfillmentText));
+    }
+
+    private IEnumerator _ChangeTextFields(String text)
+    {
+        yield return new WaitUntil(() => textFieldsCanBeOverwritten);
+
+        //Debug.Log(name + " said: \"" + response.queryResult.fulfillmentText + "\"");
         foreach (Text field in textOutputFields)
-            field.text = response.queryResult.fulfillmentText;
+            field.text = text;
 
         foreach (TextMeshProUGUI field in textPROOutputFields)
-            field.text = response.queryResult.fulfillmentText;
+            field.text = text;
+
+        textFieldsCanBeOverwritten = false;
+        yield return new WaitForSecondsRealtime(5);
+        textFieldsCanBeOverwritten = true;
+    }
+
+    public void ChangeTextFields(String text)
+    {
+        StartCoroutine(_ChangeTextFields(text));
     }
 
     private void LogError(DF2ErrorResponse errorResponse)

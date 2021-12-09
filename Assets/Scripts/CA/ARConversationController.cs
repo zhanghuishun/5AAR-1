@@ -10,7 +10,7 @@ public class ARConversationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ConversationController.RegisterTextOutputField(CAText);
+        ConversationController.istance.RegisterTextOutputField(CAText);
 
         switch (PhaseController.phase)
         {
@@ -23,13 +23,13 @@ public class ARConversationController : MonoBehaviour
 
     private void BuyTicketLogic()
     {
-        ConversationController.SendEventIntent("CheckSubscription");
+        ConversationController.istance.SendEventIntent("CheckSubscription");
         //Change info popup and options
     }
 
     private void FindBusStopLogic()
     {
-        
+
     }
 
     private void TravelOnTheBusLogic()
