@@ -57,6 +57,11 @@ public class ConversationController : MonoBehaviour
         client.DetectIntentFromEvent(eventName, parameters, sessionName);
     }
 
+    public static void SendEventIntent(string eventName)
+    {
+        SendEventIntent(eventName, new Dictionary<string, object>());
+    }
+
     public static void RegisterTextOutputField(Text field)
     {
         textOutputFields.Add(field);

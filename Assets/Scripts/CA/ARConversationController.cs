@@ -23,7 +23,8 @@ public class ARConversationController : MonoBehaviour
 
     private void BuyTicketLogic()
     {
-        
+        ConversationController.SendEventIntent("CheckSubscription");
+        //Change info popup and options
     }
 
     private void FindBusStopLogic()
