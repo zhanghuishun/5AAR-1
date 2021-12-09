@@ -165,6 +165,46 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1051364363930498644, guid: d0863b8fc1cf74a0e93481ebb64362f0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051364363930498644, guid: d0863b8fc1cf74a0e93481ebb64362f0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051364363930498644, guid: d0863b8fc1cf74a0e93481ebb64362f0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1249414090}
+    - target: {fileID: 1051364363930498644, guid: d0863b8fc1cf74a0e93481ebb64362f0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051364363930498644, guid: d0863b8fc1cf74a0e93481ebb64362f0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051364363930498644, guid: d0863b8fc1cf74a0e93481ebb64362f0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ChangeSceneWithButton, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051364363930498644, guid: d0863b8fc1cf74a0e93481ebb64362f0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: WelcomePage New
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051364363930498644, guid: d0863b8fc1cf74a0e93481ebb64362f0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2495896233804886899, guid: d0863b8fc1cf74a0e93481ebb64362f0,
         type: 3}
       propertyPath: m_RootOrder
@@ -294,6 +334,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: StepsPage
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442377514529617976, guid: d0863b8fc1cf74a0e93481ebb64362f0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0863b8fc1cf74a0e93481ebb64362f0, type: 3}
