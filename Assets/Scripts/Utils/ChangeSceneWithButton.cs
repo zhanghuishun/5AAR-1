@@ -8,5 +8,11 @@ public class ChangeSceneWithButton : MonoBehaviour {
         SceneManager.LoadScene(nameScene);
  
     }
+
+    public void LoadARScene(int phase)
+    {
+        PhaseController.phase = (Phases)phase;
+        SceneManager.LoadScene("ARScene");
+    }
  
 }

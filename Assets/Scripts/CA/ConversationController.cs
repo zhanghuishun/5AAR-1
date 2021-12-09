@@ -37,7 +37,7 @@ public class ConversationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public static void SendTextIntent(string text)
