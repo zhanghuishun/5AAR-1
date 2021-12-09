@@ -9,7 +9,8 @@ public class MicButton : MonoBehaviour
     private int minFreq;
     private int maxFreq;
     private AudioSource goAudioSource;
-    public Text micText; //Will change to sprite
+    public GameObject micOnSprite;
+    public GameObject micOffSprite;
 
     private void Awake()
     {
@@ -57,13 +58,15 @@ public class MicButton : MonoBehaviour
             {
                 //Start recording and store the audio captured from the microphone at the AudioClip in the AudioSource  
                 goAudioSource.clip = Microphone.Start(null, true, 20, maxFreq);
-                micText.text = "Stop";
+                //micText.text = "Stop";
+                ToggleMic(true);
             }
             else //Recording is in progress  
             {
                 Microphone.End(null); //Stop the audio recording  
                 goAudioSource.Play(); //Playback the recorded audio
-                micText.text = "Mic";
+                //micText.text = "Mic";
+                ToggleMic(false);
                 ConversationController.SendAudioIntent(goAudioSource.clip);
             }
         }
@@ -73,5 +76,11 @@ public class MicButton : MonoBehaviour
             GUI.contentColor = Color.red;
         }
 
+    }
+
+    private void ToggleMic(bool state)
+    {
+        micOnSprite.SetActive(state);
+        micOffSprite.SetActive(!state);
     }
 }
