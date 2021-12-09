@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,6 +11,29 @@ public class ARConversationController : MonoBehaviour
     void Start()
     {
         ConversationController.RegisterTextOutputField(CAText);
+
+        switch (PhaseController.phase)
+        {
+            case Phases.BUY_TICKET: BuyTicketLogic();  break;
+            case Phases.FIND_BUS_STOP: FindBusStopLogic();  break;
+            case Phases.TRAVEL_ON_THE_BUS: TravelOnTheBusLogic();  break;
+            default: break;
+        }
+    }
+
+    private void BuyTicketLogic()
+    {
+        
+    }
+
+    private void FindBusStopLogic()
+    {
+        
+    }
+
+    private void TravelOnTheBusLogic()
+    {
+        
     }
 
     // Update is called once per frame
