@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Threading;
 public class ConversationController : MonoBehaviour
 {
     public static ConversationController istance { private set; get; }
@@ -18,7 +18,7 @@ public class ConversationController : MonoBehaviour
     private  List<Text> textOutputFields;
     private  List<TextMeshProUGUI> textPROOutputFields;
 
-    private object textFieldsLock;
+    private readonly object textFieldsLock = new object();
     public bool textFieldsOverwritten { private set; get; }
 
     private void Awake()
@@ -33,18 +33,19 @@ public class ConversationController : MonoBehaviour
 
         textOutputFields = new List<Text>();
         textPROOutputFields = new List<TextMeshProUGUI>();
+        textFieldsOverwritten = true;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        textFieldsOverwritten = true;
+        //textFieldsOverwritten = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        Debug.Log(textFieldsOverwritten);
     }
 
     public void SendTextIntent(string text)
@@ -54,11 +55,14 @@ public class ConversationController : MonoBehaviour
 
     private IEnumerator _SendTextIntent(string text)
     {
-        lock (textFieldsLock)
+        if (textFieldsLock != null) 
         {
-            textFieldsOverwritten = false;
-            client.DetectIntentFromText(text, sessionName);
-            yield return new WaitUntil(() => textFieldsOverwritten);
+            lock (textFieldsLock)
+            {
+                textFieldsOverwritten = false;
+                client.DetectIntentFromText(text, sessionName);
+                yield return new WaitUntil(() => textFieldsOverwritten);
+            }
         }
     }
 
@@ -71,26 +75,37 @@ public class ConversationController : MonoBehaviour
     {
         byte[] audioBytes = WavUtility.FromAudioClip(clip);
         string audioString = Convert.ToBase64String(audioBytes);
-        lock (textFieldsLock)
+        if (textFieldsLock != null) 
         {
-            textFieldsOverwritten = false;
-            client.DetectIntentFromAudio(audioString, sessionName);
-            yield return new WaitUntil(() => textFieldsOverwritten);
+            lock (textFieldsLock)
+            {
+                textFieldsOverwritten = false;
+                client.DetectIntentFromAudio(audioString, sessionName);
+                yield return new WaitUntil(() => textFieldsOverwritten);
+            }
         }
     }
 
     public void SendEventIntent(string eventName, Dictionary<string, object> parameters)
     {
         StartCoroutine(_SendEventIntent(eventName, parameters));
+        
     }
 
     private IEnumerator _SendEventIntent(string eventName, Dictionary<string, object> parameters)
     {
-        lock (textFieldsLock)
+        if (textFieldsLock != null) 
         {
-            textFieldsOverwritten = false;
-            client.DetectIntentFromEvent(eventName, parameters, sessionName);
-            yield return new WaitUntil(() => textFieldsOverwritten);
+            lock (textFieldsLock)
+            {
+                Debug.Log("enter evnet intent");
+                Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
+                textFieldsOverwritten = false;
+                client.DetectIntentFromEvent(eventName, parameters, sessionName);
+                yield return new WaitUntil(() => textFieldsOverwritten);
+                Debug.Log("finish event intent");
+
+            }
         }
     }
 
@@ -121,34 +136,45 @@ public class ConversationController : MonoBehaviour
 
     private void OnResponse(DF2Response response)
     {
+        Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
         StartCoroutine(_OverwriteTextFields(response.queryResult.fulfillmentText));
     }
 
     private IEnumerator _OverwriteTextFields(String text)
     {
         //Debug.Log(name + " said: \"" + response.queryResult.fulfillmentText + "\"");
+        Debug.Log(text);
         foreach (Text field in textOutputFields)
             field.text = text;
 
         foreach (TextMeshProUGUI field in textPROOutputFields)
             field.text = text;
 
-        yield return new WaitForSecondsRealtime(5);
+        yield return new WaitForSecondsRealtime(10);
         textFieldsOverwritten = true;
+        Debug.Log("finish overwrite");
+
     }
 
     public void ChangeTextFields(String text)
     {
         StartCoroutine(_ChangeTextFields(text));
+
     }
 
     private IEnumerator _ChangeTextFields(String text)
     {
-        lock (textFieldsLock)
+        if (textFieldsLock != null)
         {
-            textFieldsOverwritten = false;
-            StartCoroutine(_OverwriteTextFields(text));
-            yield return new WaitUntil(() => textFieldsOverwritten);
+            lock (textFieldsLock)
+            {
+                Debug.Log("enter _change text fields");
+                Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
+                textFieldsOverwritten = false;
+                StartCoroutine(_OverwriteTextFields(text));
+                yield return new WaitUntil(() => textFieldsOverwritten);
+                Debug.Log("finish _change text fields");
+            }
         }
     }
 
