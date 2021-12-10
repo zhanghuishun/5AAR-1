@@ -9,7 +9,8 @@ public class OnBusStationLogic : MonoBehaviour
     private GPSLocation GPSInstance;
     private GoogleMapAPIQuery GoogleAPIScript;
     private Utils utils;
-
+    private int destDistance;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -32,8 +33,8 @@ public class OnBusStationLogic : MonoBehaviour
         //check if user is near bus station
         //Debug.Log("stationInfo"+ JsonUtility.ToJson(busInformation, true));
         float stopLat = busInformation.departure_stop.location.lat;
-        float stoplng = busInformation.departure_stop.location.lng;
-        int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, stopLat, stoplng));
+        float stopLng = busInformation.departure_stop.location.lng;
+        int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, stopLat, stopLng));
         Debug.Log("distance of user to the bus station"+stopDistance);
         if(stopDistance <= 15){
             OnBusStation();
@@ -59,7 +60,6 @@ public class OnBusStationLogic : MonoBehaviour
         Debug.Log("The bus is arrving in less one min, tell me when you are on the bus");
         
         //wait for reply then OnTheBus()
-        OnTheBus();
     }
     private void LostWhenFindingStation()
     {
@@ -71,7 +71,13 @@ public class OnBusStationLogic : MonoBehaviour
     {
         //validate the ticket
         //answer his potential questions
-        //TODO: remind before one stop
+        //remind the user is arrving the destination
+        float destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0]);
+        float destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1]);
+        do{destDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, destLat, destLng));}
+        while(destDistance > 500);
+        //if distance < 500m
+        Debug.Log("The bus is arrving the destination, please prepare to get off the bus");
     }
     // Update is called once per frame
     void Update()
