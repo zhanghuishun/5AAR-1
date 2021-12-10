@@ -48,11 +48,13 @@ public class ConversationController : MonoBehaviour
 
     public void SendTextIntent(string text)
     {
+        textFieldsCanBeOverwritten = false;
         client.DetectIntentFromText(text, sessionName);
     }
 
     public void SendAudioIntent(AudioClip clip)
     {
+        textFieldsCanBeOverwritten = false;
         byte[] audioBytes = WavUtility.FromAudioClip(clip);
         string audioString = Convert.ToBase64String(audioBytes);
         client.DetectIntentFromAudio(audioString, sessionName);
@@ -60,6 +62,7 @@ public class ConversationController : MonoBehaviour
 
     public void SendEventIntent(string eventName, Dictionary<string, object> parameters)
     {
+        textFieldsCanBeOverwritten = false;
         client.DetectIntentFromEvent(eventName, parameters, sessionName);
     }
 
@@ -90,7 +93,7 @@ public class ConversationController : MonoBehaviour
 
     private void OnResponse(DF2Response response)
     {
-        StartCoroutine(_ChangeTextFields(response.queryResult.fulfillmentText));
+        ChangeTextFields(response.queryResult.fulfillmentText);
     }
 
     private IEnumerator _ChangeTextFields(String text)
@@ -104,18 +107,19 @@ public class ConversationController : MonoBehaviour
         foreach (TextMeshProUGUI field in textPROOutputFields)
             field.text = text;
 
-        textFieldsCanBeOverwritten = false;
         yield return new WaitForSecondsRealtime(5);
         textFieldsCanBeOverwritten = true;
     }
 
     public void ChangeTextFields(String text)
     {
+        textFieldsCanBeOverwritten = false;
         StartCoroutine(_ChangeTextFields(text));
     }
 
     private void LogError(DF2ErrorResponse errorResponse)
     {
         Debug.LogError(string.Format("Error {0}: {1}", errorResponse.error.code.ToString(), errorResponse.error.message));
+        ChangeTextFields("ERROR");
     }
 }

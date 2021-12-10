@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/WelcomePage.unity
-    guid: 02cb3cb633b394f1aa0127ccdff94fd3
+    guid: 564d20c8ac76f4f229e362be265aee05
   - enabled: 1
     path: Assets/Scenes/SecondPage.unity
     guid: dd0011c846b024befaedf122b02613be
