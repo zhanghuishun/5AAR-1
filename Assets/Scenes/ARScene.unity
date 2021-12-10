@@ -274,7 +274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &465126214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,6 +605,7 @@ GameObject:
   - component: {fileID: 1019532195}
   - component: {fileID: 1019532197}
   - component: {fileID: 1019532196}
+  - component: {fileID: 1019532198}
   m_Layer: 0
   m_Name: GoogleMapAPIQuery
   m_TagString: Untagged
@@ -687,11 +688,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be268558a08664bfbbbbd7b448f809c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PanelPrefab: {fileID: 6663393834622091557, guid: e08519e8209904d60bd1d82381f8d270,
-    type: 3}
+  PanelPrefab: {fileID: 1765468683}
   CompassPerfab: {fileID: 100002, guid: c727ce61e2724410897958bc77ecf21c, type: 3}
   ARCompassIOS: {fileID: 1172372856}
-  Instruction: {fileID: 0}
+  Instruction: {fileID: 2103306897}
   ARCamera: {fileID: 1470371345}
 --- !u!114 &1019532196
 MonoBehaviour:
@@ -717,6 +717,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4d547aabc5134ffea929bde57c4b061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1019532198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019532191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e2e58129273e74786e0bdc5961d848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CAText: {fileID: 2103306897}
 --- !u!1 &1045742712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,6 +1036,75 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1292177615
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4374416756016985498, guid: 75054e77d3ce0437c9b2d84d08f4d50e,
+        type: 3}
+      propertyPath: m_Name
+      value: GoogleMapAPIConfig
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143654499057878795, guid: 75054e77d3ce0437c9b2d84d08f4d50e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143654499057878795, guid: 75054e77d3ce0437c9b2d84d08f4d50e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143654499057878795, guid: 75054e77d3ce0437c9b2d84d08f4d50e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143654499057878795, guid: 75054e77d3ce0437c9b2d84d08f4d50e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143654499057878795, guid: 75054e77d3ce0437c9b2d84d08f4d50e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143654499057878795, guid: 75054e77d3ce0437c9b2d84d08f4d50e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143654499057878795, guid: 75054e77d3ce0437c9b2d84d08f4d50e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143654499057878795, guid: 75054e77d3ce0437c9b2d84d08f4d50e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143654499057878795, guid: 75054e77d3ce0437c9b2d84d08f4d50e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143654499057878795, guid: 75054e77d3ce0437c9b2d84d08f4d50e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143654499057878795, guid: 75054e77d3ce0437c9b2d84d08f4d50e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 75054e77d3ce0437c9b2d84d08f4d50e, type: 3}
 --- !u!1 &1335320556
 GameObject:
   m_ObjectHideFlags: 0
@@ -1628,6 +1710,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1765468683 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1243819837986607788, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+    type: 3}
+  m_PrefabInstance: {fileID: 2103306896}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1975244944 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6333302964842338144, guid: 59dace8f682ea9d41a19bc3a9fe8ac16,
@@ -1646,19 +1734,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c10c3ed0732a8c4b81ae9d8daa76b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1975244946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1975244944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85e2e58129273e74786e0bdc5961d848, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CAText: {fileID: 2103306897}
 --- !u!1001 &2103306896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1790,25 +1865,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2103306898 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6392857429227626010, guid: 5d2f25396e36f403c8c2a8c7181aec81,
-    type: 3}
-  m_PrefabInstance: {fileID: 2103306896}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2103306899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2103306898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85e2e58129273e74786e0bdc5961d848, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CAText: {fileID: 2103306897}
 --- !u!1 &2118257966
 GameObject:
   m_ObjectHideFlags: 0

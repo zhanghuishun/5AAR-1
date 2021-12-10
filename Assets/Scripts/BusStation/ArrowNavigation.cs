@@ -25,7 +25,7 @@ public class ArrowNavigation : MonoBehaviour
     float brng;
     float compassBrng;
     GameObject panel;
-    TextMeshProUGUI[] texts;
+    TextMeshProUGUI textMeshProUGUI;
 
     
     //compass related 
@@ -59,10 +59,12 @@ public class ArrowNavigation : MonoBehaviour
         //instantiate prefab
         compass = Instantiate(CompassPerfab) as GameObject;
         panel = Instantiate(PanelPrefab) as GameObject;
-        texts = panel.GetComponentsInChildren<TextMeshProUGUI>();
+        textMeshProUGUI = panel.GetComponent<TextMeshProUGUI>();
+        Debug.Log(textMeshProUGUI.text);
         Debug.Log(JsonUtility.ToJson(steps, true));
         Instruction.text = utils.RemoveSpecialCharacters(steps[count].html_instructions);
-        texts[0].text = "Distance here";
+        textMeshProUGUI.text = "Distance here";
+        //texts[0].text = "Distance here";
         //texts[1].text = "Default"; // description
         //texts[2].text = "Step " + (count+1) + " / " + steps.Count;
         //texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
@@ -85,8 +87,8 @@ public class ArrowNavigation : MonoBehaviour
 
         int distance = Mathf.RoundToInt(utils.CalculateDistanceMeters(lat, lng, destLat, destLng));
         // constantly update distance shown
+        textMeshProUGUI.text = distance.ToString() + "m";
         //texts[0].text = distance.ToString() + "m";
-        texts[0].text = distance.ToString() + "m";
 
         if (isCollide())
                     {
