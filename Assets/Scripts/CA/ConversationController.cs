@@ -19,6 +19,7 @@ public class ConversationController : MonoBehaviour
     private  List<TextMeshProUGUI> textPROOutputFields;
 
     private readonly object textFieldsLock = new object();
+    private bool mockLock = true;
     public bool textFieldsOverwritten { private set; get; }
 
     private void Awake()
@@ -45,7 +46,7 @@ public class ConversationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(textFieldsOverwritten);
+        //Debug.Log(textFieldsOverwritten);
     }
 
     public void SendTextIntent(string text)
@@ -57,12 +58,15 @@ public class ConversationController : MonoBehaviour
     {
         if (textFieldsLock != null) 
         {
-            lock (textFieldsLock)
-            {
-                textFieldsOverwritten = false;
+            //lock (textFieldsLock)
+            yield return new WaitUntil(() => mockLock);
+            //{
+            mockLock = false;
+            textFieldsOverwritten = false;
                 client.DetectIntentFromText(text, sessionName);
                 yield return new WaitUntil(() => textFieldsOverwritten);
-            }
+            //}
+            mockLock = true;
         }
     }
 
@@ -77,12 +81,14 @@ public class ConversationController : MonoBehaviour
         string audioString = Convert.ToBase64String(audioBytes);
         if (textFieldsLock != null) 
         {
-            lock (textFieldsLock)
-            {
-                textFieldsOverwritten = false;
+            //lock (textFieldsLock)
+            yield return new WaitUntil(() => mockLock);
+            //{
+            textFieldsOverwritten = false;
                 client.DetectIntentFromAudio(audioString, sessionName);
                 yield return new WaitUntil(() => textFieldsOverwritten);
-            }
+            //}
+            mockLock = true;
         }
     }
 
@@ -96,16 +102,19 @@ public class ConversationController : MonoBehaviour
     {
         if (textFieldsLock != null) 
         {
-            lock (textFieldsLock)
-            {
-                Debug.Log("enter evnet intent");
+            //lock (textFieldsLock)
+            yield return new WaitUntil(() => mockLock);
+            //{
+            mockLock = false;
+            Debug.Log("enter evnet intent");
                 Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
                 textFieldsOverwritten = false;
                 client.DetectIntentFromEvent(eventName, parameters, sessionName);
                 yield return new WaitUntil(() => textFieldsOverwritten);
                 Debug.Log("finish event intent");
 
-            }
+            //}
+            mockLock = true;
         }
     }
 
@@ -166,15 +175,43 @@ public class ConversationController : MonoBehaviour
     {
         if (textFieldsLock != null)
         {
-            lock (textFieldsLock)
-            {
+            //lock (textFieldsLock)
+            yield return new WaitForSecondsRealtime(1);
+            yield return new WaitUntil(() => mockLock);
+            //{
+            mockLock = false;
                 Debug.Log("enter _change text fields");
                 Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
                 textFieldsOverwritten = false;
                 StartCoroutine(_OverwriteTextFields(text));
                 yield return new WaitUntil(() => textFieldsOverwritten);
                 Debug.Log("finish _change text fields");
-            }
+            //}
+            mockLock = true;
+        }
+    }
+    public void ChangeTextFieldsPriority(String text)
+    {
+        StartCoroutine(_ChangeTextFieldsPriority(text));
+
+    }
+
+    private IEnumerator _ChangeTextFieldsPriority(String text)
+    {
+        if (textFieldsLock != null)
+        {
+            //lock (textFieldsLock);
+            yield return new WaitUntil(() => mockLock);
+            //{
+            mockLock = false;
+            Debug.Log("enter _change text fields");
+            Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
+            textFieldsOverwritten = false;
+            StartCoroutine(_OverwriteTextFields(text));
+            yield return new WaitUntil(() => textFieldsOverwritten);
+            Debug.Log("finish _change text fields");
+            //}
+            mockLock = true;
         }
     }
 

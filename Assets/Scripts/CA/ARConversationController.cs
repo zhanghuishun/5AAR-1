@@ -23,9 +23,10 @@ public class ARConversationController : MonoBehaviour
 
     private void BuyTicketLogic()
     {
+        ConversationController.istance.ChangeTextFields("NNN");
         ConversationController.istance.SendEventIntent("CheckSubscription");
         //Change info popup and options
-        ConversationController.istance.ChangeTextFields("NNN");
+        
     }
 
     private void FindBusStopLogic()
