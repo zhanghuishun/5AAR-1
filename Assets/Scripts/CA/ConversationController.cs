@@ -18,7 +18,8 @@ public class ConversationController : MonoBehaviour
     private  List<Text> textOutputFields;
     private  List<TextMeshProUGUI> textPROOutputFields;
 
-    public  bool textFieldsCanBeOverwritten { private set; get;}
+    private object textFieldsLock;
+    public bool textFieldsOverwritten { private set; get; }
 
     private void Awake()
     {
@@ -37,7 +38,7 @@ public class ConversationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        textFieldsCanBeOverwritten = true;
+        textFieldsOverwritten = true;
     }
 
     // Update is called once per frame
@@ -48,22 +49,49 @@ public class ConversationController : MonoBehaviour
 
     public void SendTextIntent(string text)
     {
-        textFieldsCanBeOverwritten = false;
-        client.DetectIntentFromText(text, sessionName);
+        StartCoroutine(_SendTextIntent(text));
+    }
+
+    private IEnumerator _SendTextIntent(string text)
+    {
+        lock (textFieldsLock)
+        {
+            textFieldsOverwritten = false;
+            client.DetectIntentFromText(text, sessionName);
+            yield return new WaitUntil(() => textFieldsOverwritten);
+        }
     }
 
     public void SendAudioIntent(AudioClip clip)
     {
-        textFieldsCanBeOverwritten = false;
+        StartCoroutine(_SendAudioIntent(clip));
+    }
+
+    private IEnumerator _SendAudioIntent(AudioClip clip)
+    {
         byte[] audioBytes = WavUtility.FromAudioClip(clip);
         string audioString = Convert.ToBase64String(audioBytes);
-        client.DetectIntentFromAudio(audioString, sessionName);
+        lock (textFieldsLock)
+        {
+            textFieldsOverwritten = false;
+            client.DetectIntentFromAudio(audioString, sessionName);
+            yield return new WaitUntil(() => textFieldsOverwritten);
+        }
     }
 
     public void SendEventIntent(string eventName, Dictionary<string, object> parameters)
     {
-        textFieldsCanBeOverwritten = false;
-        client.DetectIntentFromEvent(eventName, parameters, sessionName);
+        StartCoroutine(_SendEventIntent(eventName, parameters));
+    }
+
+    private IEnumerator _SendEventIntent(string eventName, Dictionary<string, object> parameters)
+    {
+        lock (textFieldsLock)
+        {
+            textFieldsOverwritten = false;
+            client.DetectIntentFromEvent(eventName, parameters, sessionName);
+            yield return new WaitUntil(() => textFieldsOverwritten);
+        }
     }
 
     public void SendEventIntent(string eventName)
@@ -93,13 +121,11 @@ public class ConversationController : MonoBehaviour
 
     private void OnResponse(DF2Response response)
     {
-        ChangeTextFields(response.queryResult.fulfillmentText);
+        StartCoroutine(_OverwriteTextFields(response.queryResult.fulfillmentText));
     }
 
-    private IEnumerator _ChangeTextFields(String text)
+    private IEnumerator _OverwriteTextFields(String text)
     {
-        yield return new WaitUntil(() => textFieldsCanBeOverwritten);
-
         //Debug.Log(name + " said: \"" + response.queryResult.fulfillmentText + "\"");
         foreach (Text field in textOutputFields)
             field.text = text;
@@ -108,13 +134,22 @@ public class ConversationController : MonoBehaviour
             field.text = text;
 
         yield return new WaitForSecondsRealtime(5);
-        textFieldsCanBeOverwritten = true;
+        textFieldsOverwritten = true;
     }
 
     public void ChangeTextFields(String text)
     {
-        textFieldsCanBeOverwritten = false;
         StartCoroutine(_ChangeTextFields(text));
+    }
+
+    private IEnumerator _ChangeTextFields(String text)
+    {
+        lock (textFieldsLock)
+        {
+            textFieldsOverwritten = false;
+            StartCoroutine(_OverwriteTextFields(text));
+            yield return new WaitUntil(() => textFieldsOverwritten);
+        }
     }
 
     private void LogError(DF2ErrorResponse errorResponse)
