@@ -34,6 +34,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
     }
     public void RouteToTabacchiShopQuery()
     {
+        Debug.Log("route to tabacchi shop");
         StartCoroutine(TabacchiInOrder());
         // if(tabacchiLoc.lat == 0.0 || tabacchiLoc.lng == 0.0) {
         // Debug.Log("tabacchiLoc is null");

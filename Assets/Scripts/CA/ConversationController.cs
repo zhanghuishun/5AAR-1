@@ -48,7 +48,6 @@ public class ConversationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(textFieldsOverwritten);
     }
 
     public void SendTextIntent(string text)
@@ -170,7 +169,7 @@ public class ConversationController : MonoBehaviour
                 textFieldsOverwritten = false;
                 client.DetectIntentFromEvent(eventName, parameters, sessionName);
                 yield return new WaitUntil(() => textFieldsOverwritten);
-                Debug.Log("finish event intent");
+                //Debug.Log("finish event intent");
 
             //}
             ///mockLock = true;
@@ -275,7 +274,7 @@ public class ConversationController : MonoBehaviour
                 textFieldsOverwritten = false;
                 StartCoroutine(_OverwriteTextFields(text));
                 yield return new WaitUntil(() => textFieldsOverwritten);
-                Debug.Log("finish _change text fields");
+                //Debug.Log("finish _change text fields");
             //}
             ///mockLock = true;
         }
