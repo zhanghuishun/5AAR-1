@@ -19,8 +19,10 @@ public class ConversationController : MonoBehaviour
     private  List<TextMeshProUGUI> textPROOutputFields;
 
     private readonly object textFieldsLock = new object();
+    private bool textLock = false;
     private bool mockLock = true;
     public bool textFieldsOverwritten { private set; get; }
+
 
     private void Awake()
     {
@@ -58,15 +60,33 @@ public class ConversationController : MonoBehaviour
     {
         if (textFieldsLock != null) 
         {
+            bool canGo = false;
+            new Thread(() =>
+            {
+                Monitor.Enter(textFieldsLock);
+                try
+                {
+                    while (textLock)
+                        Monitor.Wait(textFieldsLock);
+                    canGo = true;
+                    textLock = true;
+                    Monitor.PulseAll(textFieldsLock);
+                }
+                finally
+                {
+                    Monitor.Exit(textFieldsLock);
+                }
+            }).Start();
+            yield return new WaitUntil(() => canGo);
             //lock (textFieldsLock)
-            yield return new WaitUntil(() => mockLock);
+            ///yield return new WaitUntil(() => mockLock);
             //{
-            mockLock = false;
+            ///mockLock = false;
             textFieldsOverwritten = false;
                 client.DetectIntentFromText(text, sessionName);
                 yield return new WaitUntil(() => textFieldsOverwritten);
             //}
-            mockLock = true;
+            ///mockLock = true;
         }
     }
 
@@ -81,14 +101,32 @@ public class ConversationController : MonoBehaviour
         string audioString = Convert.ToBase64String(audioBytes);
         if (textFieldsLock != null) 
         {
+            bool canGo = false;
+            new Thread(() =>
+            {
+                Monitor.Enter(textFieldsLock);
+                try
+                {
+                    while (textLock)
+                        Monitor.Wait(textFieldsLock);
+                    canGo = true;
+                    textLock = true;
+                    Monitor.PulseAll(textFieldsLock);
+                }
+                finally
+                {
+                    Monitor.Exit(textFieldsLock);
+                }
+            }).Start();
+            yield return new WaitUntil(() => canGo);
             //lock (textFieldsLock)
-            yield return new WaitUntil(() => mockLock);
+            ///yield return new WaitUntil(() => mockLock);
             //{
-            textFieldsOverwritten = false;
+            //textFieldsOverwritten = false;
                 client.DetectIntentFromAudio(audioString, sessionName);
                 yield return new WaitUntil(() => textFieldsOverwritten);
             //}
-            mockLock = true;
+            ///mockLock = true;
         }
     }
 
@@ -102,10 +140,31 @@ public class ConversationController : MonoBehaviour
     {
         if (textFieldsLock != null) 
         {
+            bool canGo = false;
+            Debug.Log("pre-enter evnet intent");
+            new Thread(() =>
+            {
+                Monitor.Enter(textFieldsLock);
+                Debug.Log("Got lock");
+                try
+                {
+                    Debug.Log(textLock);
+                    while (textLock)
+                        Monitor.Wait(textFieldsLock);
+                    canGo = true;
+                    textLock = true;
+                    Monitor.PulseAll(textFieldsLock);
+                }
+                finally
+                {
+                    Monitor.Exit(textFieldsLock);
+                }
+            }).Start();
+            yield return new WaitUntil(() => canGo);
             //lock (textFieldsLock)
-            yield return new WaitUntil(() => mockLock);
+            ///yield return new WaitUntil(() => mockLock);
             //{
-            mockLock = false;
+            ///mockLock = false;
             Debug.Log("enter evnet intent");
                 Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
                 textFieldsOverwritten = false;
@@ -114,7 +173,7 @@ public class ConversationController : MonoBehaviour
                 Debug.Log("finish event intent");
 
             //}
-            mockLock = true;
+            ///mockLock = true;
         }
     }
 
@@ -160,7 +219,20 @@ public class ConversationController : MonoBehaviour
             field.text = text;
 
         yield return new WaitForSecondsRealtime(10);
-        textFieldsOverwritten = true;
+        new Thread(() =>
+        {
+            Monitor.Enter(textFieldsLock);
+            try
+            {
+                textFieldsOverwritten = true;
+                textLock = false;
+                Monitor.PulseAll(textFieldsLock);
+            }
+            finally
+            {
+                Monitor.Exit(textFieldsLock);
+            }
+        }).Start();
         Debug.Log("finish overwrite");
 
     }
@@ -176,10 +248,28 @@ public class ConversationController : MonoBehaviour
         if (textFieldsLock != null)
         {
             //lock (textFieldsLock)
-            yield return new WaitForSecondsRealtime(1);
-            yield return new WaitUntil(() => mockLock);
+            bool canGo = false;
+            new Thread(() =>
+            {
+                Monitor.Enter(textFieldsLock);
+                try
+                {
+                    while (textLock)
+                        Monitor.Wait(textFieldsLock);
+                    canGo = true;
+                    textLock = true;
+                    Monitor.PulseAll(textFieldsLock);
+                }
+                finally
+                {
+                    Monitor.Exit(textFieldsLock);
+                }
+            }).Start();
+            yield return new WaitUntil(() => canGo);
+            ///yield return new WaitForSecondsRealtime(1);
+            ///yield return new WaitUntil(() => mockLock);
             //{
-            mockLock = false;
+            ///mockLock = false;
                 Debug.Log("enter _change text fields");
                 Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
                 textFieldsOverwritten = false;
@@ -187,10 +277,10 @@ public class ConversationController : MonoBehaviour
                 yield return new WaitUntil(() => textFieldsOverwritten);
                 Debug.Log("finish _change text fields");
             //}
-            mockLock = true;
+            ///mockLock = true;
         }
     }
-    public void ChangeTextFieldsPriority(String text)
+    /*public void ChangeTextFieldsPriority(String text)
     {
         StartCoroutine(_ChangeTextFieldsPriority(text));
 
@@ -213,7 +303,7 @@ public class ConversationController : MonoBehaviour
             //}
             mockLock = true;
         }
-    }
+    }*/
 
     private void LogError(DF2ErrorResponse errorResponse)
     {
