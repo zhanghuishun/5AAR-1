@@ -8,13 +8,11 @@ using UnityEngine.SceneManagement;
 public class ARConversationController : MonoBehaviour
 {
     public TextMeshProUGUI CAText;
-    private GoogleMapAPIQuery query;
     private ArrowNavigation navigation;
     // Start is called before the first frame update
     void Start()
     {
         ConversationController.istance.RegisterTextOutputField(CAText);
-        query = GetComponent<GoogleMapAPIQuery>();
         navigation = GetComponent<ArrowNavigation>();
 
         switch (PhaseController.phase)
@@ -33,8 +31,7 @@ public class ARConversationController : MonoBehaviour
         ConversationController.istance.ChangeTextFields("guide you to tabacchi shop now");
         
         //route query and AR navigation,TODO: order problem
-        query.RouteToTabacchiShopQuery();
-        navigation.StepsInformationWrap();
+        //navigation.StepsInformationWrap();
         //ConversationController.istance.ChangeTextFields("Now go inside and buy a ticket, tell me when you already get the ticket");
         //wait for user action
         Debug.Log("finish phase 0");

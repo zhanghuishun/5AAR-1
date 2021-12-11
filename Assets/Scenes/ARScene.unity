@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -687,11 +687,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be268558a08664bfbbbbd7b448f809c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PanelPrefab: {fileID: 6663393834622091557, guid: e08519e8209904d60bd1d82381f8d270,
-    type: 3}
+  panel: {fileID: 1497458251}
   CompassPerfab: {fileID: 100002, guid: c727ce61e2724410897958bc77ecf21c, type: 3}
   ARCompassIOS: {fileID: 1172372856}
-  Instruction: {fileID: 0}
+  Instruction: {fileID: 2103306897}
   ARCamera: {fileID: 1470371345}
 --- !u!114 &1019532196
 MonoBehaviour:
@@ -1370,6 +1369,12 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1470371345}
   m_Enabled: 1
+--- !u!1 &1497458251 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1243819837986607788, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+    type: 3}
+  m_PrefabInstance: {fileID: 2103306896}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1648359366
 GameObject:
   m_ObjectHideFlags: 0

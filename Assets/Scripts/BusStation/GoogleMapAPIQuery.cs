@@ -43,7 +43,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
         // Debug.Log("tabacchi lat in query"+tabacchiLoc.lat);
         // StartCoroutine (GetWalkRouteJSON (tabacchiLoc.lat, tabacchiLoc.lng));
     }
-    IEnumerator TabacchiInOrder() {
+    public IEnumerator TabacchiInOrder() {
         yield return StartCoroutine(GetTabacchiJSON());
         yield return StartCoroutine(GetWalkRouteJSON (tabacchiLoc.lat, tabacchiLoc.lng));
     }

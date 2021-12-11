@@ -273,6 +273,7 @@ public class ConversationController : MonoBehaviour
                 Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
                 textFieldsOverwritten = false;
                 StartCoroutine(_OverwriteTextFields(text));
+                Debug.Log("textFieldsOverwritten:"+textFieldsOverwritten);
                 yield return new WaitUntil(() => textFieldsOverwritten);
                 //Debug.Log("finish _change text fields");
             //}

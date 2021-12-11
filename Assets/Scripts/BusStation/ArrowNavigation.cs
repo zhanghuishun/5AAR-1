@@ -7,7 +7,7 @@ using TMPro;
 
 public class ArrowNavigation : MonoBehaviour
 {
-    [SerializeField] private GameObject PanelPrefab;
+    [SerializeField] private GameObject panel;
     private GPSLocation GPSInstance;
     private GoogleMapAPIQuery GoogleAPIScript;
     private Utils utils;
@@ -24,7 +24,6 @@ public class ArrowNavigation : MonoBehaviour
 	List<step> steps;
     float brng;
     float compassBrng;
-    GameObject panel;
     TextMeshProUGUI textMeshProUGUI;
 
     
@@ -43,9 +42,14 @@ public class ArrowNavigation : MonoBehaviour
         utils = Utils.Instance;
         GPSInstance = GPSLocation.Instance;
     }
-    public void StepsInformationWrap()
+    public void StepsInformationWrap(){
+        StartCoroutine(StepsInformation());
+    }
+    IEnumerator StepsInformation()
     {
-        StartCoroutine(ClickToGetStepsInformation());
+        yield return StartCoroutine(GoogleAPIScript.TabacchiInOrder());
+        yield return new WaitForSecondsRealtime(1);
+        yield return StartCoroutine(ClickToGetStepsInformation());
     }
     IEnumerator ClickToGetStepsInformation()
     {
@@ -58,10 +62,10 @@ public class ArrowNavigation : MonoBehaviour
         steps = GoogleAPIScript.walkingSteps;
         //instantiate prefab
         compass = Instantiate(CompassPerfab) as GameObject;
-        panel = Instantiate(PanelPrefab) as GameObject;
+        //panel = Instantiate(PanelPrefab) as GameObject;
         textMeshProUGUI = panel.GetComponent<TextMeshProUGUI>();
         Debug.Log(textMeshProUGUI.text);
-        Debug.Log(JsonUtility.ToJson(steps, true));
+        Debug.Log(JsonUtility.ToJson(steps[0], true));
         Instruction.text = utils.RemoveSpecialCharacters(steps[count].html_instructions);
         textMeshProUGUI.text = "Distance here";
         //texts[0].text = "Distance here";
@@ -109,7 +113,7 @@ public class ArrowNavigation : MonoBehaviour
 					if (count == steps.Count)
                     {
                         Destroy(compass);
-                        Destroy(panel);
+                        panel.SetActive(false);
                         //Destroy(CompassObject);
                         CancelInvoke();
                     }
