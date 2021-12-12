@@ -4037,6 +4037,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spinner 6
       objectReference: {fileID: 0}
+    - target: {fileID: 100024, guid: cf9f59041405fd74fb5077dd88279f02, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 22400024, guid: cf9f59041405fd74fb5077dd88279f02, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
