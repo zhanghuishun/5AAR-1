@@ -78,6 +78,7 @@ public class ConversationController : MonoBehaviour
                     Monitor.Exit(textFieldsLock);
                 }
             }).Start();
+            CAAnimationsController.istance.SetLoading(true);
             yield return new WaitUntil(() => canGo);
             //lock (textFieldsLock)
             ///yield return new WaitUntil(() => mockLock);
@@ -120,6 +121,7 @@ public class ConversationController : MonoBehaviour
                     Monitor.Exit(textFieldsLock);
                 }
             }).Start();
+            CAAnimationsController.istance.SetLoading(true);
             yield return new WaitUntil(() => canGo);
             //lock (textFieldsLock)
             ///yield return new WaitUntil(() => mockLock);
@@ -163,6 +165,7 @@ public class ConversationController : MonoBehaviour
                     Monitor.Exit(textFieldsLock);
                 }
             }).Start();
+            CAAnimationsController.istance.SetLoading(true);
             yield return new WaitUntil(() => canGo);
             //lock (textFieldsLock)
             ///yield return new WaitUntil(() => mockLock);
@@ -222,6 +225,7 @@ public class ConversationController : MonoBehaviour
             field.text = text;
 
         if (afterWriteCallback != null) afterWriteCallback.Invoke();
+        CAAnimationsController.istance.SetLoading(false);
 
         yield return new WaitForSecondsRealtime(10);
         new Thread(() =>
@@ -271,6 +275,7 @@ public class ConversationController : MonoBehaviour
                     Monitor.Exit(textFieldsLock);
                 }
             }).Start();
+            CAAnimationsController.istance.SetLoading(true);
             yield return new WaitUntil(() => canGo);
             ///yield return new WaitForSecondsRealtime(1);
             ///yield return new WaitUntil(() => mockLock);

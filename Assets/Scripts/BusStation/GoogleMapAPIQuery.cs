@@ -112,7 +112,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
         //string origin = "origin=" + "45.5219%2C9.2216939";
 		string origin = "origin="+GPSInstance.lat.ToString()+"%2C"+GPSInstance.lng.ToString();
 #if (UNITY_EDITOR)
-        origin = "origin=45.480960%2C9.225268";
+        origin = "origin=" + "45.5219%2C9.2216939";
 #endif
         //TODO: set the dest
         string dest = "destination=" + destLat +"%2C" + destLng;
@@ -150,7 +150,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
         //string origin = "origin=" + "45.5219%2C9.2216939";
 		string origin = "origin="+GPSInstance.lat.ToString()+"%2C"+GPSInstance.lng.ToString();
 #if (UNITY_EDITOR)
-        origin = "origin=45.480960%2C9.225268";
+        origin = "origin=" + "45.5219%2C9.2216939";
 #endif
         //TODO: set the dest
         string dest = "destination=" + destLat +"%2C" + destLng;
