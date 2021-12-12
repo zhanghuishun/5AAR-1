@@ -64,7 +64,7 @@ public class LogicFunctions : MonoBehaviour
         
         //wait for reply then OnTheBus()
     }
-    private void LostWhenFindingStop()
+    private void LostWhenFindingBusStop()
     {
         //confort
         //relocate        
