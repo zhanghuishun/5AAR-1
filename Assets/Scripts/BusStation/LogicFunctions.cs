@@ -2,21 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
-public class OnBusStationLogic : MonoBehaviour
+public class LogicFunctions : MonoBehaviour
 {
     transitDetails busInformation;
     private GPSLocation GPSInstance;
     private GoogleMapAPIQuery GoogleAPIScript;
     private Utils utils;
     private int destDistance;
-    
+    [SerializeField] private TextMeshProUGUI Instruction;
     // Start is called before the first frame update
     void Start()
     {
         GoogleAPIScript = GetComponent<GoogleMapAPIQuery>();
         GPSInstance = GPSLocation.Instance;
         utils = Utils.Instance;
+        ConversationController.istance.RegisterTextOutputField(Instruction);
     }
     public void LogicWrap(){
         StartCoroutine(Logic());
@@ -78,6 +80,10 @@ public class OnBusStationLogic : MonoBehaviour
         while(destDistance > 500);
         //if distance < 500m
         Debug.Log("The bus is arrving the destination, please prepare to get off the bus");
+    }
+    public void OnTabacchiShopLogic()
+    {
+        ConversationController.istance.ChangeTextFields("Ask the shop keeper to buy the ticket");
     }
     // Update is called once per frame
     void Update()

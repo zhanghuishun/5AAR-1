@@ -37,7 +37,6 @@ public class GoogleMapAPIQuery : MonoBehaviour
         GPSInstance = GPSLocation.Instance;
         utils = Utils.Instance;
         APIKey = GlobalConfig.GoogleMapAPIKey;
-
         /*XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.Load(new StringReader(xmlRawFile.text));
 
