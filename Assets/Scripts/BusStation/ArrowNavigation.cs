@@ -89,7 +89,6 @@ public class ArrowNavigation : MonoBehaviour
         ARCompassIOS.startLng = lng;
         ARCompassIOS.endLat = destLat;
         ARCompassIOS.endLng = destLng;
-
         int distance = Mathf.RoundToInt(utils.CalculateDistanceMeters(lat, lng, destLat, destLng));
         // constantly update distance shown
         //Debug.Log("distance:"+distance.ToString());

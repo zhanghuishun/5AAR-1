@@ -29,8 +29,10 @@ public class GPSLocation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //lat = 45.5227157f;
-        //lng = 9.2255169f;
+#if (UNITY_EDITOR)
+        lat = 45.480960f;
+        lng = 9.225268f;
+#endif
         StartCoroutine(GPSLoc());
 
     }
