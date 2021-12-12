@@ -21,11 +21,11 @@ public class LogicFunctions : MonoBehaviour
         utils = Utils.Instance;
         ConversationController.istance.RegisterTextOutputField(Instruction);
     }
-    public void LogicWrap(){
-        StartCoroutine(Logic());
+    public void AfterArrivingBusStopLogic(){
+        StartCoroutine(AfterArrivingBusStop());
         
     }
-    private IEnumerator Logic(){
+    private IEnumerator AfterArrivingBusStop(){
         int maxWait = 3;
         while(GoogleAPIScript.walkingSteps.Count == 0 && maxWait > 0){
             yield return new WaitForSeconds(1);
@@ -40,13 +40,13 @@ public class LogicFunctions : MonoBehaviour
         int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, stopLat, stopLng));
         Debug.Log("distance of user to the bus station"+stopDistance);
         if(stopDistance <= 15){
-            OnBusStation();
+            isOnBusStop();
         }
         else{
-            LostWhenFindingStation();
+            LostWhenFindingBusStop();
         }
     }
-    private void OnBusStation()
+    private void isOnBusStop()
     {
         //CA: The bus is arrving in XX time, 
         DateTime datevalue1 = DateTime.Now;
@@ -64,7 +64,7 @@ public class LogicFunctions : MonoBehaviour
         
         //wait for reply then OnTheBus()
     }
-    private void LostWhenFindingStation()
+    private void LostWhenFindingStop()
     {
         //confort
         //relocate        
