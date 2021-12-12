@@ -29,12 +29,14 @@ public class ARConversationController : MonoBehaviour
 
     private void BuyTicketLogic()
     {
-        ConversationController.istance.SendEventIntent("CheckSubscription", ()=>ConversationController.istance.ChangeTextFields("guide you to tabacchi shop now"));
+        ConversationController.istance.SendEventIntent("CheckSubscription", ()=> //ConversationController.istance.ChangeTextFields("After user answer"));
+            navigation.StepsInformationWrap(() => 
+                LogicFunctions.OnTabacchiShopLogic()));
         //Change info popup and options
         
         //route query and AR navigation,TODO: order problem
         //Debug.Log(navigation.testString);
-        navigation.StepsInformationWrap(() => LogicFunctions.OnTabacchiShopLogic());
+        
         //wait for user action
         Debug.Log("finish phase 0");
         //check Ticket
