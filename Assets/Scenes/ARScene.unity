@@ -600,13 +600,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1019532193}
-  - component: {fileID: 1019532192}
+  - component: {fileID: 1019532199}
   - component: {fileID: 1019532194}
+  - component: {fileID: 1019532192}
   - component: {fileID: 1019532195}
   - component: {fileID: 1019532197}
   - component: {fileID: 1019532196}
+  - component: {fileID: 1019532198}
   m_Layer: 0
-  m_Name: GoogleMapAPIQuery
+  m_Name: ARController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -716,6 +718,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4d547aabc5134ffea929bde57c4b061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1019532198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019532191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e2e58129273e74786e0bdc5961d848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CAText: {fileID: 2103306897}
+--- !u!114 &1019532199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019532191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a10e43e2589549649ef05a2fee3a8d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xmlRawFile: {fileID: 4900000, guid: 9d15f707382024691a3791d57554c0af, type: 3}
 --- !u!1 &1045742712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1651,19 +1679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c10c3ed0732a8c4b81ae9d8daa76b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1975244946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1975244944}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85e2e58129273e74786e0bdc5961d848, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CAText: {fileID: 2103306897}
 --- !u!1001 &2103306896
 PrefabInstance:
   m_ObjectHideFlags: 0

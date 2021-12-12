@@ -18,6 +18,7 @@ public class GPSLocation : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(transform.gameObject);
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
@@ -28,6 +29,8 @@ public class GPSLocation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //lat = 45.5227157f;
+        //lng = 9.2255169f;
         StartCoroutine(GPSLoc());
 
     }
@@ -70,7 +73,7 @@ public class GPSLocation : MonoBehaviour
             // timestampValue.text = Input.location.lastData.timestamp.ToString();
             lat = Input.location.lastData.latitude;
             lng = Input.location.lastData.longitude;
-            //Debug.Log(lat+"  "+lng);
+            Debug.Log(lat+"  "+lng);
         }else{
             // service is stopped
             status = "Stop";

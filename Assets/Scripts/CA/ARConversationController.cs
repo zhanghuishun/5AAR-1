@@ -29,9 +29,10 @@ public class ARConversationController : MonoBehaviour
         ConversationController.istance.SendEventIntent("CheckSubscription");
         //Change info popup and options
         ConversationController.istance.ChangeTextFields("guide you to tabacchi shop now");
-        
         //route query and AR navigation,TODO: order problem
-        //navigation.StepsInformationWrap();
+        //Debug.Log(navigation.testString);
+        navigation.StepsInformationWrap();
+
         //ConversationController.istance.ChangeTextFields("Now go inside and buy a ticket, tell me when you already get the ticket");
         //wait for user action
         Debug.Log("finish phase 0");

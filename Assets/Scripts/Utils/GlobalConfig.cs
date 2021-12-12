@@ -9,10 +9,13 @@ public class GlobalConfig : MonoBehaviour
 {
     public TextAsset xmlRawFile;
     public static string GoogleMapAPIKey;
-    void Start()
-    {
+    void Awake(){
         string data = xmlRawFile.text;
         parseXmlFile(data);
+    }
+    void Start()
+    {
+        
     }
     void parseXmlFile(string xmlData)
     {

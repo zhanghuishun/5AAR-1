@@ -32,13 +32,14 @@ public class ArrowNavigation : MonoBehaviour
     public GameObject ARCamera;
     private int forwardOffset = 1;
     private int upOffset = 1;
-
+    //public string testString = "11111";
     void Awake(){
     }
     // Start is called before the first frame update
     void Start()
     {
         GoogleAPIScript = GetComponent<GoogleMapAPIQuery>();
+        ConversationController.istance.RegisterTextOutputField(Instruction);
         utils = Utils.Instance;
         GPSInstance = GPSLocation.Instance;
     }
@@ -91,6 +92,7 @@ public class ArrowNavigation : MonoBehaviour
 
         int distance = Mathf.RoundToInt(utils.CalculateDistanceMeters(lat, lng, destLat, destLng));
         // constantly update distance shown
+        //Debug.Log("distance:"+distance.ToString());
         textMeshProUGUI.text = distance.ToString() + "m";
         //texts[0].text = distance.ToString() + "m";
 
@@ -101,7 +103,9 @@ public class ArrowNavigation : MonoBehaviour
                         count++;
                         if (count < steps.Count)
                         {
-                            Instruction.text = utils.RemoveSpecialCharacters(steps[count].html_instructions);
+                            Debug.Log(utils.RemoveSpecialCharacters(steps[count].html_instructions));
+                            ConversationController.istance.ChangeTextFields(utils.RemoveSpecialCharacters(steps[count].html_instructions));
+                            //Instruction.text = utils.RemoveSpecialCharacters(steps[count].html_instructions);
                             //panel = Instantiate(PanelPrefab);//,directionsPanel
                             //texts = panel.GetComponentsInChildren<TextMeshPro>();
                             //texts[1].text = steps[count].maneuver; // description

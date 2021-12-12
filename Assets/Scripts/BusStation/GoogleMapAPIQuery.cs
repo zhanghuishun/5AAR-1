@@ -34,7 +34,6 @@ public class GoogleMapAPIQuery : MonoBehaviour
     }
     public void RouteToTabacchiShopQuery()
     {
-        Debug.Log("route to tabacchi shop");
         StartCoroutine(TabacchiInOrder());
         // if(tabacchiLoc.lat == 0.0 || tabacchiLoc.lng == 0.0) {
         // Debug.Log("tabacchiLoc is null");
@@ -44,6 +43,8 @@ public class GoogleMapAPIQuery : MonoBehaviour
         // StartCoroutine (GetWalkRouteJSON (tabacchiLoc.lat, tabacchiLoc.lng));
     }
     public IEnumerator TabacchiInOrder() {
+        //wait for GPS location
+        yield return new WaitForSecondsRealtime(4);
         yield return StartCoroutine(GetTabacchiJSON());
         yield return StartCoroutine(GetWalkRouteJSON (tabacchiLoc.lat, tabacchiLoc.lng));
     }
@@ -62,7 +63,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
         string radius = "radius="+this.radius;
 		string apiKey = "key="+APIKey;
 		string api = baseURL + keyword + "&" + location + "&" + radius + "&" + apiKey;
-		//Debug.Log(api);
+		Debug.Log(api);
         UnityWebRequest www = UnityWebRequest.Get(api);
 		yield return www.Send();
 		if(www.isNetworkError) {
@@ -131,7 +132,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
 		string mode = "mode=walking";
 		string apiKey = "key="+APIKey;
 		string api = baseURL + origin + "&" + dest + "&" + mode + "&" + apiKey;
-        //Debug.Log(api);
+        Debug.Log(api);
 		UnityWebRequest www = UnityWebRequest.Get(api);
 		yield return www.Send();
 		if(www.isNetworkError) {
