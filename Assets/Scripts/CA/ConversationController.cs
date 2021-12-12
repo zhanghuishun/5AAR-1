@@ -22,6 +22,7 @@ public class ConversationController : MonoBehaviour
     private bool textLock = false;
     private bool mockLock = true;
     public bool textFieldsOverwritten { private set; get; }
+    private Action afterWriteCallback = null;
 
 
     private void Awake()
@@ -50,14 +51,14 @@ public class ConversationController : MonoBehaviour
     {
     }
 
-    public void SendTextIntent(string text)
+    public void SendTextIntent(string text, Action callback = null)
     {
-        StartCoroutine(_SendTextIntent(text));
+        StartCoroutine(_SendTextIntent(text, callback));
     }
 
-    private IEnumerator _SendTextIntent(string text)
+    private IEnumerator _SendTextIntent(string text, Action callback = null)
     {
-        if (textFieldsLock != null) 
+        if (textFieldsLock != null)
         {
             bool canGo = false;
             new Thread(() =>
@@ -68,6 +69,7 @@ public class ConversationController : MonoBehaviour
                     while (textLock)
                         Monitor.Wait(textFieldsLock);
                     canGo = true;
+                    afterWriteCallback = callback;
                     textLock = true;
                     Monitor.PulseAll(textFieldsLock);
                 }
@@ -82,23 +84,23 @@ public class ConversationController : MonoBehaviour
             //{
             ///mockLock = false;
             textFieldsOverwritten = false;
-                client.DetectIntentFromText(text, sessionName);
-                yield return new WaitUntil(() => textFieldsOverwritten);
+            client.DetectIntentFromText(text, sessionName);
+            yield return new WaitUntil(() => textFieldsOverwritten);
             //}
             ///mockLock = true;
         }
     }
 
-    public void SendAudioIntent(AudioClip clip)
+    public void SendAudioIntent(AudioClip clip, Action callback = null)
     {
-        StartCoroutine(_SendAudioIntent(clip));
+        StartCoroutine(_SendAudioIntent(clip, callback));
     }
 
-    private IEnumerator _SendAudioIntent(AudioClip clip)
+    private IEnumerator _SendAudioIntent(AudioClip clip, Action callback = null)
     {
         byte[] audioBytes = WavUtility.FromAudioClip(clip);
         string audioString = Convert.ToBase64String(audioBytes);
-        if (textFieldsLock != null) 
+        if (textFieldsLock != null)
         {
             bool canGo = false;
             new Thread(() =>
@@ -109,6 +111,7 @@ public class ConversationController : MonoBehaviour
                     while (textLock)
                         Monitor.Wait(textFieldsLock);
                     canGo = true;
+                    afterWriteCallback = callback;
                     textLock = true;
                     Monitor.PulseAll(textFieldsLock);
                 }
@@ -122,22 +125,22 @@ public class ConversationController : MonoBehaviour
             ///yield return new WaitUntil(() => mockLock);
             //{
             //textFieldsOverwritten = false;
-                client.DetectIntentFromAudio(audioString, sessionName);
-                yield return new WaitUntil(() => textFieldsOverwritten);
+            client.DetectIntentFromAudio(audioString, sessionName);
+            yield return new WaitUntil(() => textFieldsOverwritten);
             //}
             ///mockLock = true;
         }
     }
 
-    public void SendEventIntent(string eventName, Dictionary<string, object> parameters)
+    public void SendEventIntent(string eventName, Dictionary<string, object> parameters, Action callback = null)
     {
-        StartCoroutine(_SendEventIntent(eventName, parameters));
+        StartCoroutine(_SendEventIntent(eventName, parameters, callback));
         
     }
 
-    private IEnumerator _SendEventIntent(string eventName, Dictionary<string, object> parameters)
+    private IEnumerator _SendEventIntent(string eventName, Dictionary<string, object> parameters, Action callback = null)
     {
-        if (textFieldsLock != null) 
+        if (textFieldsLock != null)
         {
             bool canGo = false;
             Debug.Log("pre-enter evnet intent");
@@ -151,6 +154,7 @@ public class ConversationController : MonoBehaviour
                     while (textLock)
                         Monitor.Wait(textFieldsLock);
                     canGo = true;
+                    afterWriteCallback = callback;
                     textLock = true;
                     Monitor.PulseAll(textFieldsLock);
                 }
@@ -165,20 +169,20 @@ public class ConversationController : MonoBehaviour
             //{
             ///mockLock = false;
             Debug.Log("enter evnet intent");
-                Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
-                textFieldsOverwritten = false;
-                client.DetectIntentFromEvent(eventName, parameters, sessionName);
-                yield return new WaitUntil(() => textFieldsOverwritten);
-                //Debug.Log("finish event intent");
+            Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
+            textFieldsOverwritten = false;
+            client.DetectIntentFromEvent(eventName, parameters, sessionName);
+            yield return new WaitUntil(() => textFieldsOverwritten);
+            //Debug.Log("finish event intent");
 
             //}
             ///mockLock = true;
         }
     }
 
-    public void SendEventIntent(string eventName)
+    public void SendEventIntent(string eventName, Action callback = null)
     {
-        SendEventIntent(eventName, new Dictionary<string, object>());
+        SendEventIntent(eventName, new Dictionary<string, object>(), callback);
     }
 
     public void RegisterTextOutputField(Text field)
@@ -217,6 +221,8 @@ public class ConversationController : MonoBehaviour
         foreach (TextMeshProUGUI field in textPROOutputFields)
             field.text = text;
 
+        if (afterWriteCallback != null) afterWriteCallback.Invoke();
+
         yield return new WaitForSecondsRealtime(10);
         new Thread(() =>
         {
@@ -236,13 +242,13 @@ public class ConversationController : MonoBehaviour
 
     }
 
-    public void ChangeTextFields(String text)
+    public void ChangeTextFields(String text, Action callback = null)
     {
-        StartCoroutine(_ChangeTextFields(text));
+        StartCoroutine(_ChangeTextFields(text, callback));
 
     }
 
-    private IEnumerator _ChangeTextFields(String text)
+    private IEnumerator _ChangeTextFields(String text, Action callback = null)
     {
         if (textFieldsLock != null)
         {
@@ -256,6 +262,7 @@ public class ConversationController : MonoBehaviour
                     while (textLock)
                         Monitor.Wait(textFieldsLock);
                     canGo = true;
+                    afterWriteCallback = callback;
                     textLock = true;
                     Monitor.PulseAll(textFieldsLock);
                 }
@@ -269,13 +276,13 @@ public class ConversationController : MonoBehaviour
             ///yield return new WaitUntil(() => mockLock);
             //{
             ///mockLock = false;
-                Debug.Log("enter _change text fields");
-                Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
-                textFieldsOverwritten = false;
-                StartCoroutine(_OverwriteTextFields(text));
-                Debug.Log("textFieldsOverwritten:"+textFieldsOverwritten);
-                yield return new WaitUntil(() => textFieldsOverwritten);
-                //Debug.Log("finish _change text fields");
+            Debug.Log("enter _change text fields");
+            Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
+            textFieldsOverwritten = false;
+            StartCoroutine(_OverwriteTextFields(text));
+            Debug.Log("textFieldsOverwritten:" + textFieldsOverwritten);
+            yield return new WaitUntil(() => textFieldsOverwritten);
+            //Debug.Log("finish _change text fields");
             //}
             ///mockLock = true;
         }

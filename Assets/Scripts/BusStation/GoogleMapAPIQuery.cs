@@ -5,6 +5,8 @@ using System.Net.Http;
 using UnityEngine.UI;
 using System.Collections.Specialized;
 using UnityEngine.Networking;
+using System.Xml;
+using System.IO;
 
 public class GoogleMapAPIQuery : MonoBehaviour
 {
@@ -24,6 +26,9 @@ public class GoogleMapAPIQuery : MonoBehaviour
     public transitDetails busInformation;
     [HideInInspector]
     public loc tabacchiLoc = new loc();
+
+    //public TextAsset xmlRawFile;
+
     void Awake(){
 
     }
@@ -31,6 +36,16 @@ public class GoogleMapAPIQuery : MonoBehaviour
         GPSInstance = GPSLocation.Instance;
         utils = Utils.Instance;
         APIKey = GlobalConfig.GoogleMapAPIKey;
+
+        /*XmlDocument xmlDoc = new XmlDocument();
+        xmlDoc.Load(new StringReader(xmlRawFile.text));
+
+        //set google map api key
+        string xmlPathPattern = "//keys/GoogleMapAPIKey";
+        XmlNodeList nodelist = xmlDoc.SelectNodes(xmlPathPattern);
+        XmlNode node = nodelist[0];
+        APIKey = node.InnerXml;
+        Debug.Log(APIKey);*/
     }
     public void RouteToTabacchiShopQuery()
     {
@@ -60,19 +75,23 @@ public class GoogleMapAPIQuery : MonoBehaviour
 		string baseURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
 		string keyword = "keyword="+this.keyword;
         string location = "location="+GPSInstance.lat.ToString()+"%2C"+GPSInstance.lng.ToString();
+#if (UNITY_EDITOR)
+        location = "location=45.480960%2C9.225268";
+#endif
         string radius = "radius="+this.radius;
 		string apiKey = "key="+APIKey;
 		string api = baseURL + keyword + "&" + location + "&" + radius + "&" + apiKey;
 		Debug.Log(api);
         UnityWebRequest www = UnityWebRequest.Get(api);
-		yield return www.Send();
-		if(www.isNetworkError) {
+        yield return www.Send();
+        //TODO handle case where no tabacchi is found nearby
+        if (www.isNetworkError) {
 			Debug.Log(www.error);
 		}
 		else {
 			// Show results as text
 			string result = www.downloadHandler.text;
-			//Debug.Log (result);
+			Debug.Log (result);
             //parse the result
             attribution attr = JsonUtility.FromJson<attribution>(result);
             //Debug.Log(JsonUtility.ToJson(attr, true));
@@ -92,6 +111,9 @@ public class GoogleMapAPIQuery : MonoBehaviour
         string baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
         //string origin = "origin=" + "45.5219%2C9.2216939";
 		string origin = "origin="+GPSInstance.lat.ToString()+"%2C"+GPSInstance.lng.ToString();
+#if (UNITY_EDITOR)
+        origin = "origin=45.480960%2C9.225268";
+#endif
         //TODO: set the dest
         string dest = "destination=" + destLat +"%2C" + destLng;
 		string mode = "mode=transit";
@@ -127,6 +149,9 @@ public class GoogleMapAPIQuery : MonoBehaviour
         string baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
         //string origin = "origin=" + "45.5219%2C9.2216939";
 		string origin = "origin="+GPSInstance.lat.ToString()+"%2C"+GPSInstance.lng.ToString();
+#if (UNITY_EDITOR)
+        origin = "origin=45.480960%2C9.225268";
+#endif
         //TODO: set the dest
         string dest = "destination=" + destLat +"%2C" + destLng;
 		string mode = "mode=walking";
@@ -140,7 +165,8 @@ public class GoogleMapAPIQuery : MonoBehaviour
 		}
 		else {
 			string result = www.downloadHandler.text;
-			geoCoded g = JsonUtility.FromJson<geoCoded>(result);
+            Debug.Log(result);
+            geoCoded g = JsonUtility.FromJson<geoCoded>(result);
 			leg l = g.routes [0].legs [0];
             //steps include walking part and bus part
 			walkingSteps = l.steps;

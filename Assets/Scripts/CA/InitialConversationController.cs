@@ -29,20 +29,24 @@ public class InitialConversationController : MonoBehaviour
 
     public void YesButton()
     {
-        ConversationController.istance.SendTextIntent("Yes");
-        ChangeButtons();
+        yesButton.SetActive(false);
+        noButton.SetActive(false);
+        ConversationController.istance.SendTextIntent("Yes", ChangeButtons);
+        //ChangeButtons();
     }
 
     public void NoButton()
     {
-        ConversationController.istance.SendTextIntent("No");
-        ChangeButtons();
+        yesButton.SetActive(false);
+        noButton.SetActive(false);
+        ConversationController.istance.SendTextIntent("No", ChangeButtons);
+        //ChangeButtons();
     }
 
     private void ChangeButtons()
     {
-        yesButton.SetActive(false);
-        noButton.SetActive(false);
+        //yesButton.SetActive(false);
+        //noButton.SetActive(false);
         nextButton.SetActive(true);
     }
 }
