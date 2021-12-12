@@ -107,7 +107,11 @@ public class GoogleMapAPIQuery : MonoBehaviour
     IEnumerator GetBusRouteJSON(float destLat, float destLng) {
         string baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
         //string origin = "origin=" + "45.5219%2C9.2216939";
-		string origin = "origin="+GPSInstance.lat.ToString("G", CultureInfo.InvariantCulture)+"%2C"+GPSInstance.lng.ToString("G", CultureInfo.InvariantCulture);
+        string origin = "origin=" + GPSInstance.lat.ToString("G", CultureInfo.InvariantCulture) + "%2C" + GPSInstance.lng.ToString("G", CultureInfo.InvariantCulture);
+#if (UNITY_EDITOR)
+        origin = "origin=45.480960%2C9.225268";
+#endif
+        //TODO: set the dest
         string dest = "destination=" + destLat +"%2C" + destLng;
 		string mode = "mode=transit";
         string transit_mode = "transit_mode=bus";
@@ -141,7 +145,11 @@ public class GoogleMapAPIQuery : MonoBehaviour
     IEnumerator GetWalkRouteJSON(float destLat, float destLng) {
         string baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
         //string origin = "origin=" + "45.5219%2C9.2216939";
-		string origin = "origin="+GPSInstance.lat.ToString("G", CultureInfo.InvariantCulture)+"%2C"+GPSInstance.lng.ToString("G", CultureInfo.InvariantCulture);
+        string origin = "origin=" + GPSInstance.lat.ToString("G", CultureInfo.InvariantCulture) + "%2C" + GPSInstance.lng.ToString("G", CultureInfo.InvariantCulture);
+#if (UNITY_EDITOR)
+        origin = "origin=45.480960%2C9.225268";
+#endif
+        //TODO: set the dest
         string dest = "destination=" + destLat +"%2C" + destLng;
 		string mode = "mode=walking";
 		string apiKey = "key="+APIKey;
