@@ -30,7 +30,7 @@ public class ARConversationController : MonoBehaviour
     private void BuyTicketLogic()
     {
         ConversationController.istance.SendEventIntent("CheckSubscription", ()=> //ConversationController.istance.ChangeTextFields("After user answer"));
-            navigation.StepsInformationWrap(() => 
+            navigation.StepsInformationWrap(Phases.BUY_TICKET, () => 
                 LogicFunctions.OnTabacchiShopLogic()));
         //Change info popup and options
         
@@ -47,7 +47,9 @@ public class ARConversationController : MonoBehaviour
 
     private void FindBusStopLogic()
     {
-        ConversationController.istance.ChangeTextFields("This is phase 1");
+        ConversationController.istance.ChangeTextFields("Now let's go to the bus stop");
+        navigation.StepsInformationWrap(Phases.FIND_BUS_STOP, () => 
+                LogicFunctions.LogicWrap());
 
     }
 

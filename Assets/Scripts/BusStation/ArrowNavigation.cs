@@ -43,19 +43,22 @@ public class ArrowNavigation : MonoBehaviour
         utils = Utils.Instance;
         GPSInstance = GPSLocation.Instance;
     }
-    public void StepsInformationWrap(Action callback){
-        StartCoroutine(StepsInformation());
+    public void StepsInformationWrap(Phases phase, Action callback){
+        StartCoroutine(StepsInformation(phase));
         afterDestinationCallback = callback;
     }
-    IEnumerator StepsInformation()
+    IEnumerator StepsInformation(Phases phase)
     {
-#if !(UNITY_EDITOR)
-        yield return StartCoroutine(GoogleAPIScript.TabacchiInOrder());
-#endif
+        if(phase == Phases.BUY_TICKET){yield return StartCoroutine(GoogleAPIScript.TabacchiInOrder());}
+        else if(phase == Phases.FIND_BUS_STOP) {
+            float destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0]);
+            float destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1]);
+            Debug.Log(destLat.ToString() + destLng.ToString());
+            yield return StartCoroutine (GoogleAPIScript.GetBusRouteJSON (destLat, destLng));//45.5168268f, 9.2166683f
+            }
         yield return new WaitForSecondsRealtime(1);
-#if !(UNITY_EDITOR)
         yield return StartCoroutine(ClickToGetStepsInformation());
-#endif
+
     }
     IEnumerator ClickToGetStepsInformation()
     {

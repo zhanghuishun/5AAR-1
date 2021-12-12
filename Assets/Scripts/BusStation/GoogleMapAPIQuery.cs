@@ -104,7 +104,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
 
 	}
 
-    IEnumerator GetBusRouteJSON(float destLat, float destLng) {
+    public IEnumerator GetBusRouteJSON(float destLat, float destLng) {
         string baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
         //string origin = "origin=" + "45.5219%2C9.2216939";
         string origin = "origin=" + GPSInstance.lat.ToString("G", CultureInfo.InvariantCulture) + "%2C" + GPSInstance.lng.ToString("G", CultureInfo.InvariantCulture);
