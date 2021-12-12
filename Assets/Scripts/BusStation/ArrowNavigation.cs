@@ -11,7 +11,7 @@ public class ArrowNavigation : MonoBehaviour
     private GPSLocation GPSInstance;
     private GoogleMapAPIQuery GoogleAPIScript;
     private Utils utils;
-
+    private Action afterDestinationCallback = null;
     [SerializeField] private GameObject CompassPerfab;
     [SerializeField] private UnityARCompass.ARCompassIOS ARCompassIOS;
     [SerializeField] private TextMeshProUGUI Instruction;
@@ -44,9 +44,10 @@ public class ArrowNavigation : MonoBehaviour
         GPSInstance = GPSLocation.Instance;
     }
     public void StepsInformationWrap(Action callback){
-        StartCoroutine(StepsInformation(callback));
+        StartCoroutine(StepsInformation());
+        afterDestinationCallback = callback;
     }
-    IEnumerator StepsInformation(Action callback = null)
+    IEnumerator StepsInformation()
     {
 #if !(UNITY_EDITOR)
         yield return StartCoroutine(GoogleAPIScript.TabacchiInOrder());
@@ -55,7 +56,6 @@ public class ArrowNavigation : MonoBehaviour
 #if !(UNITY_EDITOR)
         yield return StartCoroutine(ClickToGetStepsInformation());
 #endif
-        if(callback != null) {callback.Invoke();};
     }
     IEnumerator ClickToGetStepsInformation()
     {
@@ -123,6 +123,7 @@ public class ArrowNavigation : MonoBehaviour
                         Destroy(compass);
                         panel.SetActive(false);
                         //Destroy(CompassObject);
+                        if(afterDestinationCallback != null) {afterDestinationCallback.Invoke();};
                         CancelInvoke();
                     }
 				

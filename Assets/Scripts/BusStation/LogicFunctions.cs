@@ -84,7 +84,7 @@ public class LogicFunctions : MonoBehaviour
     }
     public void OnTabacchiShopLogic()
     {
-        ConversationController.istance.ChangeTextFields("Ask the shop keeper to buy the ticket");
+        ConversationController.istance.ChangeTextFields("Ask the shop keeper to buy the ticket, tell me when you get the ticket");
     }
     public void LoadScene(Phases phase){
         PhaseController.phase = phase;
