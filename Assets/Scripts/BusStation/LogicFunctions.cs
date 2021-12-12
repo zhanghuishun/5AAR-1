@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LogicFunctions : MonoBehaviour
 {
@@ -84,6 +85,10 @@ public class LogicFunctions : MonoBehaviour
     public void OnTabacchiShopLogic()
     {
         ConversationController.istance.ChangeTextFields("Ask the shop keeper to buy the ticket");
+    }
+    public void LoadScene(Phases phase){
+        PhaseController.phase = phase;
+        SceneManager.LoadScene("ARScene");
     }
     // Update is called once per frame
     void Update()

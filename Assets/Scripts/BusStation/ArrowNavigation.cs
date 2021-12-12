@@ -48,9 +48,13 @@ public class ArrowNavigation : MonoBehaviour
     }
     IEnumerator StepsInformation(Action callback = null)
     {
+#if !(UNITY_EDITOR)
         yield return StartCoroutine(GoogleAPIScript.TabacchiInOrder());
+#endif
         yield return new WaitForSecondsRealtime(1);
+#if !(UNITY_EDITOR)
         yield return StartCoroutine(ClickToGetStepsInformation());
+#endif
         if(callback != null) {callback.Invoke();};
     }
     IEnumerator ClickToGetStepsInformation()
