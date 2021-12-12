@@ -7,6 +7,7 @@ using System.Collections.Specialized;
 using UnityEngine.Networking;
 using System.Xml;
 using System.IO;
+using System.Globalization;
 
 public class GoogleMapAPIQuery : MonoBehaviour
 {
@@ -36,7 +37,6 @@ public class GoogleMapAPIQuery : MonoBehaviour
         GPSInstance = GPSLocation.Instance;
         utils = Utils.Instance;
         APIKey = GlobalConfig.GoogleMapAPIKey;
-
         /*XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.Load(new StringReader(xmlRawFile.text));
 
@@ -74,10 +74,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
     IEnumerator GetTabacchiJSON() {
 		string baseURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
 		string keyword = "keyword="+this.keyword;
-        string location = "location="+GPSInstance.lat.ToString()+"%2C"+GPSInstance.lng.ToString();
-#if (UNITY_EDITOR)
-        location = "location=45.480960%2C9.225268";
-#endif
+        string location = "location="+GPSInstance.lat.ToString("G", CultureInfo.InvariantCulture)+"%2C"+GPSInstance.lng.ToString("G", CultureInfo.InvariantCulture);
         string radius = "radius="+this.radius;
 		string apiKey = "key="+APIKey;
 		string api = baseURL + keyword + "&" + location + "&" + radius + "&" + apiKey;
@@ -110,9 +107,9 @@ public class GoogleMapAPIQuery : MonoBehaviour
     IEnumerator GetBusRouteJSON(float destLat, float destLng) {
         string baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
         //string origin = "origin=" + "45.5219%2C9.2216939";
-		string origin = "origin="+GPSInstance.lat.ToString()+"%2C"+GPSInstance.lng.ToString();
+        string origin = "origin=" + GPSInstance.lat.ToString("G", CultureInfo.InvariantCulture) + "%2C" + GPSInstance.lng.ToString("G", CultureInfo.InvariantCulture);
 #if (UNITY_EDITOR)
-        origin = "origin=" + "45.5219%2C9.2216939";
+        origin = "origin=45.480960%2C9.225268";
 #endif
         //TODO: set the dest
         string dest = "destination=" + destLat +"%2C" + destLng;
@@ -148,9 +145,9 @@ public class GoogleMapAPIQuery : MonoBehaviour
     IEnumerator GetWalkRouteJSON(float destLat, float destLng) {
         string baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
         //string origin = "origin=" + "45.5219%2C9.2216939";
-		string origin = "origin="+GPSInstance.lat.ToString()+"%2C"+GPSInstance.lng.ToString();
+        string origin = "origin=" + GPSInstance.lat.ToString("G", CultureInfo.InvariantCulture) + "%2C" + GPSInstance.lng.ToString("G", CultureInfo.InvariantCulture);
 #if (UNITY_EDITOR)
-        origin = "origin=" + "45.5219%2C9.2216939";
+        origin = "origin=45.480960%2C9.225268";
 #endif
         //TODO: set the dest
         string dest = "destination=" + destLat +"%2C" + destLng;

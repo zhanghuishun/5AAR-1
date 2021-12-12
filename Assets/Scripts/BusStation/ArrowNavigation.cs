@@ -43,14 +43,15 @@ public class ArrowNavigation : MonoBehaviour
         utils = Utils.Instance;
         GPSInstance = GPSLocation.Instance;
     }
-    public void StepsInformationWrap(){
-        StartCoroutine(StepsInformation());
+    public void StepsInformationWrap(Action callback){
+        StartCoroutine(StepsInformation(callback));
     }
-    IEnumerator StepsInformation()
+    IEnumerator StepsInformation(Action callback = null)
     {
         yield return StartCoroutine(GoogleAPIScript.TabacchiInOrder());
         yield return new WaitForSecondsRealtime(1);
         yield return StartCoroutine(ClickToGetStepsInformation());
+        if(callback != null) {callback.Invoke();};
     }
     IEnumerator ClickToGetStepsInformation()
     {
@@ -89,7 +90,6 @@ public class ArrowNavigation : MonoBehaviour
         ARCompassIOS.startLng = lng;
         ARCompassIOS.endLat = destLat;
         ARCompassIOS.endLng = destLng;
-
         int distance = Mathf.RoundToInt(utils.CalculateDistanceMeters(lat, lng, destLat, destLng));
         // constantly update distance shown
         //Debug.Log("distance:"+distance.ToString());

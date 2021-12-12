@@ -9,11 +9,14 @@ public class ARConversationController : MonoBehaviour
 {
     public TextMeshProUGUI CAText;
     private ArrowNavigation navigation;
+    private LogicFunctions LogicFunctions;
+
     // Start is called before the first frame update
     void Start()
     {
         ConversationController.istance.RegisterTextOutputField(CAText);
         navigation = GetComponent<ArrowNavigation>();
+        LogicFunctions = GetComponent<LogicFunctions>();
 
         switch (PhaseController.phase)
         {
@@ -31,7 +34,7 @@ public class ARConversationController : MonoBehaviour
         ConversationController.istance.ChangeTextFields("guide you to tabacchi shop now");
         //route query and AR navigation,TODO: order problem
         //Debug.Log(navigation.testString);
-        navigation.StepsInformationWrap();
+        navigation.StepsInformationWrap(() => LogicFunctions.OnTabacchiShopLogic());
 
         //ConversationController.istance.ChangeTextFields("Now go inside and buy a ticket, tell me when you already get the ticket");
         //wait for user action
