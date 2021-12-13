@@ -348,8 +348,8 @@ public class InterfaceMethods
 {
     public static readonly Dictionary<String, Action> list = new Dictionary<string, Action>
     {
-        { "FIND_TABACCHI_SHOP", ()=>{ } },  //start the jurney towords the nearest tabacchi shop
-        { "FIND_BUS_STOP", ()=>{ } }, //start the jurney towords the bus stop
-        { "FIND_ANOTHER_TABACCHI_SHOP", ()=>{ } } //start the jurney towords another tabacchi shop (because the first was closed)
+        { "FIND_TABACCHI_SHOP", ()=>{ Debug.Log("FIND_TABACCHI_SHOP"); } },  //start the jurney towords the nearest tabacchi shop
+        { "FIND_BUS_STOP", ()=>{ Debug.Log("FIND_BUS_STOP"); } }, //start the jurney towords the bus stop
+        { "FIND_ANOTHER_TABACCHI_SHOP", ()=>{ Debug.Log("FIND_ANOTHER_TABACCHI_SHOP"); } } //start the jurney towords another tabacchi shop (because the first was closed)
     };
 }
