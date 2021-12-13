@@ -14,8 +14,7 @@ using UnityEngine.XR.ARFoundation;
     {
         
         ARTrackedImageManager m_TrackedImageManager;
-        public GameObject arrowPrefab;
-        GameObject Arrow;
+        public GameObject ARController;
         void Awake()
         {
             m_TrackedImageManager = GetComponent<ARTrackedImageManager>();
@@ -40,21 +39,18 @@ using UnityEngine.XR.ARFoundation;
             {
                 if (trackedImg.trackingState == TrackingState.Tracking) {
                 Debug.Log("find the sign");
-                Arrow = Instantiate(arrowPrefab) as GameObject;
-                Arrow.transform.position = trackedImg.transform.position;
+                ARController.GetComponent<LogicFunctions>().ticketChecked = true;
                 }
             }
             foreach (ARTrackedImage trackedImg in eventArgs.updated)
             {
                 if (trackedImg.trackingState == TrackingState.Tracking) {
                     Debug.Log("arrow regenerated");
-                    if(Arrow == null){
-                        Arrow = Instantiate(arrowPrefab) as GameObject;
-                        Arrow.transform.position = trackedImg.transform.position;
+                    if(ARController.GetComponent<LogicFunctions>().ticketChecked == false){
+                        ARController.GetComponent<LogicFunctions>().ticketChecked = true;
                     }
                 }else{
                     Debug.Log("arrow lost");
-                    if(Arrow != null) Destroy(Arrow);
                 }
             }
             

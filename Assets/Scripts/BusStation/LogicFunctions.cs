@@ -19,6 +19,10 @@ public class LogicFunctions : MonoBehaviour
     private DateTime datevalue1;
     private DateTime datevalue2;
     [SerializeField] private TextMeshProUGUI Instruction;
+    [SerializeField] private GameObject box_busticket;
+    [SerializeField] private GameObject check_busticket;
+    [SerializeField] private GameObject ImageRecognition;
+    public bool ticketChecked = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -83,14 +87,25 @@ public class LogicFunctions : MonoBehaviour
         cnaTriggerBusToDestination = true;
         
     }
-    public void OnTabacchiShopLogic()
+    public void OnTabacchiShopLogic(Action callback)
     {
-        ConversationController.istance.ChangeTextFields("Ask the shop keeper to buy the ticket, tell me when you get the ticket");
+        ConversationController.istance.ChangeTextFields("Ask the shop keeper to buy the ticket, show the ticket inside the yellow box");
+        if(callback != null) {callback.Invoke();}
     }
-    public void LoadScene(Phases phase){
-        PhaseController.phase = phase;
-        SceneManager.LoadScene("ARScene");
+    public void TicketRecognitionLogic()
+    {
+        //active the recognition script and box
+        ImageRecognition.SetActive(true);//automatic call image event manager
+        box_busticket.SetActive(true);
+        
+        //callback: load next phase
+        Debug.Log("finish recognition");
+        //if(callback != null) {callback.Invoke();}
+        
     }
+    // private IEnumerator MyWaitForSeconds(int seconds){
+    //     yield return new WaitForSeconds(seconds);
+    // }
     // Update is called once per frame
     void Update()
     {
@@ -108,6 +123,14 @@ public class LogicFunctions : MonoBehaviour
                 ConversationController.istance.ChangeTextFields("The bus is arrving the destination, please prepare to get off the bus");
                 cnaTriggerBusToDestination = false;
             }
+        }
+        if(ticketChecked == true)
+        {
+            check_busticket.SetActive(true);
+            //TODO: wait for seconds for user
+            //StartCoroutine(MyWaitForSeconds(3));
+            GameObject.Find("SceneController").GetComponent<ChangeSceneWithButton>().LoadARScene(1);
+            ticketChecked = false;
         }
     }
 }
