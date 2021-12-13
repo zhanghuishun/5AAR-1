@@ -212,6 +212,26 @@ public class ConversationController : MonoBehaviour
     {
         Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
         StartCoroutine(_OverwriteTextFields(response.queryResult.fulfillmentText));
+
+        String method = GetIntrefaceMethod(response);
+        if (!method.Equals("")) InterfaceMethods.list[method].Invoke();
+    }
+
+    private string GetIntrefaceMethod(DF2Response response)
+    {
+        //Debug.Log(response.queryResult.fulfillmentMessages[1]["payload"]);
+        /*{
+            "method": "TABACCHI_SHOP"
+        }*/
+        string s = response.queryResult.fulfillmentMessages[1]["payload"].ToString();
+        if (s.Contains("method"))
+        {
+            string[] sSplit = s.Split('\"');
+            int pos = Array.IndexOf(sSplit, "method");
+            return sSplit[pos + 2].Trim();
+        }
+        else
+            return "";
     }
 
     private IEnumerator _OverwriteTextFields(String text)
@@ -322,4 +342,14 @@ public class ConversationController : MonoBehaviour
         Debug.LogError(string.Format("Error {0}: {1}", errorResponse.error.code.ToString(), errorResponse.error.message));
         ChangeTextFields("ERROR");
     }
+}
+
+public class InterfaceMethods
+{
+    public static readonly Dictionary<String, Action> list = new Dictionary<string, Action>
+    {
+        { "FIND_TABACCHI_SHOP", ()=>{ } },  //start the jurney towords the nearest tabacchi shop
+        { "FIND_BUS_STOP", ()=>{ } }, //start the jurney towords the bus stop
+        { "FIND_ANOTHER_TABACCHI_SHOP", ()=>{ } } //start the jurney towords another tabacchi shop (because the first was closed)
+    };
 }

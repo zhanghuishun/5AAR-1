@@ -3,6 +3,7 @@ using Syrus.Plugins.DFV2Client;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,7 +30,7 @@ public class TestScript : MonoBehaviour
         client.ChatbotResponded += OnResponse;
         client.DetectIntentError += LogError;
 
-        inputField.text = "How's the weather?";
+        inputField.text = "CheckSubscription";
 
         if (Microphone.devices.Length <= 0)
         {
@@ -72,8 +73,27 @@ public class TestScript : MonoBehaviour
     private void OnResponse(DF2Response response)
     {
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
+        if(response.queryResult.fulfillmentMessages.Length>1)
+            Debug.Log(GetMethodName(response));
         Debug.Log(name + " said: \"" + response.queryResult.fulfillmentText + "\"");
         outputField.text = response.queryResult.fulfillmentText;
+    }
+
+    private string GetMethodName(DF2Response response)
+    {
+        //Debug.Log(response.queryResult.fulfillmentMessages[1]["payload"]);
+        /*{
+            "method": "TABACCHI_SHOP"
+        }*/
+        string s = response.queryResult.fulfillmentMessages[1]["payload"].ToString();
+        if (s.Contains("method"))
+        {
+            string[] sSplit = s.Split('\"');
+            int pos = Array.IndexOf(sSplit, "method");
+            return sSplit[pos + 2].Trim();
+        }
+        else
+            return "";
     }
 
     private void LogError(DF2ErrorResponse errorResponse)
@@ -107,6 +127,11 @@ public class TestScript : MonoBehaviour
             GUI.contentColor = Color.red;
         }
 
+    }
+
+    public void OnSEndAsEvent()
+    {
+        client.DetectIntentFromEvent(inputField.text, new Dictionary<string, object>(), sessionName);
     }
 
     private void sendAudio(AudioClip clip)
