@@ -29,14 +29,10 @@ public class ARConversationController : MonoBehaviour
 
     private void BuyTicketLogic()
     {
-        ConversationController.istance.SendEventIntent("CheckSubscription", ()=> //ConversationController.istance.ChangeTextFields("After user answer"));
-            navigation.StepsInformationWrap(() => 
+        ConversationController.istance.SendEventIntent("CheckSubscription", ()=>
+            navigation.ShowNavigationInformation(Phases.BUY_TICKET, () => 
                 LogicFunctions.OnTabacchiShopLogic()));
-        //Change info popup and options
-        
-        //route query and AR navigation,TODO: order problem
-        //Debug.Log(navigation.testString);
-        
+                
         //wait for user action
         Debug.Log("finish phase 0");
         //check Ticket
@@ -47,7 +43,9 @@ public class ARConversationController : MonoBehaviour
 
     private void FindBusStopLogic()
     {
-        ConversationController.istance.ChangeTextFields("This is phase 1");
+        ConversationController.istance.ChangeTextFields("Now let's go to the bus stop");
+        navigation.ShowNavigationInformation(Phases.FIND_BUS_STOP, () => 
+                LogicFunctions.AfterArrivingBusStopLogic());
 
     }
 

@@ -18,7 +18,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
     private string keyword = "tabacchi";
     [HideInInspector]
     public Text resultValue;
-    private string radius = "150";
+    private string radius = "500";
     [HideInInspector]
     public List<step> walkingSteps;
     [HideInInspector]
@@ -104,12 +104,14 @@ public class GoogleMapAPIQuery : MonoBehaviour
 
 	}
 
-    IEnumerator GetBusRouteJSON(float destLat, float destLng) {
+    public IEnumerator GetBusRouteJSON(float destLat, float destLng) {
+        //wait for GPS location
+        yield return new WaitForSecondsRealtime(4);
         string baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
         //string origin = "origin=" + "45.5219%2C9.2216939";
         string origin = "origin=" + GPSInstance.lat.ToString("G", CultureInfo.InvariantCulture) + "%2C" + GPSInstance.lng.ToString("G", CultureInfo.InvariantCulture);
 #if (UNITY_EDITOR)
-        origin = "origin=45.480960%2C9.225268";
+        origin = "origin=45.52156%2C9.226895";
 #endif
         //TODO: set the dest
         string dest = "destination=" + destLat +"%2C" + destLng;
@@ -118,7 +120,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
         string transit_routing_preference="transit_routing_preference=fewer_transfers";
 		string apiKey = "key="+APIKey;
 		string api = baseURL + origin + "&" + dest + "&" + mode + "&" + apiKey + "&" + transit_mode + "&" + transit_routing_preference;
-        //Debug.Log(api);
+        Debug.Log(api);
 		UnityWebRequest www = UnityWebRequest.Get(api);
 		yield return www.Send();
 		if(www.isNetworkError) {
@@ -147,7 +149,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
         //string origin = "origin=" + "45.5219%2C9.2216939";
         string origin = "origin=" + GPSInstance.lat.ToString("G", CultureInfo.InvariantCulture) + "%2C" + GPSInstance.lng.ToString("G", CultureInfo.InvariantCulture);
 #if (UNITY_EDITOR)
-        origin = "origin=45.480960%2C9.225268";
+        origin = "origin=45.52156%2C9.226895";
 #endif
         //TODO: set the dest
         string dest = "destination=" + destLat +"%2C" + destLng;

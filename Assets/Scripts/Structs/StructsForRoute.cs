@@ -27,6 +27,10 @@ public struct time {
 	public string text;
 }
 [System.Serializable]
+public struct line {
+	public string short_name;
+} 
+[System.Serializable]
 public struct innerStep {
 	public loc end_location;
 	public loc start_location;
@@ -43,6 +47,7 @@ public struct transitDetails {
 	public stopInfo departure_stop;
 	public time departure_time;
 	public string num_stops;
+	public line line;
 }
 [System.Serializable]
 public struct step {
