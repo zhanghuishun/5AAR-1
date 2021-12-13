@@ -57,6 +57,7 @@ public class ArrowNavigation : MonoBehaviour
         {
             float destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0]);
             float destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1]);
+            //Debug.Log(destLat.ToString()+destLng.ToString());
             yield return StartCoroutine (GoogleAPIScript.GetBusRouteJSON (destLat, destLng));//45.5168268f, 9.2166683f
         }
         yield return new WaitForSecondsRealtime(1);

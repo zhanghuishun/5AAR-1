@@ -15,6 +15,7 @@ public class InputFieldSubmit : MonoBehaviour
     public void Awake()
     {
         inputField.placeholder.GetComponent<Text>().text = destinationCoordinates[0]+","+destinationCoordinates[1];
+        DontDestroyOnLoad(transform.gameObject);
     }
     public void LockInput(InputField inputField)
     {
