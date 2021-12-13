@@ -30,11 +30,11 @@ public class ARConversationController : MonoBehaviour
     private void BuyTicketLogic()
     {
         ConversationController.istance.SendEventIntent("CheckSubscription", ()=>
-            navigation.ShowNavigationInformation(Phases.BUY_TICKET, () => 
-                LogicFunctions.OnTabacchiShopLogic(() =>
+            //navigation.ShowNavigationInformation(Phases.BUY_TICKET, () => 
+                //LogicFunctions.OnTabacchiShopLogic(() =>
                     LogicFunctions.TicketRecognitionLogic()
-                )
-            )
+                //)
+            //)
         );
                 
         //wait for user action
