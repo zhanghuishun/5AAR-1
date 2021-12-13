@@ -11,13 +11,20 @@ public class ARConversationController : MonoBehaviour
     private ArrowNavigation navigation;
     private LogicFunctions LogicFunctions;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         ConversationController.istance.RegisterTextOutputField(CAText);
         navigation = GetComponent<ArrowNavigation>();
         LogicFunctions = GetComponent<LogicFunctions>();
 
+        InterfaceMethods.AddMethod("FIND_TABACCHI_SHOP", FindTabacchi);
+        InterfaceMethods.AddMethod("CHECK_TICKET", () => LogicFunctions.TicketRecognitionLogic());
+        InterfaceMethods.AddMethod("FIND_BUS_STOP", FindBusStop);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         switch (PhaseController.phase)
         {
             case Phases.BUY_TICKET: BuyTicketLogic();  break;
@@ -29,28 +36,23 @@ public class ARConversationController : MonoBehaviour
 
     private void BuyTicketLogic()
     {
-        ConversationController.istance.SendEventIntent("CheckSubscription", ()=>
-            //navigation.ShowNavigationInformation(Phases.BUY_TICKET, () => 
-                //LogicFunctions.OnTabacchiShopLogic(() =>
-                    LogicFunctions.TicketRecognitionLogic()
-                //)
-            //)
-        );
-                
-        //wait for user action
-        Debug.Log("finish phase 0");
-        //check Ticket
+        ConversationController.istance.SendEventIntent("CheckSubscription");
+        //TODO write comments on how the application works with dialogflow
+    }
 
-        //load next phase
-        //LogicFunctions.LoadScene(Phases.FIND_BUS_STOP);
+    private void FindTabacchi()
+    {
+        navigation.ShowNavigationInformation(Phases.BUY_TICKET, () => ConversationController.istance.SendEventIntent("TabacchiReached"));
     }
 
     private void FindBusStopLogic()
     {
-        ConversationController.istance.ChangeTextFields("Now let's go to the bus stop");
-        navigation.ShowNavigationInformation(Phases.FIND_BUS_STOP, () => 
-                LogicFunctions.AfterArrivingBusStopLogic());
+        ConversationController.istance.SendEventIntent("GoToBusStop");
+    }
 
+    private void FindBusStop()
+    {
+        navigation.ShowNavigationInformation(Phases.FIND_BUS_STOP, () => ConversationController.istance.SendEventIntent("BusStopReached"));
     }
 
     private void TravelOnTheBusLogic()

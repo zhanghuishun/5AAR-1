@@ -13,7 +13,7 @@ public class ConversationController : MonoBehaviour
     private  DialogFlowV2Client client;
 
     //TODO implement a way to get session name (UUID)
-    public  string sessionName = "123456789";
+    public  string sessionName = Guid.NewGuid().ToString();
 
     private  List<Text> textOutputFields;
     private  List<TextMeshProUGUI> textPROOutputFields;
@@ -348,8 +348,20 @@ public class InterfaceMethods
 {
     public static readonly Dictionary<String, Action> list = new Dictionary<string, Action>
     {
-        { "FIND_TABACCHI_SHOP", ()=>{ Debug.Log("FIND_TABACCHI_SHOP"); } },  //start the jurney towords the nearest tabacchi shop
-        { "FIND_BUS_STOP", ()=>{ Debug.Log("FIND_BUS_STOP"); } }, //start the jurney towords the bus stop
-        { "FIND_ANOTHER_TABACCHI_SHOP", ()=>{ Debug.Log("FIND_ANOTHER_TABACCHI_SHOP"); } } //start the jurney towords another tabacchi shop (because the first was closed)
+        { "FIND_TABACCHI_SHOP", () =>{ } },  //start the jurney towords the nearest tabacchi shop
+        { "FIND_BUS_STOP", () =>{ } }, //start the jurney towords the bus stop
+        { "FIND_ANOTHER_TABACCHI_SHOP", () =>{ } }, //start the jurney towords another tabacchi shop (because the first was closed)
+        { "CHECK_TICKET", () =>{ } } //the ticket got recognized
     };
+
+    public static bool AddMethod(String interfaceName, Action method)
+    {
+        if (list.ContainsKey(interfaceName))
+        {
+            list[interfaceName] = method;
+            return true;
+        }
+
+        return false;
+    }
 }

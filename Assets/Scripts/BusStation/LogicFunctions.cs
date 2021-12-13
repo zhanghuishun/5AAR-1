@@ -103,10 +103,18 @@ public class LogicFunctions : MonoBehaviour
         //if(callback != null) {callback.Invoke();}
         
     }
-    private IEnumerator WaitForSecondsAndLoadScene(int seconds, int sceneNum){
+    private IEnumerator WaitForSecondsAndDisableBox(int seconds){
         yield return new WaitForSeconds(seconds);
-        GameObject.Find("SceneController").GetComponent<ChangeSceneWithButton>().LoadARScene(sceneNum);
+        ConversationController.istance.SendEventIntent("TicketRecognized" , disableBusBox);
     }
+
+    private void disableBusBox()
+    {
+        ImageRecognition.SetActive(false);
+        check_busticket.SetActive(false);
+        box_busticket.SetActive(false);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -129,7 +137,7 @@ public class LogicFunctions : MonoBehaviour
         {
             check_busticket.SetActive(true);
             //TODO: wait for seconds for user
-            StartCoroutine(WaitForSecondsAndLoadScene(3, 1));
+            StartCoroutine(WaitForSecondsAndDisableBox(1));
             ticketChecked = false;
         }
     }
