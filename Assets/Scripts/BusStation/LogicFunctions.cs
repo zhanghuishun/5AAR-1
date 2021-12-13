@@ -57,10 +57,11 @@ public class LogicFunctions : MonoBehaviour
         //CA: The bus is arrving in XX time, 
         datevalue1 = DateTime.Now;
         datevalue2 = utils.TimeParse(busInformation.departure_time.text);
+        string busname = busInformation.line.short_name;
         //Debug.Log("current time:" + DateTime.Now);
         double minutesDouble = (datevalue2 - datevalue1).TotalMinutes;
         int minutes = Mathf.RoundToInt((float)minutesDouble);
-        if(minutes > 1) ConversationController.istance.ChangeTextFields("the bus is arriving in " +minutes+ "min");
+        if(minutes > 1) ConversationController.istance.ChangeTextFields("the bus "+ busname +"is arriving in " +minutes+ "min at " + busInformation.departure_time.text);
         //Debug.Log("the bus is arriving in " +minutes+ "min");
         canTriggerBusIsArriving = true;
         //wait

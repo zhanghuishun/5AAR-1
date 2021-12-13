@@ -18,7 +18,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
     private string keyword = "tabacchi";
     [HideInInspector]
     public Text resultValue;
-    private string radius = "1000";
+    private string radius = "500";
     [HideInInspector]
     public List<step> walkingSteps;
     [HideInInspector]
