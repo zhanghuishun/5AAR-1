@@ -76,6 +76,7 @@ public class ArrowNavigation : MonoBehaviour
         //instantiate prefab
         compass = Instantiate(CompassPerfab) as GameObject;
         //panel = Instantiate(PanelPrefab) as GameObject;
+        panel.SetActive(true);
         textMeshProUGUI = panel.GetComponent<TextMeshProUGUI>();
         Debug.Log(textMeshProUGUI.text);
         Debug.Log(JsonUtility.ToJson(steps[0], true));
