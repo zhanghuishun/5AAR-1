@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using System.Globalization;
 
 public class ArrowNavigation : MonoBehaviour
 {
@@ -55,8 +56,8 @@ public class ArrowNavigation : MonoBehaviour
         }
         else if(phase == Phases.FIND_BUS_STOP) 
         {
-            float destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0]);
-            float destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1]);
+            float destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0], CultureInfo.InvariantCulture);
+            float destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1], CultureInfo.InvariantCulture);
             //Debug.Log(destLat.ToString()+destLng.ToString());
             yield return StartCoroutine (GoogleAPIScript.GetBusRouteJSON (destLat, destLng));//45.5168268f, 9.2166683f
         }

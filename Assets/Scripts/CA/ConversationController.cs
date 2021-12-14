@@ -223,6 +223,7 @@ public class ConversationController : MonoBehaviour
         /*{
             "method": "TABACCHI_SHOP"
         }*/
+        if (response.queryResult.fulfillmentMessages.Length <= 1) return "";
         string s = response.queryResult.fulfillmentMessages[1]["payload"].ToString();
         if (s.Contains("method"))
         {
