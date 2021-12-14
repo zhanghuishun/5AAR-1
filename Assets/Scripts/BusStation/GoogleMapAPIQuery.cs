@@ -114,7 +114,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
         origin = "origin=45.480198%2C9.2262149";
 #endif
         //TODO: set the dest
-        string dest = "destination=" + destLat +"%2C" + destLng;
+        string dest = "destination=" + destLat.ToString("G", CultureInfo.InvariantCulture) + "%2C" + destLng.ToString("G", CultureInfo.InvariantCulture);
 		string mode = "mode=transit";
         string transit_mode = "transit_mode=bus";
         string transit_routing_preference="transit_routing_preference=fewer_transfers";
