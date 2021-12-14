@@ -100,3 +100,6 @@ Temporary Items
 
 # config file
 Config.xml
+
+#EditorUserSettings
+/[Uu]ser[Ss]ettings/EditorUserSettings.asset
