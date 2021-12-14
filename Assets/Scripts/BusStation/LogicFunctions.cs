@@ -49,7 +49,7 @@ public class LogicFunctions : MonoBehaviour
         float stopLng = busInformation.departure_stop.location.lng;
         int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, stopLat, stopLng));
         Debug.Log("distance of user to the bus station"+stopDistance);
-        if(stopDistance <= 15){
+        if(stopDistance <= 30){ //should be 15, 30 for demo
             isOnBusStop();
         }
         else{
@@ -87,21 +87,12 @@ public class LogicFunctions : MonoBehaviour
         cnaTriggerBusToDestination = true;
         
     }
-    public void OnTabacchiShopLogic(Action callback)
-    {
-        ConversationController.istance.ChangeTextFields("Ask the shop keeper to buy the ticket, show the ticket inside the yellow box");
-        if(callback != null) {callback.Invoke();}
-    }
+    //called by diagflow TabacchiReached event
     public void TicketRecognitionLogic()
     {
         //active the recognition script and box
         ImageRecognition.SetActive(true);//automatic call image event manager
         box_busticket.SetActive(true);
-        
-        //callback: load next phase
-        Debug.Log("finish recognition");
-        //if(callback != null) {callback.Invoke();}
-        
     }
     private IEnumerator WaitForSecondsAndDisableBox(int seconds){
         yield return new WaitForSeconds(seconds);

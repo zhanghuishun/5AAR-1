@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class InputFieldSubmit : MonoBehaviour
 {
     //dest start from home:"45.516826", "9.216668"
-    public static string[] destinationCoordinates = new string[2] {"45.4818579", "9.226138"}; // lambrate station
+    public static string[] destinationCoordinates = new string[2] {"45.4827681", "9.2322856"}; // lambrate station,
     public static string[] tabacchiCoordinates = new string[2] {"45.480759", "9.224494"}; //tabacchi near BCL
     public InputField destinationCord;
     public InputField tabacchiCord;
