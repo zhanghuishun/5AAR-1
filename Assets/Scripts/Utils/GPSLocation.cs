@@ -30,8 +30,8 @@ public class GPSLocation : MonoBehaviour
     void Start()
     {
 #if (UNITY_EDITOR)
-        lat = 45.480960f;
-        lng = 9.225268f;
+        lat = 45.480198f;//45.480960f;
+        lng = 9.2262149f;//9.225268f;
 #endif
         StartCoroutine(GPSLoc());
 

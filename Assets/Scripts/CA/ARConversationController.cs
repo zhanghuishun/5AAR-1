@@ -42,7 +42,8 @@ public class ARConversationController : MonoBehaviour
 
     private void FindTabacchi()
     {
-        navigation.ShowNavigationInformation(Phases.BUY_TICKET, () => ConversationController.istance.SendEventIntent("TabacchiReached"));
+        navigation.ShowNavigationInformation(Phases.BUY_TICKET, () => 
+            ConversationController.istance.SendEventIntent("TabacchiReached"));
     }
 
     private void FindBusStopLogic()
@@ -52,7 +53,9 @@ public class ARConversationController : MonoBehaviour
 
     private void FindBusStop()
     {
-        navigation.ShowNavigationInformation(Phases.FIND_BUS_STOP, () => ConversationController.istance.SendEventIntent("BusStopReached"));
+        navigation.ShowNavigationInformation(Phases.FIND_BUS_STOP, () => 
+            ConversationController.istance.SendEventIntent("BusStopReached", () => 
+               LogicFunctions.AfterArrivingBusStopLogic() ));
     }
 
     private void TravelOnTheBusLogic()
