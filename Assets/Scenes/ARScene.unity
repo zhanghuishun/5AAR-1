@@ -807,6 +807,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 828352716}
   m_CullTransparentMesh: 1
+--- !u!1 &854178396 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6570861167379099180, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+    type: 3}
+  m_PrefabInstance: {fileID: 2103306896}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &883405741
 GameObject:
   m_ObjectHideFlags: 0
@@ -2181,7 +2187,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1276260158}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1576464464}
+        m_TargetAssemblyTypeName: BackButton, Assembly-CSharp
+        m_MethodName: DoNothing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1276260158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2189,7 +2207,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276260155}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -2603,7 +2621,7 @@ RectTransform:
   m_Children:
   - {fileID: 883405742}
   m_Father: {fileID: 2103306898}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2622,6 +2640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e595ff18eb76e45b6bee28acef14bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonDisabler: {fileID: 854178396}
 --- !u!1 &1648359366
 GameObject:
   m_ObjectHideFlags: 0
