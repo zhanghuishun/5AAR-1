@@ -61,6 +61,12 @@ public class GoogleMapAPIQuery : MonoBehaviour
         //wait for GPS location
         yield return new WaitForSecondsRealtime(4);
         yield return StartCoroutine(GetTabacchiJSON());
+        //if setting is not none, setting override
+        if(InputFieldSubmit.tabacchiCoordinates[0] != "")
+        {
+            tabacchiLoc.lat = float.Parse(InputFieldSubmit.tabacchiCoordinates[0]);
+            tabacchiLoc.lng = float.Parse(InputFieldSubmit.tabacchiCoordinates[1]);
+        }
         yield return StartCoroutine(GetWalkRouteJSON (tabacchiLoc.lat, tabacchiLoc.lng));
     }
     public void RouteToBusStationQuery()

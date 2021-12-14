@@ -8,23 +8,28 @@ using UnityEngine.UI;
 
 public class InputFieldSubmit : MonoBehaviour
 {
-    public static string[] destinationCoordinates = new string[2] {"45.516826", "9.216668"};
-    public InputField inputField;
+    //dest start from home:"45.516826", "9.216668"
+    public static string[] destinationCoordinates = new string[2] {"45.4818579", "9.226138"}; // lambrate station
+    public static string[] tabacchiCoordinates = new string[2] {"45.480759", "9.224494"}; //tabacchi near BCL
+    public InputField destinationCord;
+    public InputField tabacchiCord;
     public Text settingsState;
 
     public void Awake()
     {
-        inputField.placeholder.GetComponent<Text>().text = destinationCoordinates[0]+","+destinationCoordinates[1];
+        destinationCord.placeholder.GetComponent<Text>().text = destinationCoordinates[0]+","+destinationCoordinates[1];
+        tabacchiCord.placeholder.GetComponent<Text>().text = tabacchiCoordinates[0]+","+tabacchiCoordinates[1];
         DontDestroyOnLoad(transform.gameObject);
     }
-    public void LockInput(InputField inputField)
+    public void LockInput(string[] coordinates, InputField inputField)
     {
-        settingsState.text = "Finished";
-        destinationCoordinates = inputField.text.Split(',');
+        coordinates = inputField.text.Split(',');
     }
     public void Start()
 	{
-		inputField.onEndEdit.AddListener(delegate{LockInput(inputField);});
+		destinationCord.onEndEdit.AddListener(delegate{LockInput(destinationCoordinates, destinationCord);});
+		tabacchiCord.onEndEdit.AddListener(delegate{LockInput(tabacchiCoordinates, tabacchiCord);});
+
 	}
 
 }
