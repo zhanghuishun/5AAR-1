@@ -105,10 +105,12 @@ public class ArrowNavigation : MonoBehaviour
         textMeshProUGUI.text = distance.ToString() + "m";
         if (isCollide())
         {
+            //show checkpoint firework
+            count++;
             panel.SetActive(false);
             compass.SetActive(false);
-            CheckponintArrived = true;
-            count++;
+            Firework.Instance.Explosion(ARCamera.transform.position + ARCamera.transform.forward * forwardOffset);
+            ConversationController.istance.ChangeTextFields("you are arriving the checkpoint " + count + "/" + steps.Count);
             if (count < steps.Count)
             {
                 panel.SetActive(true);
@@ -151,13 +153,6 @@ public class ArrowNavigation : MonoBehaviour
             //Debug.Log("compass rotation"+compass.transform.rotation);
             
         }
-        //show checkpoint firework
-        if(CheckponintArrived == true)
-        {
-            //Firework.Instance.Explosion(new Vector3(0,0,0));
-            Firework.Instance.Explosion(ARCamera.transform.position + ARCamera.transform.forward * forwardOffset);
-            ConversationController.istance.ChangeTextFields("you are arriving the checkpoint " + count + "/" + steps.Count);
-            CheckponintArrived = false;
-        }
+        
     }
 }
