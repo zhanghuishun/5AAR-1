@@ -16,7 +16,8 @@ public class ArrowNavigation : MonoBehaviour
     [SerializeField] private GameObject CompassPerfab;
     [SerializeField] private UnityARCompass.ARCompassIOS ARCompassIOS;
     [SerializeField] private TextMeshProUGUI Instruction;
-    
+    [SerializeField] private Firework Firework;
+    private bool CheckponintArrived = false;
     float lat;
     float lng;
 	float destLat;
@@ -33,8 +34,8 @@ public class ArrowNavigation : MonoBehaviour
     public GameObject ARCamera;
     private int forwardOffset = 1;
     private int upOffset = 1;
-    //public string testString = "11111";
-    void Awake(){
+    void Awake()
+    {
     }
     // Start is called before the first frame update
     void Start()
@@ -83,10 +84,6 @@ public class ArrowNavigation : MonoBehaviour
         Debug.Log(JsonUtility.ToJson(steps[0], true));
         Instruction.text = utils.RemoveSpecialCharacters(steps[count].html_instructions);
         textMeshProUGUI.text = "Distance here";
-        //texts[0].text = "Distance here";
-        //texts[1].text = "Default"; // description
-        //texts[2].text = "Step " + (count+1) + " / " + steps.Count;
-        //texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
         
         //StepLoop starts in 0.1s and repeating running every 0.5s
         InvokeRepeating("StepsLoop", 0.1f, 0.5f);
@@ -105,36 +102,30 @@ public class ArrowNavigation : MonoBehaviour
         ARCompassIOS.endLng = destLng;
         int distance = Mathf.RoundToInt(utils.CalculateDistanceMeters(lat, lng, destLat, destLng));
         // constantly update distance shown
-        //Debug.Log("distance:"+distance.ToString());
         textMeshProUGUI.text = distance.ToString() + "m";
-        //texts[0].text = distance.ToString() + "m";
-
         if (isCollide())
-                    {
-                        //Destroy(panel);
-                        //panels count = panels[count+1]?
-                        count++;
-                        if (count < steps.Count)
-                        {
-                            Debug.Log(utils.RemoveSpecialCharacters(steps[count].html_instructions));
-                            ConversationController.istance.ChangeTextFields(utils.RemoveSpecialCharacters(steps[count].html_instructions));
-                            //Instruction.text = utils.RemoveSpecialCharacters(steps[count].html_instructions);
-                            //panel = Instantiate(PanelPrefab);//,directionsPanel
-                            //texts = panel.GetComponentsInChildren<TextMeshPro>();
-                            //texts[1].text = steps[count].maneuver; // description
-                            //texts[2].text = "Step " + (count+1) + " / " + steps.Count;
-                            //texts[3].text = steps[count].end_location.lat + ", " + steps[count].end_location.lng;
-                        }
-                    }
-                    //when arriving the dest, cancel this invokerepeating. 
-					if (count == steps.Count)
-                    {
-                        Destroy(compass);
-                        panel.SetActive(false);
-                        //Destroy(CompassObject);
-                        if(afterDestinationCallback != null) {afterDestinationCallback.Invoke();};
-                        CancelInvoke();
-                    }
+        {
+            panel.SetActive(false);
+            compass.SetActive(false);
+            CheckponintArrived = true;
+            count++;
+            if (count < steps.Count)
+            {
+                panel.SetActive(true);
+                compass.SetActive(true);
+                //Debug.Log(utils.RemoveSpecialCharacters(steps[count].html_instructions));
+                ConversationController.istance.ChangeTextFields(utils.RemoveSpecialCharacters(steps[count].html_instructions));
+            }            
+        }
+        //when arriving the dest, cancel this invokerepeating. 
+        if (count == steps.Count)
+        {
+            Destroy(compass);
+            panel.SetActive(false);
+            //Destroy(CompassObject);
+            if(afterDestinationCallback != null) {afterDestinationCallback.Invoke();};
+            CancelInvoke();
+        }
 				
 	}
 
@@ -159,6 +150,14 @@ public class ArrowNavigation : MonoBehaviour
             compass.transform.position = ARCamera.transform.position + ARCamera.transform.forward * forwardOffset;
             //Debug.Log("compass rotation"+compass.transform.rotation);
             
+        }
+        //show checkpoint firework
+        if(CheckponintArrived == true)
+        {
+            //Firework.Instance.Explosion(new Vector3(0,0,0));
+            Firework.Instance.Explosion(ARCamera.transform.position + ARCamera.transform.forward * forwardOffset);
+            ConversationController.istance.ChangeTextFields("you are arriving the checkpoint " + count + "/" + steps.Count);
+            CheckponintArrived = false;
         }
     }
 }

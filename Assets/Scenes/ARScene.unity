@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -679,6 +679,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popup: {fileID: 226987586}
   inputField: {fileID: 2126196644}
+--- !u!114 &233253519 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8887430137434868348, guid: 1c5c00d8d051a444ebae5a3028d488b1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1121883529}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8b5fe3c94614df7bda083c20a20e8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &263832512
 GameObject:
   m_ObjectHideFlags: 0
@@ -2210,6 +2222,7 @@ MonoBehaviour:
   CompassPerfab: {fileID: 100002, guid: c727ce61e2724410897958bc77ecf21c, type: 3}
   ARCompassIOS: {fileID: 1172372856}
   Instruction: {fileID: 2103306897}
+  Firework: {fileID: 233253519}
   ARCamera: {fileID: 1470371345}
 --- !u!114 &1019532196
 MonoBehaviour:
@@ -2629,6 +2642,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1091022755}
   m_CullTransparentMesh: 1
+--- !u!1001 &1121883529
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8887430137434868347, guid: 1c5c00d8d051a444ebae5a3028d488b1,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887430137434868347, guid: 1c5c00d8d051a444ebae5a3028d488b1,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887430137434868347, guid: 1c5c00d8d051a444ebae5a3028d488b1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887430137434868347, guid: 1c5c00d8d051a444ebae5a3028d488b1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887430137434868347, guid: 1c5c00d8d051a444ebae5a3028d488b1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887430137434868347, guid: 1c5c00d8d051a444ebae5a3028d488b1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887430137434868347, guid: 1c5c00d8d051a444ebae5a3028d488b1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887430137434868347, guid: 1c5c00d8d051a444ebae5a3028d488b1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887430137434868347, guid: 1c5c00d8d051a444ebae5a3028d488b1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887430137434868347, guid: 1c5c00d8d051a444ebae5a3028d488b1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887430137434868347, guid: 1c5c00d8d051a444ebae5a3028d488b1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887430137434868349, guid: 1c5c00d8d051a444ebae5a3028d488b1,
+        type: 3}
+      propertyPath: m_Name
+      value: CheckpointFirework
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1c5c00d8d051a444ebae5a3028d488b1, type: 3}
 --- !u!1 &1163748597
 GameObject:
   m_ObjectHideFlags: 0
@@ -3579,7 +3661,7 @@ Camera:
   m_GameObject: {fileID: 1470371345}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -3670,7 +3752,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1470371345}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2124064895}
