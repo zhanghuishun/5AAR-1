@@ -20,7 +20,6 @@ public class ConversationController : MonoBehaviour
 
     private readonly object textFieldsLock = new object();
     private bool textLock = false;
-    private bool mockLock = true;
     public bool textFieldsOverwritten { private set; get; }
     private Action afterWriteCallback = null;
 
@@ -218,9 +217,10 @@ public class ConversationController : MonoBehaviour
     private void OnResponse(DF2Response response)
     {
         Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
-        StartCoroutine(_OverwriteTextFields(response.queryResult.fulfillmentText));
+        string responseText = response.queryResult.fulfillmentText;
+        StartCoroutine(_OverwriteTextFields(responseText));
 
-        String method = GetIntrefaceMethod(response);
+        string method = GetIntrefaceMethod(response);
         if (!method.Equals("")) InterfaceMethods.list[method].Invoke();
     }
 
@@ -251,6 +251,8 @@ public class ConversationController : MonoBehaviour
 
         foreach (TextMeshProUGUI field in textPROOutputFields)
             field.text = text;
+
+        TTSController.Speak(text);
 
         if (afterWriteCallback != null) afterWriteCallback.Invoke();
         CAAnimationsController.istance.SetLoading(false);
