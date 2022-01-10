@@ -13,7 +13,7 @@ public class ConversationController : MonoBehaviour
     private  DialogFlowV2Client client;
 
     //TODO implement a way to get session name (UUID)
-    public  string sessionName = Guid.NewGuid().ToString();
+    private string sessionName = Guid.NewGuid().ToString();
 
     private  List<Text> textOutputFields;
     private  List<TextMeshProUGUI> textPROOutputFields;
