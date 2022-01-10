@@ -41,7 +41,7 @@ public class ArrowNavigation : MonoBehaviour
     void Start()
     {
         GoogleAPIScript = GetComponent<GoogleMapAPIQuery>();
-        ConversationController.istance.RegisterTextOutputField(Instruction);
+        ConversationController.Instance.RegisterTextOutputField(Instruction);
         utils = Utils.Instance;
         GPSInstance = GPSLocation.Instance;
     }
@@ -110,13 +110,13 @@ public class ArrowNavigation : MonoBehaviour
             panel.SetActive(false);
             compass.SetActive(false);
             Firework.Instance.Explosion(ARCamera.transform.position + ARCamera.transform.forward * forwardOffset);
-            ConversationController.istance.ChangeTextFields("you are arriving the checkpoint " + count + "/" + steps.Count);
+            ConversationController.Instance.ChangeTextFields("you are arriving the checkpoint " + count + "/" + steps.Count);
             if (count < steps.Count)
             {
                 panel.SetActive(true);
                 compass.SetActive(true);
                 //Debug.Log(utils.RemoveSpecialCharacters(steps[count].html_instructions));
-                ConversationController.istance.ChangeTextFields(utils.RemoveSpecialCharacters(steps[count].html_instructions));
+                ConversationController.Instance.ChangeTextFields(utils.RemoveSpecialCharacters(steps[count].html_instructions));
             }            
         }
         //when arriving the dest, cancel this invokerepeating. 

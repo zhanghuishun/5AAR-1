@@ -13,7 +13,7 @@ public class ARConversationController : MonoBehaviour
 
     private void Awake()
     {
-        ConversationController.istance.RegisterTextOutputField(CAText);
+        ConversationController.Instance.RegisterTextOutputField(CAText);
         navigation = GetComponent<ArrowNavigation>();
         LogicFunctions = GetComponent<LogicFunctions>();
 
@@ -36,26 +36,26 @@ public class ARConversationController : MonoBehaviour
 
     private void BuyTicketLogic()
     {
-        ConversationController.istance.SendEventIntent("CheckSubscription");
+        ConversationController.Instance.SendEventIntent("CheckSubscription");
         //TODO write comments on how the application works with dialogflow
     }
 
     private void FindTabacchi()
     {
         navigation.ShowNavigationInformation(Phases.BUY_TICKET, () => 
-            ConversationController.istance.SendEventIntent("TabacchiReached"));
+            ConversationController.Instance.SendEventIntent("TabacchiReached"));
     }
 
     private void FindBusStopLogic()
     {
-        ConversationController.istance.SendEventIntent("GoToBusStop");
+        ConversationController.Instance.SendEventIntent("GoToBusStop");
     }
 
     private void FindBusStop()
     {
         Debug.Log("FindBusStop called");
         navigation.ShowNavigationInformation(Phases.FIND_BUS_STOP, () => 
-            ConversationController.istance.SendEventIntent("BusStopReached", () => 
+            ConversationController.Instance.SendEventIntent("BusStopReached", () => 
                LogicFunctions.AfterArrivingBusStopLogic() ));
     }
 

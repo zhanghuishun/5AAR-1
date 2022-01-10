@@ -29,7 +29,7 @@ public class LogicFunctions : MonoBehaviour
         GoogleAPIScript = GetComponent<GoogleMapAPIQuery>();
         GPSInstance = GPSLocation.Instance;
         utils = Utils.Instance;
-        ConversationController.istance.RegisterTextOutputField(Instruction);
+        ConversationController.Instance.RegisterTextOutputField(Instruction);
     }
     public void AfterArrivingBusStopLogic(){
         StartCoroutine(AfterArrivingBusStop());
@@ -65,7 +65,7 @@ public class LogicFunctions : MonoBehaviour
         //Debug.Log("current time:" + DateTime.Now);
         double minutesDouble = (datevalue2 - datevalue1).TotalMinutes;
         int minutes = Mathf.RoundToInt((float)minutesDouble);
-        if(minutes > 1) ConversationController.istance.ChangeTextFields("the bus "+ busname +"is arriving in " +minutes+ "min at " + busInformation.departure_time.text);
+        if(minutes > 1) ConversationController.Instance.ChangeTextFields("the bus "+ busname +"is arriving in " +minutes+ "min at " + busInformation.departure_time.text);
         //Debug.Log("the bus is arriving in " +minutes+ "min");
         canTriggerBusIsArriving = true;
         //wait
@@ -96,7 +96,7 @@ public class LogicFunctions : MonoBehaviour
     }
     private IEnumerator WaitForSecondsAndDisableBox(int seconds){
         yield return new WaitForSeconds(seconds);
-        ConversationController.istance.SendEventIntent("TicketRecognized" , disableBusBox);
+        ConversationController.Instance.SendEventIntent("TicketRecognized" , disableBusBox);
     }
 
     private void disableBusBox()
@@ -111,7 +111,7 @@ public class LogicFunctions : MonoBehaviour
     {
         if(canTriggerBusIsArriving == true){
             if ((datevalue2 - DateTime.Now).TotalMinutes < 1){
-                ConversationController.istance.ChangeTextFields("The bus is arrving in less one min, tell me when you are on the bus");
+                ConversationController.Instance.ChangeTextFields("The bus is arrving in less one min, tell me when you are on the bus");
                 canTriggerBusIsArriving = false;
             }
         }
@@ -120,7 +120,7 @@ public class LogicFunctions : MonoBehaviour
             destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1]);
             destDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, destLat, destLng));
             if(destDistance < 500){
-                ConversationController.istance.ChangeTextFields("The bus is arrving the destination, please prepare to get off the bus");
+                ConversationController.Instance.ChangeTextFields("The bus is arrving the destination, please prepare to get off the bus");
                 cnaTriggerBusToDestination = false;
             }
         }

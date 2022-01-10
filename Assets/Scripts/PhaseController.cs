@@ -6,9 +6,14 @@ public class PhaseController : MonoBehaviour
 {
     public static Phases phase = Phases.BUY_TICKET;
 
+    private static bool thisExists = false;
+
     private void Awake()
     {
-        DontDestroyOnLoad(transform.gameObject);
+        if (!thisExists)
+            DontDestroyOnLoad(gameObject);
+        else
+            Destroy(gameObject);
     }
 
     // Start is called before the first frame update

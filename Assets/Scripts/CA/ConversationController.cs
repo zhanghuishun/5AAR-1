@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using System.Threading;
 public class ConversationController : MonoBehaviour
 {
-    public static ConversationController istance { private set; get; }
+    public static ConversationController Instance { private set; get; } = null;
 
     private  DialogFlowV2Client client;
 
@@ -27,17 +27,24 @@ public class ConversationController : MonoBehaviour
 
     private void Awake()
     {
-        istance = this;
+        if (Instance == null)
+        {
+            Instance = this;
 
-        DontDestroyOnLoad(transform.gameObject);
+            DontDestroyOnLoad(transform.gameObject);
 
-        client = GetComponent<DialogFlowV2Client>();
-        client.ChatbotResponded += OnResponse;
-        client.DetectIntentError += LogError;
+            client = GetComponent<DialogFlowV2Client>();
+            client.ChatbotResponded += OnResponse;
+            client.DetectIntentError += LogError;
 
-        textOutputFields = new List<Text>();
-        textPROOutputFields = new List<TextMeshProUGUI>();
-        textFieldsOverwritten = true;
+            textOutputFields = new List<Text>();
+            textPROOutputFields = new List<TextMeshProUGUI>();
+            textFieldsOverwritten = true;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Start is called before the first frame update

@@ -28,7 +28,7 @@ public class tmp_Text : MonoBehaviour
 
     public void OnSend()
     {
-        ConversationController.istance.SendTextIntent(inputField.text);
+        ConversationController.Instance.SendTextIntent(inputField.text);
         ClosePopup();
     }
 

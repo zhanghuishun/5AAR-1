@@ -16,9 +16,9 @@ public class InitialConversationController : MonoBehaviour
     void Start()
     {
         //Do I need to remove it?
-        ConversationController.istance.RegisterTextOutputField(CAText);
+        ConversationController.Instance.RegisterTextOutputField(CAText);
 
-        ConversationController.istance.SendEventIntent("Introduction");
+        ConversationController.Instance.SendEventIntent("Introduction");
     }
 
     // Update is called once per frame
@@ -31,7 +31,7 @@ public class InitialConversationController : MonoBehaviour
     {
         yesButton.SetActive(false);
         noButton.SetActive(false);
-        ConversationController.istance.SendTextIntent("Yes", ChangeButtons);
+        ConversationController.Instance.SendTextIntent("Yes", ChangeButtons);
         //ChangeButtons();
     }
 
@@ -39,7 +39,7 @@ public class InitialConversationController : MonoBehaviour
     {
         yesButton.SetActive(false);
         noButton.SetActive(false);
-        ConversationController.istance.SendTextIntent("No", ChangeButtons);
+        ConversationController.Instance.SendTextIntent("No", ChangeButtons);
         //ChangeButtons();
     }
 

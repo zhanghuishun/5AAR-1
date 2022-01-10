@@ -67,7 +67,7 @@ public class MicButton : MonoBehaviour
                 //goAudioSource.Play(); //Playback the recorded audio
                 //micText.text = "Mic";
                 ToggleMic(false);
-                ConversationController.istance.SendAudioIntent(goAudioSource.clip);
+                ConversationController.Instance.SendAudioIntent(goAudioSource.clip);
             }
         }
         else // No microphone  
