@@ -4437,6 +4437,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4960792904135991586, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: minimumLevel
+      value: 0.0001
+      objectReference: {fileID: 0}
     - target: {fileID: 5394848571268948384, guid: 5d2f25396e36f403c8c2a8c7181aec81,
         type: 3}
       propertyPath: m_Name

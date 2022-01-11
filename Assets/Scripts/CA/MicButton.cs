@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,13 +9,20 @@ public class MicButton : MonoBehaviour
     private bool micConnected = false;
     private int minFreq;
     private int maxFreq;
+
     private AudioSource goAudioSource;
+
     public GameObject micOnSprite;
     public GameObject micOffSprite;
+    public float minimumLevel = 1e-06f;
+    private float quietTime = 0;
+    public float quietTimeMax = 1.5f;
+    private bool isRecording = false;
 
     private void Awake()
     {
-        goAudioSource = this.GetComponent<AudioSource>();
+        goAudioSource = GetComponent<AudioSource>();
+        goAudioSource.mute = true;
     }
 
     // Start is called before the first frame update
@@ -45,7 +53,21 @@ public class MicButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isRecording)
+        {
+            //Debug.Log(MicLoudness.micLoudness);
+
+            if(MicLoudness.micLoudness < minimumLevel)
+            {
+                quietTime += Time.deltaTime;
+            }
+
+            if(quietTime >= quietTimeMax)
+            {
+                quietTime = 0;
+                StopMicrophone();
+            }
+        }
     }
 
     public void OnMicButtonPress()
@@ -54,20 +76,18 @@ public class MicButton : MonoBehaviour
         if (micConnected)
         {
             //If the audio from any microphone isn't being captured  
-            if (!Microphone.IsRecording(null))
+            if (!isRecording)
             {
+                isRecording = true;
                 //Start recording and store the audio captured from the microphone at the AudioClip in the AudioSource  
-                goAudioSource.clip = Microphone.Start(null, true, 20, maxFreq);
+                goAudioSource.clip = Microphone.Start(null, false, 20, maxFreq);
+                //goAudioSource.Play();
                 //micText.text = "Stop";
                 ToggleMic(true);
             }
             else //Recording is in progress  
             {
-                Microphone.End(null); //Stop the audio recording  
-                //goAudioSource.Play(); //Playback the recorded audio
-                //micText.text = "Mic";
-                ToggleMic(false);
-                ConversationController.Instance.SendAudioIntent(goAudioSource.clip);
+                StopMicrophone();
             }
         }
         else // No microphone  
@@ -76,6 +96,17 @@ public class MicButton : MonoBehaviour
             GUI.contentColor = Color.red;
         }
 
+    }
+
+    private void StopMicrophone()
+    {
+        isRecording = false;
+        //Stop the audio recording
+        Microphone.End(null);   
+        goAudioSource.Play(); //Playback the recorded audio
+        //micText.text = "Mic";
+        ToggleMic(false);
+        //ConversationController.Instance.SendAudioIntent(goAudioSource.clip);
     }
 
     private void ToggleMic(bool state)
