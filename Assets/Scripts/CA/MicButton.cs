@@ -103,10 +103,10 @@ public class MicButton : MonoBehaviour
         isRecording = false;
         //Stop the audio recording
         Microphone.End(null);   
-        goAudioSource.Play(); //Playback the recorded audio
+        //goAudioSource.Play(); //Playback the recorded audio
         //micText.text = "Mic";
         ToggleMic(false);
-        //ConversationController.Instance.SendAudioIntent(goAudioSource.clip);
+        ConversationController.Instance.SendAudioIntent(goAudioSource.clip);
     }
 
     private void ToggleMic(bool state)
