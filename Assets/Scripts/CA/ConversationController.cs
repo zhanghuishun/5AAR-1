@@ -216,12 +216,19 @@ public class ConversationController : MonoBehaviour
 
     private void OnResponse(DF2Response response)
     {
-        Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
+        //Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
         string responseText = response.queryResult.fulfillmentText;
         StartCoroutine(_OverwriteTextFields(responseText));
 
-        string method = GetIntrefaceMethod(response);
-        if (!method.Equals("")) InterfaceMethods.list[method].Invoke();
+        string method = GetCustomPayload(response)?.method;
+        if (method!=null && InterfaceMethods.list.ContainsKey(method)) InterfaceMethods.list[method].Invoke();
+    }
+
+    private CustomPayload GetCustomPayload(DF2Response response)
+    {
+        if (response.queryResult.fulfillmentMessages.Length <= 1) return null;
+        string s = response.queryResult.fulfillmentMessages[1]["payload"].ToString();
+        return JsonUtility.FromJson<CustomPayload>(s);
     }
 
     private string GetIntrefaceMethod(DF2Response response)
@@ -352,6 +359,12 @@ public class ConversationController : MonoBehaviour
         Debug.LogError(string.Format("Error {0}: {1}", errorResponse.error.code.ToString(), errorResponse.error.message));
         ChangeTextFields("ERROR");
     }
+}
+
+public class CustomPayload
+{
+    public string method;
+    public string[] options;
 }
 
 public class InterfaceMethods
