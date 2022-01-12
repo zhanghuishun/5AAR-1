@@ -242,7 +242,7 @@ public class ConversationController : MonoBehaviour
             return "";
     }
 
-    private IEnumerator _OverwriteTextFields(String text)
+    private IEnumerator _OverwriteTextFields(string text)
     {
         //Debug.Log(name + " said: \"" + response.queryResult.fulfillmentText + "\"");
         Debug.Log(text);
@@ -276,13 +276,13 @@ public class ConversationController : MonoBehaviour
 
     }
 
-    public void ChangeTextFields(String text, Action callback = null)
+    public void ChangeTextFields(string text, Action callback = null)
     {
         StartCoroutine(_ChangeTextFields(text, callback));
 
     }
 
-    private IEnumerator _ChangeTextFields(String text, Action callback = null)
+    private IEnumerator _ChangeTextFields(string text, Action callback = null)
     {
         if (textFieldsLock != null)
         {
@@ -322,13 +322,13 @@ public class ConversationController : MonoBehaviour
             ///mockLock = true;
         }
     }
-    /*public void ChangeTextFieldsPriority(String text)
+    /*public void ChangeTextFieldsPriority(string text)
     {
         StartCoroutine(_ChangeTextFieldsPriority(text));
 
     }
 
-    private IEnumerator _ChangeTextFieldsPriority(String text)
+    private IEnumerator _ChangeTextFieldsPriority(string text)
     {
         if (textFieldsLock != null)
         {
@@ -356,7 +356,7 @@ public class ConversationController : MonoBehaviour
 
 public class InterfaceMethods
 {
-    public static readonly Dictionary<String, Action> list = new Dictionary<string, Action>
+    public static readonly Dictionary<string, Action> list = new Dictionary<string, Action>
     {
         { "FIND_TABACCHI_SHOP", () =>{ } },  //start the jurney towords the nearest tabacchi shop
         { "FIND_BUS_STOP", () =>{ } }, //start the jurney towords the bus stop
@@ -364,7 +364,7 @@ public class InterfaceMethods
         { "CHECK_TICKET", () =>{ } } //the ticket got recognized
     };
 
-    public static bool AddMethod(String interfaceName, Action method)
+    public static bool AddMethod(string interfaceName, Action method)
     {
         if (list.ContainsKey(interfaceName))
         {
