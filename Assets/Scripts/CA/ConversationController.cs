@@ -2,10 +2,10 @@ using Syrus.Plugins.DFV2Client;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading;
 public class ConversationController : MonoBehaviour
 {
     public static ConversationController Instance { private set; get; } = null;
@@ -17,6 +17,7 @@ public class ConversationController : MonoBehaviour
 
     private  List<Text> textOutputFields;
     private  List<TextMeshProUGUI> textPROOutputFields;
+    private Action<string[]> optionsConsumer = null;
 
     private readonly object textFieldsLock = new object();
     private bool textLock = false;
@@ -214,14 +215,21 @@ public class ConversationController : MonoBehaviour
         textPROOutputFields.Remove(field);
     }
 
+    public void ChangeOptionsConsumer(Action<string[]> fun)
+    {
+        optionsConsumer = fun;
+    }
+
     private void OnResponse(DF2Response response)
     {
         //Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
         string responseText = response.queryResult.fulfillmentText;
         StartCoroutine(_OverwriteTextFields(responseText));
 
-        string method = GetCustomPayload(response)?.method;
+        CustomPayload cp = GetCustomPayload(response);
+        string method = cp?.method;
         if (method!=null && InterfaceMethods.list.ContainsKey(method)) InterfaceMethods.list[method].Invoke();
+        if (optionsConsumer != null) optionsConsumer.Invoke(cp?.options);
     }
 
     private CustomPayload GetCustomPayload(DF2Response response)
