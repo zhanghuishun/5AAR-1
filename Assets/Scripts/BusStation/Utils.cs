@@ -74,6 +74,7 @@ public class Utils : MonoBehaviour
     public void ClickToCloseAlert(GameObject gameObject)
     {
         gameObject.SetActive(false);
+        Debug.Log("test");
         
     }
 }
