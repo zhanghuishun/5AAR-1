@@ -73,4 +73,9 @@ public class Utils : MonoBehaviour
         else 
             return Regex.Replace(str, "\\<.*?\\>", "", RegexOptions.Compiled);
     }
+    public void ClickToCloseAlert(GameObject gameObject)
+    {
+        gameObject.SetActive(false);
+        
+    }
 }

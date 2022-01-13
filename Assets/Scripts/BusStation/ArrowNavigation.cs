@@ -9,6 +9,7 @@ using System.Globalization;
 public class ArrowNavigation : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
+    [SerializeField] private GameObject safetyAlert;
     private GPSLocation GPSInstance;
     private GoogleMapAPIQuery GoogleAPIScript;
     private Utils utils;
@@ -68,6 +69,8 @@ public class ArrowNavigation : MonoBehaviour
     }
     IEnumerator ClickToGetStepsInformation()
     {
+        //show safety alert
+        safetyAlert.SetActive(true);
         int maxWait = 3;
         while(GoogleAPIScript.walkingSteps.Count == 0 && maxWait > 0){
             yield return new WaitForSeconds(1);

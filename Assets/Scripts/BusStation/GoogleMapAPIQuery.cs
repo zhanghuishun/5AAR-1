@@ -47,16 +47,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
         APIKey = node.InnerXml;
         Debug.Log(APIKey);*/
     }
-    public void RouteToTabacchiShopQuery()
-    {
-        StartCoroutine(TabacchiInOrder());
-        // if(tabacchiLoc.lat == 0.0 || tabacchiLoc.lng == 0.0) {
-        // Debug.Log("tabacchiLoc is null");
-        // return;
-        // }
-        // Debug.Log("tabacchi lat in query"+tabacchiLoc.lat);
-        // StartCoroutine (GetWalkRouteJSON (tabacchiLoc.lat, tabacchiLoc.lng));
-    }
+
     public IEnumerator TabacchiInOrder() {
         //wait for GPS location
         yield return new WaitForSecondsRealtime(4);
