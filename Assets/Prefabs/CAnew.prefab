@@ -4510,11 +4510,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '1st sentence
-
-    2nd sentence
-
-    3rd sentence'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9b4161f50186b46c4a5d17892e1e9355, type: 2}
   m_sharedMaterial: {fileID: 3644708363603585986, guid: 9b4161f50186b46c4a5d17892e1e9355,
@@ -4542,7 +4538,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.8
+  m_fontSize: 30
   m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 1
