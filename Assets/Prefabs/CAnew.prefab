@@ -2066,7 +2066,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: description
+  m_text: Pay attention to the traffic lights, you can only pass when the light is
+    green
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9b4161f50186b46c4a5d17892e1e9355, type: 2}
   m_sharedMaterial: {fileID: 3644708363603585986, guid: 9b4161f50186b46c4a5d17892e1e9355,
