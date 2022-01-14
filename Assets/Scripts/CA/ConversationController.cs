@@ -379,6 +379,7 @@ public class InterfaceMethods
 {
     public static readonly Dictionary<string, Action> list = new Dictionary<string, Action>
     {
+        { "HELP_SUBSCRIPTION", () =>{ } },  //start the jurney towords the nearest tabacchi shop
         { "FIND_TABACCHI_SHOP", () =>{ } },  //start the jurney towords the nearest tabacchi shop
         { "FIND_BUS_STOP", () =>{ } }, //start the jurney towords the bus stop
         { "FIND_ANOTHER_TABACCHI_SHOP", () =>{ } }, //start the jurney towords another tabacchi shop (because the first was closed)

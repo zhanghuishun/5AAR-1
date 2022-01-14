@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class ARConversationController : MonoBehaviour
 {
     public TextMeshProUGUI CAText;
+    public GameObject subscriptionPopup;
     private ArrowNavigation navigation;
     private LogicFunctions LogicFunctions;
 
@@ -17,6 +18,7 @@ public class ARConversationController : MonoBehaviour
         navigation = GetComponent<ArrowNavigation>();
         LogicFunctions = GetComponent<LogicFunctions>();
 
+        InterfaceMethods.AddMethod("HELP_SUBSCRIPTION", ShowSubscriptionPopup);
         InterfaceMethods.AddMethod("FIND_TABACCHI_SHOP", FindTabacchi);
         InterfaceMethods.AddMethod("CHECK_TICKET", () => LogicFunctions.TicketRecognitionLogic());
         InterfaceMethods.AddMethod("FIND_BUS_STOP", FindBusStop);
@@ -32,6 +34,11 @@ public class ARConversationController : MonoBehaviour
             case Phases.TRAVEL_ON_THE_BUS: TravelOnTheBusLogic();  break;
             default: break;
         }
+    }
+
+    private void ShowSubscriptionPopup()
+    {
+        subscriptionPopup.SetActive(true);
     }
 
     private void BuyTicketLogic()

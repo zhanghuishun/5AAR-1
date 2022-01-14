@@ -527,6 +527,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 584621367349600805, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2733134849128598869, guid: 5d2f25396e36f403c8c2a8c7181aec81,
         type: 3}
       propertyPath: m_RootOrder
@@ -582,13 +587,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4772208377806197023, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5358126680422551875, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5394848571268948384, guid: 5d2f25396e36f403c8c2a8c7181aec81,
         type: 3}
       propertyPath: m_Name
       value: CAnew
       objectReference: {fileID: 0}
+    - target: {fileID: 5444325799806690161, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906830235223476317, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824109830319022506, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9037301351310589029, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_text
+      value: This is a subscription to the various public transport services of Milan
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d2f25396e36f403c8c2a8c7181aec81, type: 3}
+--- !u!1 &732905401 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7906830235223476317, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+    type: 3}
+  m_PrefabInstance: {fileID: 732905400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &746378224 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7631350001068115815, guid: 5d2f25396e36f403c8c2a8c7181aec81,
@@ -886,6 +927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CAText: {fileID: 1306750558}
+  subscriptionPopup: {fileID: 732905401}
 --- !u!114 &1019532199
 MonoBehaviour:
   m_ObjectHideFlags: 0
