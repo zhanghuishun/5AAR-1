@@ -4621,6 +4621,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loading: {fileID: 5394086065510940402}
+  interactionButtons:
+  - {fileID: 5980933643164283291}
+  - {fileID: 9210260189114842524}
+  - {fileID: 104970090618249906}
+  - {fileID: 8599908861478419625}
+  - {fileID: 272402737902304937}
 --- !u!1 &6430791989621220136
 GameObject:
   m_ObjectHideFlags: 0
