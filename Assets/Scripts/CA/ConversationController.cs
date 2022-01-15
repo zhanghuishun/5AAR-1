@@ -227,7 +227,7 @@ public class ConversationController : MonoBehaviour
         StartCoroutine(_OverwriteTextFields(responseText));
 
         CustomPayload cp = GetCustomPayload(response);
-        string method = cp?.method;
+        string method = response.queryResult.action;
         if (method!=null && InterfaceMethods.list.ContainsKey(method)) InterfaceMethods.list[method].Invoke();
         if (optionsConsumer != null) optionsConsumer.Invoke(cp?.options);
     }
@@ -237,24 +237,6 @@ public class ConversationController : MonoBehaviour
         if (response.queryResult.fulfillmentMessages.Length <= 1) return null;
         string s = response.queryResult.fulfillmentMessages[1]["payload"].ToString();
         return JsonUtility.FromJson<CustomPayload>(s);
-    }
-
-    private string GetIntrefaceMethod(DF2Response response)
-    {
-        //Debug.Log(response.queryResult.fulfillmentMessages[1]["payload"]);
-        /*{
-            "method": "TABACCHI_SHOP"
-        }*/
-        if (response.queryResult.fulfillmentMessages.Length <= 1) return "";
-        string s = response.queryResult.fulfillmentMessages[1]["payload"].ToString();
-        if (s.Contains("method"))
-        {
-            string[] sSplit = s.Split('\"');
-            int pos = Array.IndexOf(sSplit, "method");
-            return sSplit[pos + 2].Trim();
-        }
-        else
-            return "";
     }
 
     private IEnumerator _OverwriteTextFields(string text)
@@ -371,7 +353,6 @@ public class ConversationController : MonoBehaviour
 
 public class CustomPayload
 {
-    public string method;
     public string[] options;
 }
 
