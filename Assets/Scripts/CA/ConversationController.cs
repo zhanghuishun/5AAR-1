@@ -223,13 +223,32 @@ public class ConversationController : MonoBehaviour
     private void OnResponse(DF2Response response)
     {
         //Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
-        string responseText = response.queryResult.fulfillmentText;
+        string responseText = GetResponseText(response);//response.queryResult.fulfillmentText;
         StartCoroutine(_OverwriteTextFields(responseText));
 
         CustomPayload cp = GetCustomPayload(response);
         string method = response.queryResult.action;
         if (method!=null && InterfaceMethods.list.ContainsKey(method)) InterfaceMethods.list[method].Invoke();
         if (optionsConsumer != null) optionsConsumer.Invoke(cp?.options);
+    }
+
+    private string GetResponseText(DF2Response response)
+    {
+        string text = response.queryResult.fulfillmentText;
+        Debug.Log(text);
+
+        CustomPayload cp = GetCustomPayload(response);
+        Debug.Log(cp.substitutions);
+        if (cp != null && cp.substitutions!=null)
+        {
+            Substitution[] sub = cp.substitutions;
+            foreach(Substitution s in sub)
+            {
+                if (Parameters.list.ContainsKey(s.parameterName)) text = text.Replace(s.placeholder, Parameters.list[s.parameterName].ToString());
+            }
+        }
+
+        return text;
     }
 
     private CustomPayload GetCustomPayload(DF2Response response)
@@ -351,9 +370,18 @@ public class ConversationController : MonoBehaviour
     }
 }
 
+[Serializable]
 public class CustomPayload
 {
     public string[] options;
+    public Substitution[] substitutions;
+}
+
+[Serializable]
+public class Substitution
+{
+    public string placeholder;
+    public string parameterName;
 }
 
 public class InterfaceMethods
@@ -372,6 +400,48 @@ public class InterfaceMethods
         if (list.ContainsKey(interfaceName))
         {
             list[interfaceName] = method;
+            return true;
+        }
+
+        return false;
+    }
+
+    public static bool RemoveMethod(string interfaceName)
+    {
+        if (list.ContainsKey(interfaceName))
+        {
+            list[interfaceName] = () => { };
+            return true;
+        }
+
+        return false;
+    }
+}
+
+public class Parameters
+{
+    public static readonly Dictionary<string, object> list = new Dictionary<string, object>
+    {
+        { "time", null },
+        { "direction", null }
+    };
+
+    public static bool AddParameter(string parameterName, object parameterReference)
+    {
+        if (list.ContainsKey(parameterName))
+        {
+            list[parameterName] = parameterReference;
+            return true;
+        }
+
+        return false;
+    }
+
+    public static bool RemoveParameter(string parameterName)
+    {
+        if (list.ContainsKey(parameterName))
+        {
+            list[parameterName] = null;
             return true;
         }
 

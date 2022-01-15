@@ -22,6 +22,9 @@ public class ARConversationController : MonoBehaviour
         InterfaceMethods.AddMethod("FIND_TABACCHI_SHOP", FindTabacchi);
         InterfaceMethods.AddMethod("CHECK_TICKET", () => LogicFunctions.TicketRecognitionLogic());
         InterfaceMethods.AddMethod("FIND_BUS_STOP", FindBusStop);
+
+        Parameters.AddParameter("time", new Container<int>(3));
+        Parameters.AddParameter("direction", new Container<string>("right"));
     }
 
     // Start is called before the first frame update
