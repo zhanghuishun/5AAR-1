@@ -92,6 +92,17 @@ public class ArrowNavigation : MonoBehaviour
         InvokeRepeating("StepsLoop", 0.1f, 0.5f);
     }
 
+    private int oldDistance = -1;
+    private int minDistanceReached = int.MaxValue;
+    private float timeCounter = 0;
+    private bool firstDistanceTresholdReached = false;
+    private bool secondDistanceTresholdReached = false;
+    public int firstDistanceTreshold = 100;
+    public int secondDistanceTreshold = 150;
+    private bool firstTimeTresholdReached = false;
+    private bool secondTimeTresholdReached = false;
+    public int firstTimeTreshold = 4*60;
+    public int secondTimeTreshold = 6*60;
     public void StepsLoop()
     {
         lat = GPSInstance.lat;
@@ -106,6 +117,48 @@ public class ArrowNavigation : MonoBehaviour
         int distance = Mathf.RoundToInt(utils.CalculateDistanceMeters(lat, lng, destLat, destLng));
         // constantly update distance shown
         textMeshProUGUI.text = distance.ToString() + "m";
+
+        if (distance < minDistanceReached)
+        {
+            firstDistanceTresholdReached = false;
+            secondDistanceTresholdReached = false;
+            minDistanceReached = distance;
+        }
+        else if (!firstDistanceTresholdReached && distance > minDistanceReached + firstDistanceTreshold)
+        {
+            firstDistanceTresholdReached = true;
+            ConversationController.Instance.SendEventIntent("MovingWrongDirection");
+        }
+        else if (firstDistanceTresholdReached && !secondDistanceTresholdReached && distance > minDistanceReached + secondDistanceTreshold)
+        {
+            secondDistanceTresholdReached = true;
+            ConversationController.Instance.SendEventIntent("MovingWrongDirection");
+        }
+
+        if (oldDistance != -1)
+        {
+            if(distance == oldDistance)
+            {
+                timeCounter += 0.5f;
+            }
+            else
+            {
+                timeCounter = 0;
+            }
+        }
+        oldDistance = distance;
+
+        if (!firstTimeTresholdReached && distance > minDistanceReached + firstDistanceTreshold)
+        {
+            firstTimeTresholdReached = true;
+            ConversationController.Instance.SendEventIntent("NotMoving");
+        }
+        else if (firstTimeTresholdReached && !secondTimeTresholdReached && distance > minDistanceReached + secondDistanceTreshold)
+        {
+            secondTimeTresholdReached = true;
+            ConversationController.Instance.SendEventIntent("NotMoving");
+        }
+
         if (isCollide())
         {
             //show checkpoint firework
