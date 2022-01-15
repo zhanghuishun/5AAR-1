@@ -423,7 +423,8 @@ public class Parameters
     public static readonly Dictionary<string, object> list = new Dictionary<string, object>
     {
         { "time", null },
-        { "direction", null }
+        { "direction", null },
+        { "destination", null }
     };
 
     public static bool AddParameter(string parameterName, object parameterReference)

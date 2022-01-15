@@ -12,6 +12,8 @@ public class ARConversationController : MonoBehaviour
     private ArrowNavigation navigation;
     private LogicFunctions LogicFunctions;
 
+    private Container<string> destination = new Container<string>();
+
     private void Awake()
     {
         ConversationController.Instance.RegisterTextOutputField(CAText);
@@ -23,8 +25,7 @@ public class ARConversationController : MonoBehaviour
         InterfaceMethods.AddMethod("CHECK_TICKET", () => LogicFunctions.TicketRecognitionLogic());
         InterfaceMethods.AddMethod("FIND_BUS_STOP", FindBusStop);
 
-        Parameters.AddParameter("time", new Container<int>(3));
-        Parameters.AddParameter("direction", new Container<string>("right"));
+        Parameters.AddParameter("destination", destination);
     }
 
     // Start is called before the first frame update
@@ -52,6 +53,7 @@ public class ARConversationController : MonoBehaviour
 
     private void FindTabacchi()
     {
+        destination.content = "tabacchi shop";
         navigation.ShowNavigationInformation(Phases.BUY_TICKET, () => 
             ConversationController.Instance.SendEventIntent("TabacchiReached"));
     }
@@ -63,6 +65,7 @@ public class ARConversationController : MonoBehaviour
 
     private void FindBusStop()
     {
+        destination.content = "bus stop";
         Debug.Log("FindBusStop called");
         navigation.ShowNavigationInformation(Phases.FIND_BUS_STOP, () => 
             ConversationController.Instance.SendEventIntent("BusStopReached", () => 

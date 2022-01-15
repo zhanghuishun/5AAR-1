@@ -794,6 +794,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 828352716}
   m_CullTransparentMesh: 1
+--- !u!1 &1006502879 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1243819837986607788, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+    type: 3}
+  m_PrefabInstance: {fileID: 732905400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1019532191
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,7 +884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be268558a08664bfbbbbd7b448f809c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 0}
+  panel: {fileID: 1006502879}
   safetyAlert: {fileID: 1072265736}
   CompassPerfab: {fileID: 100002, guid: c727ce61e2724410897958bc77ecf21c, type: 3}
   ARCompassIOS: {fileID: 1172372856}
