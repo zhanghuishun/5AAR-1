@@ -60,6 +60,7 @@ public class ConversationController : MonoBehaviour
 
     public void SendTextIntent(string text, Action callback = null)
     {
+        inactive = false;
         StartCoroutine(_SendTextIntent(text, callback));
     }
 
@@ -101,6 +102,7 @@ public class ConversationController : MonoBehaviour
 
     public void SendAudioIntent(AudioClip clip, Action callback = null)
     {
+        inactive = false;
         StartCoroutine(_SendAudioIntent(clip, callback));
     }
 
@@ -143,8 +145,8 @@ public class ConversationController : MonoBehaviour
 
     public void SendEventIntent(string eventName, Dictionary<string, object> parameters, Action callback = null)
     {
+        inactive = false;
         StartCoroutine(_SendEventIntent(eventName, parameters, callback));
-        
     }
 
     private IEnumerator _SendEventIntent(string eventName, Dictionary<string, object> parameters, Action callback = null)
@@ -372,6 +374,19 @@ public class ConversationController : MonoBehaviour
             mockLock = true;
         }
     }*/
+
+    public void TrackInactivity(float time)
+    {
+        StartCoroutine(_TrackInactivity(time));
+    }
+
+    private bool inactive = false;
+    private IEnumerator _TrackInactivity(float time)
+    {
+        inactive = true;
+        yield return new WaitForSecondsRealtime(time);
+        if (inactive) SendEventIntent("Inactivity");
+    }
 
     private void LogError(DF2ErrorResponse errorResponse)
     {

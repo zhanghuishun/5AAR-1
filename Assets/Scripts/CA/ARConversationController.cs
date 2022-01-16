@@ -56,8 +56,13 @@ public class ARConversationController : MonoBehaviour
     private void FindTabacchi()
     {
         destination.content = "tabacchi shop";
-        navigation.ShowNavigationInformation(Phases.BUY_TICKET, () => 
-            ConversationController.Instance.SendEventIntent("TabacchiReached"));
+        navigation.ShowNavigationInformation(Phases.BUY_TICKET, OnTabacchiReached);
+    }
+
+    private void OnTabacchiReached()
+    {
+        ConversationController.Instance.SendEventIntent("TabacchiReached");
+        ConversationController.Instance.TrackInactivity(60 * 4);
     }
 
     private void FindAnotherTabacchi()
