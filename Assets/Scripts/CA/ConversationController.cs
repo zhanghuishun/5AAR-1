@@ -375,17 +375,17 @@ public class ConversationController : MonoBehaviour
         }
     }*/
 
-    public void TrackInactivity(float time)
+    public void DoSomethingOnInactivity(float time, Action action)
     {
-        StartCoroutine(_TrackInactivity(time));
+        StartCoroutine(_DoSomethingOnInactivity(time, action));
     }
 
     private bool inactive = false;
-    private IEnumerator _TrackInactivity(float time)
+    private IEnumerator _DoSomethingOnInactivity(float time, Action action)
     {
         inactive = true;
         yield return new WaitForSecondsRealtime(time);
-        if (inactive) SendEventIntent("Inactivity");
+        if (inactive) action.Invoke();
     }
 
     private void LogError(DF2ErrorResponse errorResponse)

@@ -62,7 +62,7 @@ public class ARConversationController : MonoBehaviour
     private void OnTabacchiReached()
     {
         ConversationController.Instance.SendEventIntent("TabacchiReached");
-        ConversationController.Instance.TrackInactivity(60 * 4);
+        ConversationController.Instance.DoSomethingOnInactivity(60 * 4, () => ConversationController.Instance.SendEventIntent("Inactivity"));
     }
 
     private void FindAnotherTabacchi()
