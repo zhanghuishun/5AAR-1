@@ -630,6 +630,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 732905400}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &732905402 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 442022054471135133, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+    type: 3}
+  m_PrefabInstance: {fileID: 732905400}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &732905403 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3032933316611135833, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+    type: 3}
+  m_PrefabInstance: {fileID: 732905400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &746378224 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7631350001068115815, guid: 5d2f25396e36f403c8c2a8c7181aec81,
@@ -891,6 +903,10 @@ MonoBehaviour:
   Instruction: {fileID: 1306750558}
   Firework: {fileID: 233253519}
   ARCamera: {fileID: 1470371345}
+  firstDistanceTreshold: 100
+  secondDistanceTreshold: 150
+  firstTimeTreshold: 240
+  secondTimeTreshold: 360
 --- !u!114 &1019532196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -934,6 +950,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CAText: {fileID: 1306750558}
   subscriptionPopup: {fileID: 732905401}
+  stopButtonPopup: {fileID: 732905403}
+  ticketMachinePopup: {fileID: 732905402}
 --- !u!114 &1019532199
 MonoBehaviour:
   m_ObjectHideFlags: 0

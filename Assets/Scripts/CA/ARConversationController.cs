@@ -10,6 +10,8 @@ public class ARConversationController : MonoBehaviour
 {
     public TextMeshProUGUI CAText;
     public GameObject subscriptionPopup;
+    public GameObject stopButtonPopup;
+    public GameObject ticketMachinePopup;
     private ArrowNavigation navigation;
     private LogicFunctions LogicFunctions;
 
@@ -22,6 +24,8 @@ public class ARConversationController : MonoBehaviour
         LogicFunctions = GetComponent<LogicFunctions>();
 
         InterfaceMethods.AddMethod("HELP_SUBSCRIPTION", ShowSubscriptionPopup);
+        InterfaceMethods.AddMethod("HELP_STOP_BUTTON", ShowStopButtonPopup);
+        InterfaceMethods.AddMethod("HELP_TICKET_MACHINE", ShowTicketMachinePopup);
         InterfaceMethods.AddMethod("FIND_TABACCHI_SHOP", FindTabacchi);
         InterfaceMethods.AddMethod("FIND_ANOTHER_TABACCHI_SHOP", FindAnotherTabacchi);
         InterfaceMethods.AddMethod("CHECK_TICKET", () => LogicFunctions.TicketRecognitionLogic());
@@ -45,6 +49,16 @@ public class ARConversationController : MonoBehaviour
     private void ShowSubscriptionPopup()
     {
         subscriptionPopup.SetActive(true);
+    }
+
+    private void ShowStopButtonPopup()
+    {
+        stopButtonPopup.SetActive(true);
+    }
+
+    private void ShowTicketMachinePopup()
+    {
+        ticketMachinePopup.SetActive(true);
     }
 
     private void BuyTicketLogic()

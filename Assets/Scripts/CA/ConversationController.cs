@@ -24,6 +24,8 @@ public class ConversationController : MonoBehaviour
     public bool textFieldsOverwritten { private set; get; }
     private Action afterWriteCallback = null;
 
+    private bool inactive = false;
+
 
     private void Awake()
     {
@@ -380,7 +382,6 @@ public class ConversationController : MonoBehaviour
         StartCoroutine(_DoSomethingOnInactivity(time, action));
     }
 
-    private bool inactive = false;
     private IEnumerator _DoSomethingOnInactivity(float time, Action action)
     {
         inactive = true;
@@ -413,7 +414,9 @@ public class InterfaceMethods
 {
     public static readonly Dictionary<string, Action> list = new Dictionary<string, Action>
     {
-        { "HELP_SUBSCRIPTION", () =>{ } },  //start the jurney towords the nearest tabacchi shop
+        { "HELP_SUBSCRIPTION", () =>{ } },
+        { "HELP_STOP_BUTTON", () =>{ } },
+        { "HELP_TICKET_MACHINE", () =>{ } },
         { "FIND_TABACCHI_SHOP", () =>{ } },  //start the jurney towords the nearest tabacchi shop
         { "FIND_BUS_STOP", () =>{ } }, //start the jurney towords the bus stop
         { "FIND_ANOTHER_TABACCHI_SHOP", () =>{ } }, //start the jurney towords another tabacchi shop (because the first was closed)
