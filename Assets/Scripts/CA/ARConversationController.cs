@@ -15,6 +15,8 @@ public class ARConversationController : MonoBehaviour
     private ArrowNavigation navigation;
     private LogicFunctions LogicFunctions;
 
+    private bool hasTicket = true;
+
     private Container<string> destination = new Container<string>();
 
     private void Awake()
@@ -30,6 +32,7 @@ public class ARConversationController : MonoBehaviour
         InterfaceMethods.AddMethod("FIND_ANOTHER_TABACCHI_SHOP", FindAnotherTabacchi);
         InterfaceMethods.AddMethod("CHECK_TICKET", () => LogicFunctions.TicketRecognitionLogic());
         InterfaceMethods.AddMethod("FIND_BUS_STOP", FindBusStop);
+        InterfaceMethods.AddMethod("INSIDE_THE_BUS", InsideTheBusLogic);
 
         Parameters.AddParameter("destination", destination);
     }
@@ -107,6 +110,20 @@ public class ARConversationController : MonoBehaviour
     private void TravelOnTheBusLogic()
     {
         
+    }
+
+    private void InsideTheBusLogic()
+    {
+        if (hasTicket)
+        {
+            ConversationController.Instance.SendEventIntent("OnTheBusTicket");
+            ConversationController.Instance.DoSomethingOnInactivity(60 * 2, () => ConversationController.Instance.SendEventIntent("Inactivity"));
+        }
+        else
+        {
+            ConversationController.Instance.SendEventIntent("OnTheBusNoTicket");
+            ConversationController.Instance.DoSomethingOnInactivity(60 * 2, () => ConversationController.Instance.SendEventIntent("Inactivity"));
+        }
     }
 
     // Update is called once per frame
