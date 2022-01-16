@@ -195,6 +195,16 @@ public class ConversationController : MonoBehaviour
         SendEventIntent(eventName, new Dictionary<string, object>(), callback);
     }
 
+    public void ResetContext(DF2Context[] contexts = null)
+    {
+        client.ClearSession(sessionName);
+        if (contexts != null)
+        {
+            foreach (DF2Context context in contexts)
+                client.AddInputContext(context, sessionName);
+        }
+    }
+
     public void RegisterTextOutputField(Text field)
     {
         textOutputFields.Add(field);

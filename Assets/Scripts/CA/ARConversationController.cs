@@ -1,3 +1,4 @@
+using Syrus.Plugins.DFV2Client;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ public class ARConversationController : MonoBehaviour
 
         InterfaceMethods.AddMethod("HELP_SUBSCRIPTION", ShowSubscriptionPopup);
         InterfaceMethods.AddMethod("FIND_TABACCHI_SHOP", FindTabacchi);
+        InterfaceMethods.AddMethod("FIND_ANOTHER_TABACCHI_SHOP", FindAnotherTabacchi);
         InterfaceMethods.AddMethod("CHECK_TICKET", () => LogicFunctions.TicketRecognitionLogic());
         InterfaceMethods.AddMethod("FIND_BUS_STOP", FindBusStop);
 
@@ -56,6 +58,17 @@ public class ARConversationController : MonoBehaviour
         destination.content = "tabacchi shop";
         navigation.ShowNavigationInformation(Phases.BUY_TICKET, () => 
             ConversationController.Instance.SendEventIntent("TabacchiReached"));
+    }
+
+    private void FindAnotherTabacchi()
+    {
+        destination.content = "tabacchi shop";
+        //TODO integrate with navigarion
+        //if(notFound)
+        DF2Context[] newContext = new DF2Context[1];
+        newContext[0] = new DF2Context("TabacchiReached-Closed-followup", 2, new Dictionary<string, object>());
+        ConversationController.Instance.ResetContext(newContext);
+        ConversationController.Instance.SendTextIntent("No");
     }
 
     private void FindBusStopLogic()
