@@ -178,6 +178,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SettingsPage
       objectReference: {fileID: 0}
+    - target: {fileID: 310539426742058885, guid: d985d18ba832646599521c0a65c08eae,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1211150030101448184, guid: d985d18ba832646599521c0a65c08eae,
         type: 3}
       propertyPath: m_RootOrder
@@ -257,6 +262,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275419726071296028, guid: d985d18ba832646599521c0a65c08eae,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6636520743506213967, guid: d985d18ba832646599521c0a65c08eae,
         type: 3}
