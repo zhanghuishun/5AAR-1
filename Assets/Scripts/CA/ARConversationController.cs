@@ -122,7 +122,6 @@ public class ARConversationController : MonoBehaviour
         else
         {
             ConversationController.Instance.SendEventIntent("OnTheBusNoTicket");
-            ConversationController.Instance.DoSomethingOnInactivity(60 * 2, () => ConversationController.Instance.SendEventIntent("Inactivity"));
         }
     }
 
