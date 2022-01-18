@@ -2,20 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Threading;
+using UnityEngine.UI;
+
 public class SerchableDropdown : MonoBehaviour
 {
     public TMP_Dropdown dropdown;
     public TMP_InputField inputField;
 
+    public int minSerchCharactersToDisplayOptions = 7;
+    public int maxResultsIfSearchTooShort = 100;
+
     private List<TMP_Dropdown.OptionData> defaultOptions;
+    private List<TMP_Dropdown.OptionData> currentOptions;
 
     private bool validSelection = false;
+
+    private bool loadingOptions = true;
 
 
     // Start is called before the first frame update
     void Start()
     {
         defaultOptions = dropdown.options;
+        currentOptions = dropdown.options;
         Deselect();
     }
 
@@ -31,45 +41,74 @@ public class SerchableDropdown : MonoBehaviour
     public void UpdateSearch(string value)
     {
         validSelection = false;
-        dropdown.options = defaultOptions.FindAll(x => x.text.ToLower().Contains(value.ToLower()));
+        _UpdateOptions(defaultOptions.FindAll(x => x.text.ToLower().Contains(value.ToLower())));
+    }
+
+    private void _UpdateOptions(List<TMP_Dropdown.OptionData> optionDatas)
+    {
+        currentOptions = optionDatas;
+        dropdown.options = optionDatas;
         Deselect();
         HideAndRefocus();
+    }
+
+    public void UpdateOptions(List<TMP_Dropdown.OptionData> optionDatas)
+    {
+        loadingOptions = false;
+        _UpdateOptions(optionDatas);
+    }
+
+    public void UpdateDefaultOptions(List<TMP_Dropdown.OptionData> optionDatas)
+    {
+        defaultOptions = optionDatas;
+        UpdateOptions(optionDatas);
     }
 
     public void UpdateField()
     {
         if (dropdown.captionText.text == "") return;
          
-        //showDropdown = false;
         inputField.text = dropdown.captionText.text;
         validSelection = true;
     }
 
     public void ShowAndRefocus()
     {
+        bool tooManyOptions = inputField.text.Length < minSerchCharactersToDisplayOptions && currentOptions.Count > maxResultsIfSearchTooShort;
+        if (tooManyOptions)
+        {
+            dropdown.options = new List<TMP_Dropdown.OptionData>();
+            dropdown.options.Add(new TMP_Dropdown.OptionData("Loading..."));
+            Deselect();
+        }
+        bool refocus = inputField.isFocused;
         int oldCarretPosition = inputField.caretPosition;
         dropdown.Show();
-        inputField.ActivateInputField();
-        inputField.caretPosition = oldCarretPosition;
+        if(tooManyOptions || loadingOptions) dropdown.transform.Find("Dropdown List").GetComponentsInChildren<Toggle>()[0].interactable = false;
+        if (refocus)
+        {
+            inputField.ActivateInputField();
+            inputField.caretPosition = oldCarretPosition;
+        }
     }
 
     public void HideAndRefocus()
     {
+        bool refocus = inputField.isFocused;
         int oldCarretPosition = inputField.caretPosition;
         dropdown.Hide();
-        inputField.ActivateInputField();
-        inputField.caretPosition = oldCarretPosition;
+        if (refocus)
+        {
+            inputField.ActivateInputField();
+            inputField.caretPosition = oldCarretPosition;
+        }
     }
 
     private void Deselect()
     {
-        // Add a blank dropdown option you will then remove at the end of the options list
         dropdown.options.Add(new TMP_Dropdown.OptionData() { text = "" });
-        // Select it
-        dropdown.value = dropdown.options.Count - 1;
-        // Remove it    
+        dropdown.value = dropdown.options.Count - 1;  
         dropdown.options.RemoveAt(dropdown.options.Count - 1);
-        // Done!
     }
 
     public string getSelection()

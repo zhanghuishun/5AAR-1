@@ -237,11 +237,7 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Prova
-      m_Image: {fileID: 0}
-    - m_Text: Secondo
-      m_Image: {fileID: 0}
-    - m_Text: Api
+    - m_Text: Loading...
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -952,6 +948,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropdown: {fileID: 4437051612978457730}
   inputField: {fileID: 6605919348813300515}
+  minSerchCharactersToDisplayOptions: 7
+  maxResultsIfSearchTooShort: 100
 --- !u!1 &5559253766645393310
 GameObject:
   m_ObjectHideFlags: 0
