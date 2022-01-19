@@ -421,7 +421,8 @@ public class InterfaceMethods
         { "FIND_BUS_STOP", () =>{ } }, //start the jurney towords the bus stop
         { "FIND_ANOTHER_TABACCHI_SHOP", () =>{ } }, //start the jurney towords another tabacchi shop (because the first was closed)
         { "CHECK_TICKET", () =>{ } }, //the ticket got recognized
-        { "INSIDE_THE_BUS", () =>{ } } //the ticket got recognized
+        { "INSIDE_THE_BUS", () =>{ } },
+        { "GOT_OFF_THE_BUS", () =>{ } } 
     };
 
     public static bool AddMethod(string interfaceName, Action method)
