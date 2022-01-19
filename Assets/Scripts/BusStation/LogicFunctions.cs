@@ -14,8 +14,11 @@ public class LogicFunctions : MonoBehaviour
     private int destDistance;
     float destLat;
     float destLng;
+    float stopLat;
+    float stopLng;
     private bool canTriggerBusIsArriving = false;
     private bool cnaTriggerBusToDestination = false;
+    private bool  isInsideBusStopArea = false;
     private DateTime datevalue1;
     private DateTime datevalue2;
     [SerializeField] private TextMeshProUGUI Instruction;
@@ -27,6 +30,7 @@ public class LogicFunctions : MonoBehaviour
     void Start()
     {
         GoogleAPIScript = GetComponent<GoogleMapAPIQuery>();
+        busInformation = GoogleAPIScript.busInformation;
         GPSInstance = GPSLocation.Instance;
         utils = Utils.Instance;
         ConversationController.Instance.RegisterTextOutputField(Instruction);
@@ -42,15 +46,15 @@ public class LogicFunctions : MonoBehaviour
             maxWait--;
         }
         if(maxWait <= 0) yield return 0;
-        busInformation = GoogleAPIScript.busInformation;
         //check if user is near bus station
         //Debug.Log("stationInfo"+ JsonUtility.ToJson(busInformation, true));
-        float stopLat = busInformation.departure_stop.location.lat;
-        float stopLng = busInformation.departure_stop.location.lng;
+        stopLat = busInformation.departure_stop.location.lat;
+        stopLng = busInformation.departure_stop.location.lng;
         int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, stopLat, stopLng));
         Debug.Log("distance of user to the bus station"+stopDistance);
-        if(stopDistance <= 30){ //should be 15, 30 for demo
+        if(stopDistance <= 20){
             isOnBusStop();
+            isInsideBusStopArea = true;
         }
         else{
             LostWhenFindingBusStop();
@@ -75,8 +79,7 @@ public class LogicFunctions : MonoBehaviour
     }
     private void LostWhenFindingBusStop()
     {
-        //confort
-        //relocate        
+        //TODO: send the event intent to find the destination again
         Debug.Log("get too far from bus station");
     }
     private void OnTheBus()
@@ -109,6 +112,16 @@ public class LogicFunctions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isInsideBusStopArea == true) {
+            stopLat = busInformation.departure_stop.location.lat;
+            stopLng = busInformation.departure_stop.location.lng;
+            int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, stopLat, stopLng));
+            if(stopDistance > 20){
+                isInsideBusStopArea = false;
+                canTriggerBusIsArriving = false;
+                LostWhenFindingBusStop();
+            }
+        }
         if(canTriggerBusIsArriving == true){
             if ((datevalue2 - DateTime.Now).TotalMinutes < 1){
                 ConversationController.Instance.ChangeTextFields("The bus is arrving in less one min, tell me when you are on the bus");
