@@ -73,7 +73,7 @@ public class ARConversationController : MonoBehaviour
     private void FindTabacchi()
     {
         destination.content = "tabacchi shop";
-        navigation.ShowNavigationInformation(Phases.BUY_TICKET, OnTabacchiReached);
+        navigation.ShowNavigationInformation(Phases.BUY_TICKET, OnTabacchiReached, true);
     }
 
     private void OnTabacchiReached()
@@ -86,6 +86,7 @@ public class ARConversationController : MonoBehaviour
     {
         destination.content = "tabacchi shop";
         //TODO integrate with navigarion
+        navigation.ShowNavigationInformation(Phases.BUY_TICKET, OnTabacchiReached, false);
         //if(notFound)
         DF2Context[] newContext = new DF2Context[1];
         newContext[0] = new DF2Context("TabacchiReached-Closed-followup", 2, new Dictionary<string, object>());
@@ -104,7 +105,7 @@ public class ARConversationController : MonoBehaviour
         Debug.Log("FindBusStop called");
         navigation.ShowNavigationInformation(Phases.FIND_BUS_STOP, () => 
             ConversationController.Instance.SendEventIntent("BusStopReached", () => 
-               LogicFunctions.AfterArrivingBusStopLogic() ));
+               LogicFunctions.AfterArrivingBusStopLogic()), true);
     }
 
     private void TravelOnTheBusLogic()
