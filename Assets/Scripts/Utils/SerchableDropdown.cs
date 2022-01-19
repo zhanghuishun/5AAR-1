@@ -20,6 +20,8 @@ public class SerchableDropdown : MonoBehaviour
 
     private bool loadingOptions = true;
 
+    public bool firstEditDone = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +42,7 @@ public class SerchableDropdown : MonoBehaviour
 
     public void UpdateSearch(string value)
     {
+        firstEditDone = true;
         validSelection = false;
         _UpdateOptions(defaultOptions.FindAll(x => x.text.ToLower().Contains(value.ToLower())));
     }
@@ -113,6 +116,6 @@ public class SerchableDropdown : MonoBehaviour
 
     public string getSelection()
     {
-        return validSelection ? inputField.text : "";
+        return validSelection ? inputField.text : null;
     }
 }

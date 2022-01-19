@@ -133,7 +133,7 @@ public class LogicFunctions : MonoBehaviour
             destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1]);
             destDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, destLat, destLng));
             if(destDistance < 500){
-                ConversationController.Instance.ChangeTextFields("The bus is arrving the destination, please prepare to get off the bus");
+                ConversationController.Instance.SendEventIntent("LastStopAproaching");
                 cnaTriggerBusToDestination = false;
             }
         }
