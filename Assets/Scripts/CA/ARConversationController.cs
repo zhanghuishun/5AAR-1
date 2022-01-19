@@ -105,7 +105,7 @@ public class ARConversationController : MonoBehaviour
         Debug.Log("FindBusStop called");
         navigation.ShowNavigationInformation(Phases.FIND_BUS_STOP, () => 
             ConversationController.Instance.SendEventIntent("BusStopReached", () => 
-               LogicFunctions.AfterArrivingBusStopLogic() ));
+               LogicFunctions.AfterArrivingBusStopLogic()), true);
     }
 
     private void TravelOnTheBusLogic()

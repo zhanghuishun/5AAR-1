@@ -75,8 +75,8 @@ public class GoogleMapAPIQuery : MonoBehaviour
                 tabacchiLoc.lng = tabacchiResults[tabacchiIndex].geometry.location.lng;
                 tabacchiIndex++;
                 }
-            catch(IndexOutOfRangeException e){
-                throw new ArgumentOutOfRangeException("tabacchiResults index is out of range.", e);//what else to do except exception?
+            catch(System.IndexOutOfRangeException e){
+                throw new System.ArgumentOutOfRangeException("tabacchiResults index is out of range.", e);//what else to do except exception?
             }
         }    
         yield return StartCoroutine(GetWalkRouteJSON (tabacchiLoc.lat, tabacchiLoc.lng));
