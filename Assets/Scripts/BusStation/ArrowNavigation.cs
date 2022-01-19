@@ -46,15 +46,15 @@ public class ArrowNavigation : MonoBehaviour
         utils = Utils.Instance;
         GPSInstance = GPSLocation.Instance;
     }
-    public void ShowNavigationInformation(Phases phase, Action callback){
-        StartCoroutine(StepsInformation(phase));
+    public void ShowNavigationInformation(Phases phase, Action callback, bool isFirstTabacchi){
+        StartCoroutine(StepsInformation(phase, isFirstTabacchi));
         afterDestinationCallback = callback;
     }
-    IEnumerator StepsInformation(Phases phase)
+    IEnumerator StepsInformation(Phases phase, bool isFirstTabacchi)
     {
         if(phase == Phases.BUY_TICKET)
         {
-            yield return StartCoroutine(GoogleAPIScript.TabacchiInOrder());
+            yield return StartCoroutine(GoogleAPIScript.TabacchiInOrder(isFirstTabacchi));
         }
         else if(phase == Phases.FIND_BUS_STOP) 
         {

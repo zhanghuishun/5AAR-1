@@ -27,7 +27,8 @@ public class GoogleMapAPIQuery : MonoBehaviour
     public transitDetails busInformation;
     [HideInInspector]
     public loc tabacchiLoc = new loc();
-
+    private List<result> tabacchiResults;
+    private int tabacchiIndex = 0;
     //public TextAsset xmlRawFile;
 
     void Awake(){
@@ -37,6 +38,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
         GPSInstance = GPSLocation.Instance;
         utils = Utils.Instance;
         APIKey = GlobalConfig.GoogleMapAPIKey;
+        tabacchiResults = new List<result>();
         /*XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.Load(new StringReader(xmlRawFile.text));
 
@@ -47,19 +49,39 @@ public class GoogleMapAPIQuery : MonoBehaviour
         APIKey = node.InnerXml;
         Debug.Log(APIKey);*/
     }
-
-    public IEnumerator TabacchiInOrder() {
-        //wait for GPS location
-        yield return new WaitForSecondsRealtime(4);
-        yield return StartCoroutine(GetTabacchiJSON());
-        //if setting is not none, setting override
-        if(InputFieldSubmit.tabacchiCoordinates[0] != "")
-        {
-            tabacchiLoc.lat = float.Parse(InputFieldSubmit.tabacchiCoordinates[0]);
-            tabacchiLoc.lng = float.Parse(InputFieldSubmit.tabacchiCoordinates[1]);
+    
+    public IEnumerator TabacchiInOrder(bool isFirstTabacchi) {
+        //if it is the first time, if user set their shop, follow the setting, or use the first result
+        if(isFirstTabacchi){
+            tabacchiIndex = 0;
+            if(InputFieldSubmit.tabacchiCoordinates[0] != "") {
+                tabacchiLoc.lat = float.Parse(InputFieldSubmit.tabacchiCoordinates[0]);
+                tabacchiLoc.lng = float.Parse(InputFieldSubmit.tabacchiCoordinates[1]);
+            }
+            else{
+                //wait for GPS location
+                yield return new WaitForSecondsRealtime(4);
+                //store tabacchi results into tabacchiResults
+                yield return StartCoroutine(GetTabacchiJSON());
+                tabacchiLoc.lat = tabacchiResults[tabacchiIndex].geometry.location.lat;//index = 0
+                tabacchiLoc.lng = tabacchiResults[tabacchiIndex].geometry.location.lng;
+                tabacchiIndex++;
+            }
         }
+        //if it is not the first time, use tabacchi index to get result
+        else {
+            try{
+                tabacchiLoc.lat = tabacchiResults[tabacchiIndex].geometry.location.lat;
+                tabacchiLoc.lng = tabacchiResults[tabacchiIndex].geometry.location.lng;
+                tabacchiIndex++;
+                }
+            catch(IndexOutOfRangeException e){
+                throw new ArgumentOutOfRangeException("tabacchiResults index is out of range.", e);//what else to do except exception?
+            }
+        }    
         yield return StartCoroutine(GetWalkRouteJSON (tabacchiLoc.lat, tabacchiLoc.lng));
-    }
+        }
+        
     public void RouteToBusStationQuery()
     {
         //get value from settings scene
@@ -95,8 +117,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
                 maxWait--;
             }
             if(maxWait <= 0) yield return 0;
-            tabacchiLoc.lat = attr.results[0].geometry.location.lat;
-            tabacchiLoc.lng = attr.results[0].geometry.location.lng;
+            tabacchiResults = attr.results;
 		}
 
 	}
