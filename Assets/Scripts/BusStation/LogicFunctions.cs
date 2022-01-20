@@ -76,7 +76,7 @@ public class LogicFunctions : MonoBehaviour
     private void LostWhenFindingBusStop()
     {
         //TODO: send the "LostWhenFindingBusStop" event intent to find the destination again
-        ConversationController.Instance.SendEventIntent("LostWhenFindingBusStop" , () =>
+        ConversationController.Instance.SendEventIntent("UserMovedAway" , () =>
             navigation.ShowBusStopNavigation(() => 
                 ConversationController.Instance.SendEventIntent("BusStopReached", () => 
                     AfterArrivingBusStopLogic()
