@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 using System.Xml;
 using System.IO;
 using System.Globalization;
+using Syrus.Plugins.DFV2Client;
 
 public class GoogleMapAPIQuery : MonoBehaviour
 {
@@ -53,16 +54,16 @@ public class GoogleMapAPIQuery : MonoBehaviour
     public IEnumerator TabacchiInOrder(bool isFirstTabacchi) {
         //if it is the first time, if user set their shop, follow the setting, or use the first result
         if(isFirstTabacchi){
+            //wait for GPS location
+            yield return new WaitForSecondsRealtime(4);
+            //store tabacchi results into tabacchiResults
+            yield return StartCoroutine(GetTabacchiJSON());
             tabacchiIndex = 0;
             if(InputFieldSubmit.tabacchiCoordinates[0] != "") {
                 tabacchiLoc.lat = float.Parse(InputFieldSubmit.tabacchiCoordinates[0]);
                 tabacchiLoc.lng = float.Parse(InputFieldSubmit.tabacchiCoordinates[1]);
             }
             else{
-                //wait for GPS location
-                yield return new WaitForSecondsRealtime(4);
-                //store tabacchi results into tabacchiResults
-                yield return StartCoroutine(GetTabacchiJSON());
                 tabacchiLoc.lat = tabacchiResults[tabacchiIndex].geometry.location.lat;//index = 0
                 tabacchiLoc.lng = tabacchiResults[tabacchiIndex].geometry.location.lng;
                 tabacchiIndex++;
@@ -75,8 +76,11 @@ public class GoogleMapAPIQuery : MonoBehaviour
                 tabacchiLoc.lng = tabacchiResults[tabacchiIndex].geometry.location.lng;
                 tabacchiIndex++;
                 }
-            catch(System.IndexOutOfRangeException e){
-                throw new System.ArgumentOutOfRangeException("tabacchiResults index is out of range.", e);//what else to do except exception?
+            catch(System.Exception e){
+                DF2Context[] newContext = new DF2Context[1];
+                newContext[0] = new DF2Context("TabacchiReached-Closed-followup", 2, new Dictionary<string, object>());
+                ConversationController.Instance.ResetContext(newContext);
+                ConversationController.Instance.SendTextIntent("No");
             }
         }    
         yield return StartCoroutine(GetWalkRouteJSON (tabacchiLoc.lat, tabacchiLoc.lng));

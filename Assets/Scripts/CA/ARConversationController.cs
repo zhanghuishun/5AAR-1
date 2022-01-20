@@ -86,13 +86,7 @@ public class ARConversationController : MonoBehaviour
     private void FindAnotherTabacchi()
     {
         destination.content = "tabacchi shop";
-        //TODO integrate with navigarion
         navigation.ShowTabacchiNavigation(OnTabacchiReached, false);
-        //if(notFound)
-        DF2Context[] newContext = new DF2Context[1];
-        newContext[0] = new DF2Context("TabacchiReached-Closed-followup", 2, new Dictionary<string, object>());
-        ConversationController.Instance.ResetContext(newContext);
-        ConversationController.Instance.SendTextIntent("No");
     }
 
     private void FindBusStopLogic()
