@@ -77,6 +77,7 @@ public class SerchableDropdown : MonoBehaviour
 
     public void ShowAndRefocus()
     {
+        _UpdateOptions(defaultOptions.FindAll(x => x.text.ToLower().Contains(inputField.text.ToLower())));
         bool tooManyOptions = inputField.text.Length < minSerchCharactersToDisplayOptions && currentOptions.Count > maxResultsIfSearchTooShort;
         if (tooManyOptions)
         {

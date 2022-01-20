@@ -252,7 +252,6 @@ public class ConversationController : MonoBehaviour
         Debug.Log(text);
 
         CustomPayload cp = GetCustomPayload(response);
-        Debug.Log(cp.substitutions);
         if (cp != null && cp.substitutions!=null)
         {
             Substitution[] sub = cp.substitutions;

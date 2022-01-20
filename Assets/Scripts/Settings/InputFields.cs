@@ -17,6 +17,7 @@ public class InputFields : MonoBehaviour
         if (InputFieldSubmit.selectedStopSet)
         {
             destinationCord.inputField.text = InputFieldSubmit.selectedStop == null ? "" : InputFieldSubmit.selectedStop.name;
+            destinationCord.UpdateSearch(destinationCord.inputField.text);
         }
         else
         {
@@ -48,26 +49,33 @@ public class InputFields : MonoBehaviour
     public void OnSaveAndQuit()
     {
         string[] tabacchiCord;
-        try
+        if (tabacchiLongitude.text.Equals("") || tabacchiLatitude.text.Equals(""))
         {
-            float lon = float.Parse(tabacchiLongitude.text);
-            float lat = float.Parse(tabacchiLatitude.text);
-
-            if (-180 <= lon && lon <= 180 && -90 <= lat && lat <= 90)
+            tabacchiCord = new string[2] { "", "" };
+        }
+        else
+        {
+            try
             {
-                tabacchiCord = new string[2] { tabacchiLongitude.text, tabacchiLatitude.text };
+
+                float lon = float.Parse(tabacchiLongitude.text);
+                float lat = float.Parse(tabacchiLatitude.text);
+
+                if (-180 <= lon && lon <= 180 && -90 <= lat && lat <= 90)
+                {
+                    tabacchiCord = new string[2] { tabacchiLongitude.text, tabacchiLatitude.text };
+                }
+                else
+                {
+                    tabacchiCord = null;
+                }
             }
-            else
+            catch (Exception)
             {
                 tabacchiCord = null;
             }
         }
-        catch (Exception)
-        {
-            tabacchiCord = null;
-        }
-
-
+        
         InputFieldSubmit.SaveData(destinationCord.getSelection(), tabacchiCord);
         SceneManager.LoadScene("SecondPage");
     }
