@@ -40,16 +40,16 @@ public class ARConversationController : MonoBehaviour
         InterfaceMethods.AddMethod("INSIDE_THE_BUS", InsideTheBusLogic);
         InterfaceMethods.AddMethod("GOT_OFF_THE_BUS", AlreadyGetOffTheBusLogic);
         InterfaceMethods.AddMethod("FINAL_REWARD", FinalActions);
-
-        Parameters.AddParameter("timeToBus", LogicFunctions.minutes);
-        Parameters.AddParameter("busNumber", GoogleAPIScript.busName);
-        Parameters.AddParameter("busArrivalTime", GoogleAPIScript.departureTime);
-        Parameters.AddParameter("destination", destination);
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        Parameters.AddParameter("timeToBus", LogicFunctions.minutes);
+        Parameters.AddParameter("busNumber", GoogleAPIScript.busName);
+        Parameters.AddParameter("busArrivalTime", GoogleAPIScript.departureTime);
+        Parameters.AddParameter("destination", destination);
+
         switch (PhaseController.phase)
         {
             case Phases.BUY_TICKET: BuyTicketLogic();  break;
