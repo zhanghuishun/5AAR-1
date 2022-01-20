@@ -25,7 +25,7 @@ public class LogicFunctions : MonoBehaviour
     [SerializeField] private GameObject ImageRecognition;
     public bool ticketChecked = false;
     private Container<int> _minutes = new Container<int>();
-    public Container<int> minutes { get { _minutes.content = Mathf.RoundToInt((float)(GoogleAPIScript.datevalue2 - DateTime.Now).TotalMinutes); ; return _minutes; } }
+    public Container<int> minutes { get { _minutes.content = Mathf.RoundToInt((float)(GoogleAPIScript.datevalue2 - DateTime.Now).TotalMinutes); return _minutes; } }
     private ArrowNavigation navigation;
     // Start is called before the first frame update
     void Start()
@@ -116,32 +116,37 @@ public class LogicFunctions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isInsideBusStopArea == true) {
+        if (isInsideBusStopArea == true)
+        {
             stopLat = busInformation.departure_stop.location.lat;
             stopLng = busInformation.departure_stop.location.lng;
             int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, stopLat, stopLng));
-            if(stopDistance > 20){
+            if (stopDistance > 20)
+            {
                 isInsideBusStopArea = false;
                 canTriggerBusIsArriving = false;
                 LostWhenFindingBusStop();
             }
         }
-        if(canTriggerBusIsArriving == true){
-            if (minutes.content <= 2){
-                ConversationController.Instance.SendEventIntent("BusArriving");
-                canTriggerBusIsArriving = false;
-            }
+
+        if (minutes.content <= 2 && canTriggerBusIsArriving == true)
+        {
+            ConversationController.Instance.SendEventIntent("BusArriving");
+            canTriggerBusIsArriving = false;
         }
-        if(cnaTriggerBusToDestination == true){
+
+        if (cnaTriggerBusToDestination == true)
+        {
             destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0]);
             destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1]);
             destDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, destLat, destLng));
-            if(destDistance < 500){
+            if (destDistance < 500)
+            {
                 ConversationController.Instance.SendEventIntent("LastStopAproaching");
                 cnaTriggerBusToDestination = false;
             }
         }
-        if(ticketChecked == true)
+        if (ticketChecked == true)
         {
             check_busticket.SetActive(true);
             //TODO: wait for seconds for user
