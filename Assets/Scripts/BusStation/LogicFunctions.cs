@@ -134,8 +134,8 @@ public class LogicFunctions : MonoBehaviour
             }
         }
         if(canTriggerBusIsArriving == true){
-            if ((datevalue2 - DateTime.Now).TotalMinutes < 1){
-                ConversationController.Instance.ChangeTextFields("The bus is arrving in less one min, tell me when you are on the bus");
+            if (minutes.content <= 2){
+                ConversationController.Instance.SendEventIntent("BusArriving");
                 canTriggerBusIsArriving = false;
             }
         }
