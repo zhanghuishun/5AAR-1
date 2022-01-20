@@ -42,6 +42,8 @@ public class ARConversationController : MonoBehaviour
         InterfaceMethods.AddMethod("FINAL_REWARD", FinalActions);
     }
 
+    private void Start()
+    {
         Parameters.AddParameter("timeToBus", GoogleAPIScript.minutes);
         Parameters.AddParameter("busNumber", GoogleAPIScript.busName);
         Parameters.AddParameter("busArrivalTime", GoogleAPIScript.departureTime);
@@ -49,9 +51,9 @@ public class ARConversationController : MonoBehaviour
 
         switch (PhaseController.phase)
         {
-            case Phases.BUY_TICKET: BuyTicketLogic();  break;
-            case Phases.FIND_BUS_STOP: FindBusStopLogic();  break;
-            case Phases.TRAVEL_ON_THE_BUS: TravelOnTheBusLogic();  break;
+            case Phases.BUY_TICKET: BuyTicketLogic(); break;
+            case Phases.FIND_BUS_STOP: FindBusStopLogic(); break;
+            case Phases.TRAVEL_ON_THE_BUS: TravelOnTheBusLogic(); break;
             default: break;
         }
     }

@@ -35,7 +35,8 @@ public class GoogleMapAPIQuery : MonoBehaviour
     public Container<string> busName = new Container<string>();
     public DateTime datevalue2;
     public Container<string> departureTime = new Container<string>();
-    public Container<int> minutes = new Container<int>();
+    private Container<int> _minutes = new Container<int>();
+    public Container<int> minutes { get { _minutes.content = Mathf.RoundToInt((float)(datevalue2 - DateTime.Now).TotalMinutes); return _minutes; } }
     
     void Awake(){
 
@@ -173,7 +174,6 @@ public class GoogleMapAPIQuery : MonoBehaviour
             datevalue2 = utils.TimeParse(busInformation.departure_time.text);
             busName.content = busInformation.line.short_name;
             departureTime.content = busInformation.departure_time.text;
-            minutes.content = Mathf.RoundToInt((float)(datevalue2 - DateTime.Now).TotalMinutes);
         }
     }
     IEnumerator GetWalkRouteJSON(float destLat, float destLng) {
