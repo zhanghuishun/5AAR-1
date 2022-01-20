@@ -452,8 +452,9 @@ public class Parameters
 {
     public static readonly Dictionary<string, object> list = new Dictionary<string, object>
     {
-        { "time", null },
-        { "direction", null },
+        { "timeToBus", null },
+        { "busNumber", null },
+        { "busArrivalTime", null },
         { "destination", null }
     };
 

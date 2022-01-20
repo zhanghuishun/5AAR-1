@@ -37,7 +37,11 @@ public class ARConversationController : MonoBehaviour
         InterfaceMethods.AddMethod("FIND_BUS_STOP", FindBusStop);
         InterfaceMethods.AddMethod("INSIDE_THE_BUS", InsideTheBusLogic);
         InterfaceMethods.AddMethod("GOT_OFF_THE_BUS", AlreadyGetOffTheBusLogic);
+        InterfaceMethods.AddMethod("FINAL_REWARD", FinalActions);
 
+        Parameters.AddParameter("timeToBus", LogicFunctions.minutes);
+        Parameters.AddParameter("busNumber", LogicFunctions.busName);
+        Parameters.AddParameter("busArrivalTime", LogicFunctions.departureTime);
         Parameters.AddParameter("destination", destination);
     }
 

@@ -27,7 +27,8 @@ public class LogicFunctions : MonoBehaviour
     [SerializeField] private GameObject ImageRecognition;
     public bool ticketChecked = false;
     public Container<string> busName = new Container<string>();
-    public Container<int> minutes = new Container<int>();
+    private Container<int> _minutes = new Container<int>();
+    public Container<int> minutes { get { _minutes.content = Mathf.RoundToInt((float)(datevalue2 - datevalue1).TotalMinutes); ; return _minutes; } }
     public Container<string> departureTime = new Container<string>();
     // Start is called before the first frame update
     void Start()
@@ -70,7 +71,6 @@ public class LogicFunctions : MonoBehaviour
         datevalue2 = utils.TimeParse(busInformation.departure_time.text);
         busName.content = busInformation.line.short_name;
         //Debug.Log("current time:" + DateTime.Now);
-        minutes.content = MinutesToDeparture();
         departureTime.content = busInformation.departure_time.text;
         if(minutes.content > 1) ConversationController.Instance.ChangeTextFields("the bus " +"is arriving in " + "min at ");
         //Debug.Log("the bus is arriving in " +minutes+ "min");
@@ -79,11 +79,6 @@ public class LogicFunctions : MonoBehaviour
         //CA: The bus is arrving in less one min, tell me when you are on the bus
         
         //wait for reply then OnTheBus()
-    }
-
-    private int MinutesToDeparture()
-    {
-        return Mathf.RoundToInt((float)(datevalue2 - datevalue1).TotalMinutes);
     }
 
     private void LostWhenFindingBusStop()
