@@ -33,6 +33,7 @@ public class ARConversationController : MonoBehaviour
         InterfaceMethods.AddMethod("CHECK_TICKET", () => LogicFunctions.TicketRecognitionLogic());
         InterfaceMethods.AddMethod("FIND_BUS_STOP", FindBusStop);
         InterfaceMethods.AddMethod("INSIDE_THE_BUS", InsideTheBusLogic);
+        InterfaceMethods.AddMethod("GOT_OFF_THE_BUS", AlreadyGetOffTheBusLogic);
 
         Parameters.AddParameter("destination", destination);
     }
@@ -73,7 +74,7 @@ public class ARConversationController : MonoBehaviour
     private void FindTabacchi()
     {
         destination.content = "tabacchi shop";
-        navigation.ShowNavigationInformation(Phases.BUY_TICKET, OnTabacchiReached, true);
+        navigation.ShowTabacchiNavigation(OnTabacchiReached, true);
     }
 
     private void OnTabacchiReached()
@@ -86,7 +87,7 @@ public class ARConversationController : MonoBehaviour
     {
         destination.content = "tabacchi shop";
         //TODO integrate with navigarion
-        navigation.ShowNavigationInformation(Phases.BUY_TICKET, OnTabacchiReached, false);
+        navigation.ShowTabacchiNavigation(OnTabacchiReached, false);
         //if(notFound)
         DF2Context[] newContext = new DF2Context[1];
         newContext[0] = new DF2Context("TabacchiReached-Closed-followup", 2, new Dictionary<string, object>());
@@ -103,9 +104,9 @@ public class ARConversationController : MonoBehaviour
     {
         destination.content = "bus stop";
         Debug.Log("FindBusStop called");
-        navigation.ShowNavigationInformation(Phases.FIND_BUS_STOP, () => 
+        navigation.ShowBusStopNavigation(() => 
             ConversationController.Instance.SendEventIntent("BusStopReached", () => 
-               LogicFunctions.AfterArrivingBusStopLogic()), true);
+               LogicFunctions.AfterArrivingBusStopLogic()));
     }
 
     private void TravelOnTheBusLogic()
@@ -125,7 +126,20 @@ public class ARConversationController : MonoBehaviour
             ConversationController.Instance.SendEventIntent("OnTheBusNoTicket");
         }
     }
+    private void AlreadyGetOffTheBusLogic()
+    {
+        if(navigation.isAlreadyReachedDestination())
+        {
+            ConversationController.Instance.SendEventIntent("DestinationReached");//TODO
+        }
+        else
+        {
+            navigation.ShowBusStopNavigation(() => 
+            ConversationController.Instance.SendEventIntent("BusStopReached", () => 
+               LogicFunctions.AfterArrivingBusStopLogic()));
+        }
 
+    }
     // Update is called once per frame
     void Update()
     {

@@ -46,26 +46,30 @@ public class ArrowNavigation : MonoBehaviour
         utils = Utils.Instance;
         GPSInstance = GPSLocation.Instance;
     }
-    public void ShowNavigationInformation(Phases phase, Action callback, bool isFirstTabacchi){
-        StartCoroutine(StepsInformation(phase, isFirstTabacchi));
+    public void ShowTabacchiNavigation(Action callback, bool isFirstTabacchi){
+        StartCoroutine(TabacchiStepsInformation(isFirstTabacchi));
         afterDestinationCallback = callback;
     }
-    IEnumerator StepsInformation(Phases phase, bool isFirstTabacchi)
+    public void ShowBusStopNavigation(Action callback){
+        StartCoroutine(BusStopStepsInformation());
+        afterDestinationCallback = callback;
+    }
+    IEnumerator TabacchiStepsInformation(bool isFirstTabacchi)
     {
-        if(phase == Phases.BUY_TICKET)
-        {
-            yield return StartCoroutine(GoogleAPIScript.TabacchiInOrder(isFirstTabacchi));
-        }
-        else if(phase == Phases.FIND_BUS_STOP) 
-        {
-            float destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0], CultureInfo.InvariantCulture);
-            float destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1], CultureInfo.InvariantCulture);
-            //Debug.Log(destLat.ToString()+destLng.ToString());
-            yield return StartCoroutine (GoogleAPIScript.GetBusRouteJSON (destLat, destLng));//45.5168268f, 9.2166683f
-        }
+        yield return StartCoroutine(GoogleAPIScript.TabacchiInOrder(isFirstTabacchi));
         yield return new WaitForSecondsRealtime(1);
         yield return StartCoroutine(ClickToGetStepsInformation());
 
+    }
+    IEnumerator BusStopStepsInformation()
+    {
+        
+        float destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0], CultureInfo.InvariantCulture);
+        float destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1], CultureInfo.InvariantCulture);
+        //Debug.Log(destLat.ToString()+destLng.ToString());
+        yield return StartCoroutine (GoogleAPIScript.GetBusRouteJSON (destLat, destLng));//45.5168268f, 9.2166683f
+        yield return new WaitForSecondsRealtime(1);
+        yield return StartCoroutine(ClickToGetStepsInformation());
     }
     IEnumerator ClickToGetStepsInformation()
     {
@@ -199,7 +203,17 @@ public class ArrowNavigation : MonoBehaviour
 
 		return false;
 	}
-    
+    public bool isAlreadyReachedDestination()
+    {
+        float destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0], CultureInfo.InvariantCulture);
+        float destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1], CultureInfo.InvariantCulture);
+        //already reached
+        if(isCollide()){
+            return true;
+        }
+        else return false;
+
+    }
 	// Update is called once per frame
 	void Update () {      
         if(compass != null) {
