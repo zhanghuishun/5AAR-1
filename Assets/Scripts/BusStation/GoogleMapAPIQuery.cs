@@ -9,6 +9,7 @@ using System.Xml;
 using System.IO;
 using System.Globalization;
 using Syrus.Plugins.DFV2Client;
+using System;
 
 public class GoogleMapAPIQuery : MonoBehaviour
 {
@@ -31,6 +32,9 @@ public class GoogleMapAPIQuery : MonoBehaviour
     private List<result> tabacchiResults;
     private int tabacchiIndex = 0;
     //public TextAsset xmlRawFile;
+    public Container<string> busName = new Container<string>();
+    public DateTime datevalue2;
+    public Container<string> departureTime = new Container<string>();
 
     void Awake(){
 
@@ -164,6 +168,10 @@ public class GoogleMapAPIQuery : MonoBehaviour
                     break;
                 }
             }
+            //send parameters to CA
+            datevalue2 = utils.TimeParse(busInformation.departure_time.text);
+            busName.content = busInformation.line.short_name;
+            departureTime.content = busInformation.departure_time.text;
         }
     }
     IEnumerator GetWalkRouteJSON(float destLat, float destLng) {
