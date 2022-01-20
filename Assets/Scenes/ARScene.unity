@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -722,6 +722,66 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 732905400}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &732905404 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8140418714427158363, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+    type: 3}
+  m_PrefabInstance: {fileID: 732905400}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86c68be09c9aa04fa98adf83bb777e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &732905405 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 272402737902304937, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+    type: 3}
+  m_PrefabInstance: {fileID: 732905400}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &732905406 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8599908861478419625, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+    type: 3}
+  m_PrefabInstance: {fileID: 732905400}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &732905407 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9210260189114842524, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+    type: 3}
+  m_PrefabInstance: {fileID: 732905400}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &732905408 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5980933643164283291, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+    type: 3}
+  m_PrefabInstance: {fileID: 732905400}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &746378224 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7631350001068115815, guid: 5d2f25396e36f403c8c2a8c7181aec81,
@@ -1029,6 +1089,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CAText: {fileID: 1306750558}
+  textButtonScript: {fileID: 732905404}
+  CAButtons:
+  - {fileID: 732905408}
+  - {fileID: 732905407}
+  - {fileID: 732905406}
+  - {fileID: 732905405}
   subscriptionPopup: {fileID: 732905401}
   stopButtonPopup: {fileID: 732905403}
   ticketMachinePopup: {fileID: 732905402}

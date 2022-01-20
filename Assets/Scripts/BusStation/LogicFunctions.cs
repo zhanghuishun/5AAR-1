@@ -70,10 +70,9 @@ public class LogicFunctions : MonoBehaviour
         datevalue2 = utils.TimeParse(busInformation.departure_time.text);
         busName.content = busInformation.line.short_name;
         //Debug.Log("current time:" + DateTime.Now);
-        double minutesDouble = (datevalue2 - datevalue1).TotalMinutes;
-        minutes.content = Mathf.RoundToInt((float)minutesDouble);
+        minutes.content = MinutesToDeparture();
         departureTime.content = busInformation.departure_time.text;
-        if(minutes > 1) ConversationController.Instance.ChangeTextFields("the bus " +"is arriving in " + "min at ");
+        if(minutes.content > 1) ConversationController.Instance.ChangeTextFields("the bus " +"is arriving in " + "min at ");
         //Debug.Log("the bus is arriving in " +minutes+ "min");
         canTriggerBusIsArriving = true;
         //wait
@@ -81,6 +80,12 @@ public class LogicFunctions : MonoBehaviour
         
         //wait for reply then OnTheBus()
     }
+
+    private int MinutesToDeparture()
+    {
+        return Mathf.RoundToInt((float)(datevalue2 - datevalue1).TotalMinutes);
+    }
+
     private void LostWhenFindingBusStop()
     {
         //TODO: send the event intent to find the destination again

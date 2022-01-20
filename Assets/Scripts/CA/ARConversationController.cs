@@ -5,10 +5,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ARConversationController : MonoBehaviour
 {
     public TextMeshProUGUI CAText;
+    public TextButton textButtonScript;
+    public Button[] CAButtons;
     public GameObject subscriptionPopup;
     public GameObject stopButtonPopup;
     public GameObject ticketMachinePopup;
@@ -124,16 +127,27 @@ public class ARConversationController : MonoBehaviour
     {
         if(navigation.isAlreadyReachedDestination())
         {
-            ConversationController.Instance.SendEventIntent("DestinationReached");//TODO
+            ConversationController.Instance.SendEventIntent("FinalDestinationReached");
         }
         else
         {
+            ConversationController.Instance.ResetContext(new DF2Context[1] { new DF2Context("Moving", 2) });
+            textButtonScript.ChangeOptions(new string[2] {"Where are we going?", "Help" });
             navigation.ShowBusStopNavigation(() => 
             ConversationController.Instance.SendEventIntent("BusStopReached", () => 
                LogicFunctions.AfterArrivingBusStopLogic()));
         }
 
     }
+
+    private void FinalActions()
+    {
+        foreach(Button b in CAButtons)
+        {
+            b.interactable = false;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
