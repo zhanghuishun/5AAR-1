@@ -571,6 +571,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: StepsPage
       objectReference: {fileID: 0}
+    - target: {fileID: 8880389303901139301, guid: d0863b8fc1cf74a0e93481ebb64362f0,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 54e71930ac7a04677a6f92e2d67ca16f,
+        type: 2}
+    - target: {fileID: 8880389303901139301, guid: d0863b8fc1cf74a0e93481ebb64362f0,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880389303901139301, guid: d0863b8fc1cf74a0e93481ebb64362f0,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5510826671472812890, guid: 54e71930ac7a04677a6f92e2d67ca16f,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0863b8fc1cf74a0e93481ebb64362f0, type: 3}
 --- !u!1 &302436161 stripped

@@ -263,6 +263,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3567775754519506857, guid: d985d18ba832646599521c0a65c08eae,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 9b4161f50186b46c4a5d17892e1e9355,
+        type: 2}
+    - target: {fileID: 3567775754519506857, guid: d985d18ba832646599521c0a65c08eae,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 3644708363603585986, guid: 9b4161f50186b46c4a5d17892e1e9355,
+        type: 2}
     - target: {fileID: 3827485780611150186, guid: d985d18ba832646599521c0a65c08eae,
         type: 3}
       propertyPath: m_Options.m_Options.Array.data[3].m_Text
@@ -408,6 +420,30 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7928164922669828267, guid: d985d18ba832646599521c0a65c08eae,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 9b4161f50186b46c4a5d17892e1e9355,
+        type: 2}
+    - target: {fileID: 7928164922669828267, guid: d985d18ba832646599521c0a65c08eae,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 3644708363603585986, guid: 9b4161f50186b46c4a5d17892e1e9355,
+        type: 2}
+    - target: {fileID: 7941697977042280969, guid: d985d18ba832646599521c0a65c08eae,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 9b4161f50186b46c4a5d17892e1e9355,
+        type: 2}
+    - target: {fileID: 7941697977042280969, guid: d985d18ba832646599521c0a65c08eae,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 3644708363603585986, guid: 9b4161f50186b46c4a5d17892e1e9355,
+        type: 2}
     - target: {fileID: 8496390117687485801, guid: d985d18ba832646599521c0a65c08eae,
         type: 3}
       propertyPath: m_AnchoredPosition.y
