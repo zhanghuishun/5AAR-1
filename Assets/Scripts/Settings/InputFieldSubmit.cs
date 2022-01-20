@@ -14,7 +14,7 @@ public class InputFieldSubmit : MonoBehaviour
     public static StopInfo selectedStop = null;
     private static string stopName = null;
     public static bool selectedStopSet = false;
-    public static string[] destinationCoordinates { get => new string[2] { selectedStop.lon.ToString(), selectedStop.lon.ToString() }; } // = new string[2] {"45.4827681", "9.2322856"}; // lambrate station,
+    public static string[] destinationCoordinates { get => new string[2] { selectedStop.lat.ToString(), selectedStop.lon.ToString() }; } // = new string[2] {"45.4827681", "9.2322856"}; // lambrate station,
     public static string[] tabacchiCoordinates = null;// {"45.480759", "9.224494"}; //tabacchi near BCL
 
     private static string selectedStopNameKey = "selectedStop";
