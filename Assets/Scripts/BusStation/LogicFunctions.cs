@@ -19,7 +19,6 @@ public class LogicFunctions : MonoBehaviour
     private bool canTriggerBusIsArriving = false;
     private bool cnaTriggerBusToDestination = false;
     private bool  isInsideBusStopArea = false;
-    private DateTime datevalue1;
     private DateTime datevalue2;
     [SerializeField] private TextMeshProUGUI Instruction;
     [SerializeField] private GameObject box_busticket;
@@ -28,7 +27,7 @@ public class LogicFunctions : MonoBehaviour
     public bool ticketChecked = false;
     public Container<string> busName = new Container<string>();
     private Container<int> _minutes = new Container<int>();
-    public Container<int> minutes { get { _minutes.content = Mathf.RoundToInt((float)(datevalue2 - datevalue1).TotalMinutes); ; return _minutes; } }
+    public Container<int> minutes { get { _minutes.content = Mathf.RoundToInt((float)(datevalue2 - DateTime.Now).TotalMinutes); ; return _minutes; } }
     public Container<string> departureTime = new Container<string>();
     private ArrowNavigation navigation;
     // Start is called before the first frame update
@@ -69,12 +68,10 @@ public class LogicFunctions : MonoBehaviour
     private void isOnBusStop()
     {
         //CA: The bus is arrving in XX time, 
-        datevalue1 = DateTime.Now;
         datevalue2 = utils.TimeParse(busInformation.departure_time.text);
         busName.content = busInformation.line.short_name;
         //Debug.Log("current time:" + DateTime.Now);
         departureTime.content = busInformation.departure_time.text;
-        if(minutes.content > 1) ConversationController.Instance.ChangeTextFields("the bus " +"is arriving in " + "min at ");
         //Debug.Log("the bus is arriving in " +minutes+ "min");
         canTriggerBusIsArriving = true;
         //wait
