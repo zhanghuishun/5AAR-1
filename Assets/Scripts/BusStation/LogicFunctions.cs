@@ -29,6 +29,7 @@ public class LogicFunctions : MonoBehaviour
     public Container<string> busName = new Container<string>();
     public Container<int> minutes = new Container<int>();
     public Container<string> departureTime = new Container<string>();
+    private ArrowNavigation navigation;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +38,7 @@ public class LogicFunctions : MonoBehaviour
         GPSInstance = GPSLocation.Instance;
         utils = Utils.Instance;
         ConversationController.Instance.RegisterTextOutputField(Instruction);
+        navigation = GetComponent<ArrowNavigation>();
     }
     public void AfterArrivingBusStopLogic(){
         StartCoroutine(AfterArrivingBusStop());
@@ -88,7 +90,15 @@ public class LogicFunctions : MonoBehaviour
 
     private void LostWhenFindingBusStop()
     {
-        //TODO: send the event intent to find the destination again
+        //TODO: send the "LostWhenFindingBusStop" event intent to find the destination again
+        ConversationController.Instance.SendEventIntent("LostWhenFindingBusStop" , () =>
+            navigation.ShowBusStopNavigation(() => 
+                ConversationController.Instance.SendEventIntent("BusStopReached", () => 
+                    AfterArrivingBusStopLogic()
+                )
+            )
+        );
+            
         Debug.Log("get too far from bus station");
     }
     private void OnTheBus()
