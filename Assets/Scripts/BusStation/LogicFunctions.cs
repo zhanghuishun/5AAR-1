@@ -24,8 +24,6 @@ public class LogicFunctions : MonoBehaviour
     [SerializeField] private GameObject check_busticket;
     [SerializeField] private GameObject ImageRecognition;
     public bool ticketChecked = false;
-    private Container<int> _minutes = new Container<int>();
-    public Container<int> minutes { get { _minutes.content = Mathf.RoundToInt((float)(GoogleAPIScript.datevalue2 - DateTime.Now).TotalMinutes); return _minutes; } }
     private ArrowNavigation navigation;
     // Start is called before the first frame update
     void Start()
@@ -129,7 +127,7 @@ public class LogicFunctions : MonoBehaviour
             }
         }
 
-        if (minutes.content <= 2 && canTriggerBusIsArriving == true)
+        if (GoogleAPIScript.minutes.content <= 2 && canTriggerBusIsArriving == true)
         {
             ConversationController.Instance.SendEventIntent("BusArriving");
             canTriggerBusIsArriving = false;

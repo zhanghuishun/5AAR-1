@@ -42,10 +42,7 @@ public class ARConversationController : MonoBehaviour
         InterfaceMethods.AddMethod("FINAL_REWARD", FinalActions);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Parameters.AddParameter("timeToBus", LogicFunctions.minutes);
+        Parameters.AddParameter("timeToBus", GoogleAPIScript.minutes);
         Parameters.AddParameter("busNumber", GoogleAPIScript.busName);
         Parameters.AddParameter("busArrivalTime", GoogleAPIScript.departureTime);
         Parameters.AddParameter("destination", destination);
