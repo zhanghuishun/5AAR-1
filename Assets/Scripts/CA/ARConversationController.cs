@@ -41,7 +41,7 @@ public class ARConversationController : MonoBehaviour
         InterfaceMethods.AddMethod("GOT_OFF_THE_BUS", AlreadyGetOffTheBusLogic);
         InterfaceMethods.AddMethod("FINAL_REWARD", FinalActions);
 
-        Parameters.AddParameter("timeToBus", LogicFunctions.minutes);
+        Parameters.AddParameter("timeToBus", GoogleAPIScript.minutes);
         Parameters.AddParameter("busNumber", GoogleAPIScript.busName);
         Parameters.AddParameter("busArrivalTime", GoogleAPIScript.departureTime);
         Parameters.AddParameter("destination", destination);
