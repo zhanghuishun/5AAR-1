@@ -17,6 +17,7 @@ public class ARConversationController : MonoBehaviour
     public GameObject ticketMachinePopup;
     private ArrowNavigation navigation;
     private LogicFunctions LogicFunctions;
+    private GoogleMapAPIQuery GoogleAPIScript;
 
     private bool hasTicket = true;
 
@@ -27,6 +28,7 @@ public class ARConversationController : MonoBehaviour
         ConversationController.Instance.RegisterTextOutputField(CAText);
         navigation = GetComponent<ArrowNavigation>();
         LogicFunctions = GetComponent<LogicFunctions>();
+        GoogleAPIScript = GetComponent<GoogleMapAPIQuery>();
 
         InterfaceMethods.AddMethod("HELP_SUBSCRIPTION", ShowSubscriptionPopup);
         InterfaceMethods.AddMethod("HELP_STOP_BUTTON", ShowStopButtonPopup);
@@ -40,8 +42,8 @@ public class ARConversationController : MonoBehaviour
         InterfaceMethods.AddMethod("FINAL_REWARD", FinalActions);
 
         Parameters.AddParameter("timeToBus", LogicFunctions.minutes);
-        Parameters.AddParameter("busNumber", LogicFunctions.busName);
-        Parameters.AddParameter("busArrivalTime", LogicFunctions.departureTime);
+        Parameters.AddParameter("busNumber", GoogleAPIScript.busName);
+        Parameters.AddParameter("busArrivalTime", GoogleAPIScript.departureTime);
         Parameters.AddParameter("destination", destination);
     }
 
