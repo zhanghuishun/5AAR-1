@@ -40,9 +40,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1219367322644994932}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee3fcc560b0b44eef916417800135a71, type: 3}
+  m_Script: {fileID: 11500000, guid: 9040746e0f81c314fb5fccc949648e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destinationCord: {fileID: 0}
-  tabacchiLongitude: {fileID: 0}
-  tabacchiLatitude: {fileID: 0}

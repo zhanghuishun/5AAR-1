@@ -31,6 +31,8 @@ public class InputFields : MonoBehaviour
             tabacchiLongitude.text = SettingsData.tabacchiCoordinates[0];
             tabacchiLatitude.text = SettingsData.tabacchiCoordinates[1];
         }
+
+        volumeSlider.value = SettingsData.volume;
     }
 
     private IEnumerator UpdateDestination()

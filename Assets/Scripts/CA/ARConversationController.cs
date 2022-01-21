@@ -54,7 +54,6 @@ public class ARConversationController : MonoBehaviour
         {
             case Phases.BUY_TICKET: BuyTicketLogic(); break;
             case Phases.FIND_BUS_STOP: FindBusStopLogic(); break;
-            case Phases.TRAVEL_ON_THE_BUS: TravelOnTheBusLogic(); break;
             default: break;
         }
     }

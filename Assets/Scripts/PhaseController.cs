@@ -11,7 +11,10 @@ public class PhaseController : MonoBehaviour
     private void Awake()
     {
         if (!thisExists)
+        {
             DontDestroyOnLoad(gameObject);
+            thisExists = true;
+        }
         else
             Destroy(gameObject);
     }
@@ -33,5 +36,4 @@ public enum Phases
 {
     BUY_TICKET = 0,
     FIND_BUS_STOP = 1,
-    TRAVEL_ON_THE_BUS = 2
 }
