@@ -26,6 +26,7 @@ public class ConversationController : MonoBehaviour
 
     private bool inactive = false;
 
+    private string lastText;
 
     private void Awake()
     {
@@ -42,11 +43,21 @@ public class ConversationController : MonoBehaviour
             textOutputFields = new List<Text>();
             textPROOutputFields = new List<TextMeshProUGUI>();
             textFieldsOverwritten = true;
+
+            InterfaceMethods.AddMethod("REPEAT", ()=>StartCoroutine(RepeatAfterSeconds(10)));
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    private IEnumerator RepeatAfterSeconds(int s)
+    {
+        string text = lastText;
+        yield return new WaitForSecondsRealtime(s);
+        if (text.Equals(lastText))
+            StartCoroutine(_ChangeTextFields(text, true));
     }
 
     // Start is called before the first frame update
@@ -238,12 +249,13 @@ public class ConversationController : MonoBehaviour
     {
         //Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
         string responseText = GetResponseText(response);//response.queryResult.fulfillmentText;
-        StartCoroutine(_OverwriteTextFields(responseText));
+        string method = response.queryResult.action;
+        bool isRepeatResponse = method != null && method.Equals("REPEAT");
+        StartCoroutine(_OverwriteTextFields(responseText,!isRepeatResponse));
 
         CustomPayload cp = GetCustomPayload(response);
-        string method = response.queryResult.action;
         if (method!=null && InterfaceMethods.list.ContainsKey(method)) InterfaceMethods.list[method].Invoke();
-        if (optionsConsumer != null) optionsConsumer.Invoke(cp?.options);
+        if (optionsConsumer != null && !isRepeatResponse) optionsConsumer.Invoke(cp?.options);
     }
 
     private string GetResponseText(DF2Response response)
@@ -271,10 +283,10 @@ public class ConversationController : MonoBehaviour
         return JsonUtility.FromJson<CustomPayload>(s);
     }
 
-    private IEnumerator _OverwriteTextFields(string text)
+    private IEnumerator _OverwriteTextFields(string text, bool rememberText)
     {
         //Debug.Log(name + " said: \"" + response.queryResult.fulfillmentText + "\"");
-        Debug.Log(text);
+        if(rememberText) lastText = text;
         foreach (Text field in textOutputFields)
             field.text = text;
 
@@ -307,11 +319,11 @@ public class ConversationController : MonoBehaviour
 
     public void ChangeTextFields(string text, Action callback = null)
     {
-        StartCoroutine(_ChangeTextFields(text, callback));
+        StartCoroutine(_ChangeTextFields(text, true, callback));
 
     }
 
-    private IEnumerator _ChangeTextFields(string text, Action callback = null)
+    private IEnumerator _ChangeTextFields(string text, bool rememberText, Action callback = null)
     {
         if (textFieldsLock != null)
         {
@@ -343,7 +355,7 @@ public class ConversationController : MonoBehaviour
             Debug.Log("enter _change text fields");
             Debug.Log(Thread.CurrentThread.ManagedThreadId.ToString());
             textFieldsOverwritten = false;
-            StartCoroutine(_OverwriteTextFields(text));
+            StartCoroutine(_OverwriteTextFields(text, rememberText));
             Debug.Log("textFieldsOverwritten:" + textFieldsOverwritten);
             yield return new WaitUntil(() => textFieldsOverwritten);
             //Debug.Log("finish _change text fields");
@@ -422,7 +434,8 @@ public class InterfaceMethods
         { "CHECK_TICKET", () =>{ } }, //the ticket got recognized
         { "INSIDE_THE_BUS", () =>{ } },
         { "GOT_OFF_THE_BUS", () =>{ } },
-        { "FINAL_REWARD", () =>{ } }
+        { "FINAL_REWARD", () =>{ } },
+        { "REPEAT", () =>{ } }
     };
 
     public static bool AddMethod(string interfaceName, Action method)
