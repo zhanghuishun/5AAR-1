@@ -37,7 +37,9 @@ public class GoogleMapAPIQuery : MonoBehaviour
     public Container<string> departureTime = new Container<string>();
     private Container<int> _minutes = new Container<int>();
     public Container<int> minutes { get { _minutes.content = Mathf.RoundToInt((float)(datevalue2 - DateTime.Now).TotalMinutes); return _minutes; } }
-    
+    public float stopLat;
+    public float stopLng;
+
     void Awake(){
 
     }
@@ -139,7 +141,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
         //string origin = "origin=" + "45.5219%2C9.2216939";
         string origin = "origin=" + GPSInstance.lat.ToString("G", CultureInfo.InvariantCulture) + "%2C" + GPSInstance.lng.ToString("G", CultureInfo.InvariantCulture);
 #if (UNITY_EDITOR)
-        origin = "origin=45.4806988%2C9.2245384";
+        origin = "origin=45.5218740%2C9.226940";
 #endif
         //TODO: set the dest
         string dest = "destination=" + destLat.ToString("G", CultureInfo.InvariantCulture) + "%2C" + destLng.ToString("G", CultureInfo.InvariantCulture);
@@ -170,6 +172,10 @@ public class GoogleMapAPIQuery : MonoBehaviour
                     break;
                 }
             }
+            //send parameters to LogicFunctions
+            stopLat = busInformation.departure_stop.location.lat;
+            stopLng = busInformation.departure_stop.location.lng;
+            Debug.Log(stopLat +","+stopLng);
             //send parameters to CA
             datevalue2 = utils.TimeParse(busInformation.departure_time.text);
             busName.content = busInformation.line.short_name;
