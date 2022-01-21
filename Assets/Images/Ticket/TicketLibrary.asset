@@ -25,3 +25,13 @@ MonoBehaviour:
     m_SpecifySize: 1
     m_Name: Ticket
     m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5511048401454830414
+      m_GuidHigh: 12131308535935492542
+    m_SerializedTextureGuid:
+      m_GuidLow: 4959412344137194628
+      m_GuidHigh: 16586956001883496888
+    m_Size: {x: 0.12, y: 0.073290415}
+    m_SpecifySize: 1
+    m_Name: Ticket1
+    m_Texture: {fileID: 0}
