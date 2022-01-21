@@ -163,7 +163,7 @@ public class ArrowNavigation : MonoBehaviour
             ConversationController.Instance.SendEventIntent("NotMoving");
         }
 
-        if (isCollide())
+        if (isCollide(0.0001f))
         {
             //show checkpoint firework
             count++;
@@ -191,12 +191,12 @@ public class ArrowNavigation : MonoBehaviour
 				
 	}
 
-    bool isCollide() {
+    bool isCollide(float meters) {
 		lat = Input.location.lastData.latitude;
 		lng = Input.location.lastData.longitude;
         //collide within 10m
-		if (lat - destLat <= 0.0001f && lat - destLat >= -0.0001f) {
-			if (lng - destLng <= 0.0001f && lng - destLng >= -0.0001f) {
+		if (lat - destLat <= meters && lat - destLat >= -1*meters) {
+			if (lng - destLng <= meters && lng - destLng >= -1*meters) {
 				return true;
 			}
 		}
@@ -208,10 +208,17 @@ public class ArrowNavigation : MonoBehaviour
         float destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0], CultureInfo.InvariantCulture);
         float destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1], CultureInfo.InvariantCulture);
         //already reached
-        if(isCollide()){
+        Debug.Log(lat+","+lng);
+        Debug.Log(destLat+","+destLng);
+        if(isCollide(0.0002f)){
+            Debug.Log("collide");
             return true;
         }
-        else return false;
+        else
+        {
+            Debug.Log("not collide");
+            return false;
+        }
 
     }
 	// Update is called once per frame
