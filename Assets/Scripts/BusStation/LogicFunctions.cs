@@ -14,8 +14,6 @@ public class LogicFunctions : MonoBehaviour
     private int destDistance;
     float destLat;
     float destLng;
-    float stopLat;
-    float stopLng;
     private bool canTriggerBusIsArriving = false;
     private bool cnaTriggerBusToDestination = false;
     private bool  isInsideBusStopArea = false;
@@ -25,7 +23,9 @@ public class LogicFunctions : MonoBehaviour
     [SerializeField] private GameObject checked_sign;
     [SerializeField] private GameObject ImageRecognition;
     public bool ticketChecked = false;
+    private bool isFarAwayFirstTime = true;
     private ArrowNavigation navigation;
+    private DateTime oldTime;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,15 +49,13 @@ public class LogicFunctions : MonoBehaviour
         if(maxWait <= 0) yield return 0;
         //check if user is near bus station
         //Debug.Log("stationInfo"+ JsonUtility.ToJson(busInformation, true));
-        stopLat = busInformation.departure_stop.location.lat;
-        stopLng = busInformation.departure_stop.location.lng;
-        Debug.Log(stopLat+","+stopLng);
-        Debug.Log(GPSInstance.lat+ ","+GPSInstance.lng);
-        int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, stopLat, stopLng));
+        
+        canTriggerBusIsArriving = false;
+        isInsideBusStopArea = false;
+        int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, GoogleAPIScript.stopLat, GoogleAPIScript.stopLng));
         Debug.Log("distance of user to the bus station"+stopDistance);
         if(stopDistance <= 20){
             isOnBusStop();
-            isInsideBusStopArea = true;
         }
         else{
             LostWhenFindingBusStop();
@@ -68,6 +66,8 @@ public class LogicFunctions : MonoBehaviour
         //CA: The bus is arrving in XX time, 
         //Debug.Log("the bus is arriving in " +minutes+ "min");
         canTriggerBusIsArriving = true;
+        isInsideBusStopArea = true;
+
         //wait
         //CA: The bus is arrving in less one min, tell me when you are on the bus
         
@@ -93,6 +93,7 @@ public class LogicFunctions : MonoBehaviour
         //answer his potential questions
         //remind the user is arrving the destination
         cnaTriggerBusToDestination = true;
+        isInsideBusStopArea = false;
         
     }
     //called by diagflow TabacchiReached event
@@ -101,7 +102,8 @@ public class LogicFunctions : MonoBehaviour
         //active the recognition script and box
         ImageRecognition.SetActive(true);//automatic call image event manager
         check_busticket.SetActive(true);
-        box_busticket.SetActive(true);
+        checked_sign.SetActive(false);
+        //box_busticket.SetActive(true);
     }
     private IEnumerator WaitForSecondsAndDisableBox(int seconds){
         yield return new WaitForSeconds(seconds);
@@ -121,15 +123,33 @@ public class LogicFunctions : MonoBehaviour
     {
         if (isInsideBusStopArea == true)
         {
-            stopLat = busInformation.departure_stop.location.lat;
-            stopLng = busInformation.departure_stop.location.lng;
-            int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, stopLat, stopLng));
+            int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, GoogleAPIScript.stopLat, GoogleAPIScript.stopLng));
             Debug.Log("lost distance"+stopDistance);
-            if (stopDistance > 20)
+            if (stopDistance > 30 && isFarAwayFirstTime)
+            {   
+                //start timer
+                Debug.Log("start timer");
+                oldTime = DateTime.Now;
+                isFarAwayFirstTime = false;
+                
+            }
+            else if(stopDistance > 30 && !isFarAwayFirstTime)
             {
-                isInsideBusStopArea = false;
-                canTriggerBusIsArriving = false;
-                LostWhenFindingBusStop();
+                Debug.Log("second time");
+                if(DateTime.Now.Subtract(oldTime).Seconds > 5)
+                {
+                    Debug.Log("more than 5s");
+                    isInsideBusStopArea = false;
+                    canTriggerBusIsArriving = false;
+                    LostWhenFindingBusStop();
+                }
+            }
+            else
+            {
+                Debug.Log("less than 30m");
+                //once less than 30m, reset timer
+                oldTime = DateTime.Now;
+                isFarAwayFirstTime = true;
             }
         }
 
