@@ -170,7 +170,7 @@ public class ArrowNavigation : MonoBehaviour
             panel.SetActive(false);
             compass.SetActive(false);
             Firework.Instance.Explosion(ARCamera.transform.position + ARCamera.transform.forward * forwardOffset);
-            ConversationController.Instance.ChangeTextFields("you are arriving the checkpoint " + count + "/" + steps.Count);
+            //ConversationController.Instance.ChangeTextFields("you are arriving the checkpoint " + count + "/" + steps.Count);
             if (count < steps.Count)
             {
                 panel.SetActive(true);

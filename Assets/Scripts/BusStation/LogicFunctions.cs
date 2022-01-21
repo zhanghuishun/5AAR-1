@@ -15,8 +15,8 @@ public class LogicFunctions : MonoBehaviour
     float destLat;
     float destLng;
     private bool canTriggerBusIsArriving = false;
-    private bool cnaTriggerBusToDestination = false;
-    private bool  isInsideBusStopArea = false;
+    public bool cnaTriggerBusToDestination = false;
+    public bool  isInsideBusStopArea = false;
     [SerializeField] private TextMeshProUGUI Instruction;
     [SerializeField] private GameObject box_busticket;
     [SerializeField] private GameObject check_busticket;
@@ -87,15 +87,7 @@ public class LogicFunctions : MonoBehaviour
             
         Debug.Log("get too far from bus station");
     }
-    private void OnTheBus()
-    {
-        //validate the ticket
-        //answer his potential questions
-        //remind the user is arrving the destination
-        cnaTriggerBusToDestination = true;
-        isInsideBusStopArea = false;
-        
-    }
+
     //called by diagflow TabacchiReached event
     public void TicketRecognitionLogic()
     {
@@ -136,9 +128,9 @@ public class LogicFunctions : MonoBehaviour
             else if(stopDistance > 30 && !isFarAwayFirstTime)
             {
                 Debug.Log("second time");
-                if(DateTime.Now.Subtract(oldTime).Seconds > 5)
+                if(DateTime.Now.Subtract(oldTime).Seconds > 10)
                 {
-                    Debug.Log("more than 5s");
+                    Debug.Log("more than 10s");
                     isInsideBusStopArea = false;
                     canTriggerBusIsArriving = false;
                     LostWhenFindingBusStop();
@@ -164,6 +156,7 @@ public class LogicFunctions : MonoBehaviour
             destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0]);
             destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1]);
             destDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, destLat, destLng));
+            Debug.Log("destDistance"+destDistance);
             if (destDistance < 500)
             {
                 ConversationController.Instance.SendEventIntent("LastStopAproaching");

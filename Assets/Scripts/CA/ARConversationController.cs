@@ -118,6 +118,8 @@ public class ARConversationController : MonoBehaviour
 
     private void InsideTheBusLogic()
     {
+        LogicFunctions.cnaTriggerBusToDestination = true;
+        LogicFunctions.isInsideBusStopArea = false;
         if (hasTicket)
         {
             ConversationController.Instance.SendEventIntent("OnTheBusTicket");
