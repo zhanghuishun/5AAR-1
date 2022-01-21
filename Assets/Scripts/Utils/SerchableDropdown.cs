@@ -97,8 +97,6 @@ public class SerchableDropdown : MonoBehaviour
         if (refocus)
         {
             inputField.ActivateInputField();
-            inputField.selectionAnchorPosition = oldCarretPosition;
-            inputField.selectionFocusPosition = oldCarretPosition;
             inputField.caretPosition = oldCarretPosition;
             //GUI.skin.settings.cursorColor = oldCursorColor;
         }
@@ -117,8 +115,6 @@ public class SerchableDropdown : MonoBehaviour
         if (refocus)
         {
             inputField.ActivateInputField();
-            inputField.selectionAnchorPosition = oldCarretPosition;
-            inputField.selectionFocusPosition = oldCarretPosition;
             inputField.caretPosition = oldCarretPosition;
             //GUI.skin.settings.cursorColor = oldCursorColor;
         }
