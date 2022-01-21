@@ -22,6 +22,7 @@ public class LogicFunctions : MonoBehaviour
     [SerializeField] private TextMeshProUGUI Instruction;
     [SerializeField] private GameObject box_busticket;
     [SerializeField] private GameObject check_busticket;
+    [SerializeField] private GameObject checked_sign;
     [SerializeField] private GameObject ImageRecognition;
     public bool ticketChecked = false;
     private ArrowNavigation navigation;
@@ -50,6 +51,8 @@ public class LogicFunctions : MonoBehaviour
         //Debug.Log("stationInfo"+ JsonUtility.ToJson(busInformation, true));
         stopLat = busInformation.departure_stop.location.lat;
         stopLng = busInformation.departure_stop.location.lng;
+        Debug.Log(stopLat+","+stopLng);
+        Debug.Log(GPSInstance.lat+ ","+GPSInstance.lng);
         int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, stopLat, stopLng));
         Debug.Log("distance of user to the bus station"+stopDistance);
         if(stopDistance <= 20){
@@ -97,6 +100,7 @@ public class LogicFunctions : MonoBehaviour
     {
         //active the recognition script and box
         ImageRecognition.SetActive(true);//automatic call image event manager
+        check_busticket.SetActive(true);
         box_busticket.SetActive(true);
     }
     private IEnumerator WaitForSecondsAndDisableBox(int seconds){
@@ -107,6 +111,7 @@ public class LogicFunctions : MonoBehaviour
     private void disableBusBox()
     {
         ImageRecognition.SetActive(false);
+        checked_sign.SetActive(false);
         check_busticket.SetActive(false);
         box_busticket.SetActive(false);
     }
@@ -119,6 +124,7 @@ public class LogicFunctions : MonoBehaviour
             stopLat = busInformation.departure_stop.location.lat;
             stopLng = busInformation.departure_stop.location.lng;
             int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, stopLat, stopLng));
+            Debug.Log("lost distance"+stopDistance);
             if (stopDistance > 20)
             {
                 isInsideBusStopArea = false;
@@ -146,7 +152,7 @@ public class LogicFunctions : MonoBehaviour
         }
         if (ticketChecked == true)
         {
-            check_busticket.SetActive(true);
+            checked_sign.SetActive(true);
             //TODO: wait for seconds for user
             StartCoroutine(WaitForSecondsAndDisableBox(1));
             ticketChecked = false;
