@@ -367,11 +367,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5990513469595426507, guid: d985d18ba832646599521c0a65c08eae,
         type: 3}
-      propertyPath: m_OnFocusSelectAll
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5990513469595426507, guid: d985d18ba832646599521c0a65c08eae,
-        type: 3}
       propertyPath: m_OnSelect.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 959194389}
