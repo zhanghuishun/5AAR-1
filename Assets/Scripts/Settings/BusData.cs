@@ -105,7 +105,7 @@ public class BusData : MonoBehaviour
         if (www.result != UnityWebRequest.Result.Success)
         {
             Debug.Log("Error fetching the bus stops");
-            Debug.Log(www.downloadHandler.data);
+            Debug.Log(Encoding.UTF8.GetString(www.downloadHandler.data));
         }
         else
         {

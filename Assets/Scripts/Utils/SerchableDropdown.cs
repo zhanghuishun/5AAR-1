@@ -87,12 +87,20 @@ public class SerchableDropdown : MonoBehaviour
         }
         bool refocus = inputField.isFocused;
         int oldCarretPosition = inputField.caretPosition;
+        /*Color oldCursorColor = GUI.skin.settings.cursorColor;
+        if (refocus)
+        {
+            GUI.skin.settings.cursorColor = new Color(0, 0, 0, 0);
+        }*/
         dropdown.Show();
         if(tooManyOptions || loadingOptions) dropdown.transform.Find("Dropdown List").GetComponentsInChildren<Toggle>()[0].interactable = false;
         if (refocus)
         {
             inputField.ActivateInputField();
+            inputField.selectionAnchorPosition = oldCarretPosition;
+            inputField.selectionFocusPosition = oldCarretPosition;
             inputField.caretPosition = oldCarretPosition;
+            //GUI.skin.settings.cursorColor = oldCursorColor;
         }
     }
 
@@ -100,11 +108,19 @@ public class SerchableDropdown : MonoBehaviour
     {
         bool refocus = inputField.isFocused;
         int oldCarretPosition = inputField.caretPosition;
+        /*Color oldCursorColor = GUI.skin.settings.cursorColor;
+        if (refocus)
+        {
+            GUI.skin.settings.cursorColor = new Color(0, 0, 0, 0);
+        }*/
         dropdown.Hide();
         if (refocus)
         {
             inputField.ActivateInputField();
+            inputField.selectionAnchorPosition = oldCarretPosition;
+            inputField.selectionFocusPosition = oldCarretPosition;
             inputField.caretPosition = oldCarretPosition;
+            //GUI.skin.settings.cursorColor = oldCursorColor;
         }
     }
 
