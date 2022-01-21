@@ -26,6 +26,18 @@ public class LogicFunctions : MonoBehaviour
     private bool isFarAwayFirstTime = true;
     private ArrowNavigation navigation;
     private DateTime oldTime;
+
+    private Container<int> _distanceFromLastStop = new Container<int>();
+    public Container<int> distanceFromLastStop
+    {
+        get
+        {
+            _distanceFromLastStop.content = Mathf.RoundToInt(utils.CalculateDistanceMeters(
+                GPSInstance.lat, GPSInstance.lng, float.Parse(InputFieldSubmit.destinationCoordinates[0]), float.Parse(InputFieldSubmit.destinationCoordinates[1])));
+            ; return _distanceFromLastStop;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -161,10 +173,7 @@ public class LogicFunctions : MonoBehaviour
 
         if (cnaTriggerBusToDestination == true)
         {
-            destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0]);
-            destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1]);
-            destDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, destLat, destLng));
-            if (destDistance < 500)
+            if (distanceFromLastStop.content < 500)
             {
                 ConversationController.Instance.SendEventIntent("LastStopAproaching");
                 cnaTriggerBusToDestination = false;

@@ -269,7 +269,7 @@ public class ConversationController : MonoBehaviour
             Substitution[] sub = cp.substitutions;
             foreach(Substitution s in sub)
             {
-                if (Parameters.list.ContainsKey(s.parameterName)) text = text.Replace(s.placeholder, Parameters.list[s.parameterName].ToString());
+                if (Parameters.list.ContainsKey(s.parameterName) && Parameters.list[s.parameterName]!=null) text = text.Replace(s.placeholder, Parameters.list[s.parameterName].Invoke());
             }
         }
 
@@ -463,19 +463,20 @@ public class InterfaceMethods
 
 public class Parameters
 {
-    public static readonly Dictionary<string, object> list = new Dictionary<string, object>
+    public static readonly Dictionary<string, Func<string>> list = new Dictionary<string, Func<string>>
     {
         { "timeToBus", null },
         { "busNumber", null },
         { "busArrivalTime", null },
-        { "destination", null }
+        { "destination", null },
+        { "distance", null }
     };
 
-    public static bool AddParameter(string parameterName, object parameterReference)
+    public static bool AddParameter(string parameterName, Func<string> parameterPrinter)
     {
         if (list.ContainsKey(parameterName))
         {
-            list[parameterName] = parameterReference;
+            list[parameterName] = parameterPrinter;
             return true;
         }
 

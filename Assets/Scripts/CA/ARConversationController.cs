@@ -44,10 +44,11 @@ public class ARConversationController : MonoBehaviour
 
     private void Start()
     {
-        Parameters.AddParameter("timeToBus", GoogleAPIScript.minutes);
-        Parameters.AddParameter("busNumber", GoogleAPIScript.busName);
-        Parameters.AddParameter("busArrivalTime", GoogleAPIScript.departureTime);
-        Parameters.AddParameter("destination", destination);
+        Parameters.AddParameter("timeToBus", GoogleAPIScript.minutes.ToString);
+        Parameters.AddParameter("busNumber", GoogleAPIScript.busName.ToString);
+        Parameters.AddParameter("busArrivalTime", GoogleAPIScript.departureTime.ToString);
+        Parameters.AddParameter("destination", destination.ToString);
+        Parameters.AddParameter("distance", LogicFunctions.distanceFromLastStop.ToString);
 
         switch (PhaseController.phase)
         {
