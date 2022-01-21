@@ -20,7 +20,7 @@ public class SelectedDestinationController : MonoBehaviour
     {
         selectedStopPresent = false;
         waitingForSelectedStop = false;
-        if (InputFieldSubmit.selectedStopSet)
+        if (SettingsData.selectedStopSet)
         {
             SetText();
         }
@@ -35,14 +35,14 @@ public class SelectedDestinationController : MonoBehaviour
     private IEnumerator DelayedSetText()
     {
         waitingForSelectedStop = true;
-        yield return new WaitUntil(() => InputFieldSubmit.selectedStopSet);
+        yield return new WaitUntil(() => SettingsData.selectedStopSet);
         SetText();
         waitingForSelectedStop = false;
     }
 
     private void SetText()
     {
-        if (InputFieldSubmit.selectedStop == null)
+        if (SettingsData.selectedStop == null)
         {
             selecdetDestinationLabel.SetActive(false);
             selectedDestination.gameObject.SetActive(false);
@@ -52,7 +52,7 @@ public class SelectedDestinationController : MonoBehaviour
         {
             selecdetDestinationLabel.SetActive(true);
             selectedDestination.gameObject.SetActive(true);
-            selectedDestination.text = InputFieldSubmit.selectedStop.name;
+            selectedDestination.text = SettingsData.selectedStop.name;
             selectedStopPresent = true;
         }
     }

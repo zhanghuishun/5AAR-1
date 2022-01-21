@@ -64,8 +64,8 @@ public class ArrowNavigation : MonoBehaviour
     IEnumerator BusStopStepsInformation()
     {
         
-        float destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0], CultureInfo.InvariantCulture);
-        float destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1], CultureInfo.InvariantCulture);
+        float destLat = float.Parse(SettingsData.destinationCoordinates[0], CultureInfo.InvariantCulture);
+        float destLng = float.Parse(SettingsData.destinationCoordinates[1], CultureInfo.InvariantCulture);
         //Debug.Log(destLat.ToString()+destLng.ToString());
         yield return StartCoroutine (GoogleAPIScript.GetBusRouteJSON (destLat, destLng));//45.5168268f, 9.2166683f
         yield return new WaitForSecondsRealtime(1);
@@ -205,8 +205,8 @@ public class ArrowNavigation : MonoBehaviour
 	}
     public bool isAlreadyReachedDestination()
     {
-        float destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0], CultureInfo.InvariantCulture);
-        float destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1], CultureInfo.InvariantCulture);
+        float destLat = float.Parse(SettingsData.destinationCoordinates[0], CultureInfo.InvariantCulture);
+        float destLng = float.Parse(SettingsData.destinationCoordinates[1], CultureInfo.InvariantCulture);
         //already reached
         Debug.Log(lat+","+lng);
         Debug.Log(destLat+","+destLng);

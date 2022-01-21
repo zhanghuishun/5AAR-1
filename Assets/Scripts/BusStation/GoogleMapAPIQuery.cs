@@ -67,9 +67,9 @@ public class GoogleMapAPIQuery : MonoBehaviour
             //store tabacchi results into tabacchiResults
             yield return StartCoroutine(GetTabacchiJSON());
             tabacchiIndex = 0;
-            if(InputFieldSubmit.tabacchiCoordinates[0] != "") {
-                tabacchiLoc.lat = float.Parse(InputFieldSubmit.tabacchiCoordinates[0]);
-                tabacchiLoc.lng = float.Parse(InputFieldSubmit.tabacchiCoordinates[1]);
+            if(SettingsData.tabacchiCoordinates[0] != "") {
+                tabacchiLoc.lat = float.Parse(SettingsData.tabacchiCoordinates[0]);
+                tabacchiLoc.lng = float.Parse(SettingsData.tabacchiCoordinates[1]);
             }
             else{
                 tabacchiLoc.lat = tabacchiResults[tabacchiIndex].geometry.location.lat;//index = 0
@@ -97,8 +97,8 @@ public class GoogleMapAPIQuery : MonoBehaviour
     public void RouteToBusStationQuery()
     {
         //get value from settings scene
-        float destLat = float.Parse(InputFieldSubmit.destinationCoordinates[0]);
-        float destLng = float.Parse(InputFieldSubmit.destinationCoordinates[1]);
+        float destLat = float.Parse(SettingsData.destinationCoordinates[0]);
+        float destLng = float.Parse(SettingsData.destinationCoordinates[1]);
         StartCoroutine (GetBusRouteJSON (destLat, destLng));//45.5168268f, 9.2166683f
     }
 

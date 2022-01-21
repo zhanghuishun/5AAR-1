@@ -4,19 +4,21 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class InputFields : MonoBehaviour
 {
     public SerchableDropdown destinationCord;
     public TMP_InputField tabacchiLongitude;
     public TMP_InputField tabacchiLatitude;
+    public Slider volumeSlider;
     // Start is called before the first frame update
 
     void Start()
     {
-        if (InputFieldSubmit.selectedStopSet)
+        if (SettingsData.selectedStopSet)
         {
-            destinationCord.inputField.text = InputFieldSubmit.selectedStop == null ? "" : InputFieldSubmit.selectedStop.name;
+            destinationCord.inputField.text = SettingsData.selectedStop == null ? "" : SettingsData.selectedStop.name;
             destinationCord.UpdateSearch(destinationCord.inputField.text);
         }
         else
@@ -24,10 +26,10 @@ public class InputFields : MonoBehaviour
             StartCoroutine(UpdateDestination());
         }
 
-        if (InputFieldSubmit.tabacchiCoordinates != null)
+        if (SettingsData.tabacchiCoordinates != null)
         {
-            tabacchiLongitude.text = InputFieldSubmit.tabacchiCoordinates[0];
-            tabacchiLatitude.text = InputFieldSubmit.tabacchiCoordinates[1];
+            tabacchiLongitude.text = SettingsData.tabacchiCoordinates[0];
+            tabacchiLatitude.text = SettingsData.tabacchiCoordinates[1];
         }
     }
 
@@ -35,8 +37,8 @@ public class InputFields : MonoBehaviour
     {
         destinationCord.inputField.interactable = false;
         destinationCord.inputField.text = "Loading...";
-        yield return new WaitUntil(()=>InputFieldSubmit.selectedStopSet);
-        destinationCord.inputField.text = InputFieldSubmit.selectedStop == null ? "" : InputFieldSubmit.selectedStop.name;
+        yield return new WaitUntil(()=>SettingsData.selectedStopSet);
+        destinationCord.inputField.text = SettingsData.selectedStop == null ? "" : SettingsData.selectedStop.name;
         destinationCord.inputField.interactable = true;
     }
 
@@ -76,7 +78,7 @@ public class InputFields : MonoBehaviour
             }
         }
         
-        InputFieldSubmit.SaveData(destinationCord.getSelection(), tabacchiCord);
+        SettingsData.SaveData(destinationCord.getSelection(), tabacchiCord, volumeSlider.value);
         SceneManager.LoadScene("SecondPage");
     }
 

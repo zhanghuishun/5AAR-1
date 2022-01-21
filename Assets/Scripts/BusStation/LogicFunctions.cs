@@ -33,7 +33,7 @@ public class LogicFunctions : MonoBehaviour
         get
         {
             _distanceFromLastStop.content = Mathf.RoundToInt(utils.CalculateDistanceMeters(
-                GPSInstance.lat, GPSInstance.lng, float.Parse(InputFieldSubmit.destinationCoordinates[0]), float.Parse(InputFieldSubmit.destinationCoordinates[1])));
+                GPSInstance.lat, GPSInstance.lng, float.Parse(SettingsData.destinationCoordinates[0]), float.Parse(SettingsData.destinationCoordinates[1])));
             ; return _distanceFromLastStop;
         }
     }
