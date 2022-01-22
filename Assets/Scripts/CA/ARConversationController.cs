@@ -21,6 +21,7 @@ public class ARConversationController : MonoBehaviour
     private GoogleMapAPIQuery GoogleAPIScript;
 
     private bool hasTicket = true;
+    private bool buyingTicket = false;
 
     private Container<string> destination = new Container<string>();
 
@@ -36,7 +37,7 @@ public class ARConversationController : MonoBehaviour
         InterfaceMethods.AddMethod("HELP_TICKET_MACHINE", ShowTicketMachinePopup);
         InterfaceMethods.AddMethod("FIND_TABACCHI_SHOP", FindTabacchi);
         InterfaceMethods.AddMethod("FIND_ANOTHER_TABACCHI_SHOP", FindAnotherTabacchi);
-        InterfaceMethods.AddMethod("CHECK_TICKET", () => LogicFunctions.TicketRecognitionLogic());
+        InterfaceMethods.AddMethod("CHECK_TICKET", () => { buyingTicket = false; LogicFunctions.TicketRecognitionLogic(); });
         InterfaceMethods.AddMethod("FIND_BUS_STOP", FindBusStop);
         InterfaceMethods.AddMethod("INSIDE_THE_BUS", InsideTheBusLogic);
         InterfaceMethods.AddMethod("GOT_OFF_THE_BUS", AlreadyGetOffTheBusLogic);
@@ -97,6 +98,7 @@ public class ARConversationController : MonoBehaviour
 
     private void OnTabacchiReached()
     {
+        buyingTicket = true;
         ConversationController.Instance.SendEventIntent("TabacchiReached");
         ConversationController.Instance.DoSomethingOnInactivity(60 * 4, () => ConversationController.Instance.SendEventIntent("Inactivity"));
     }
@@ -180,6 +182,12 @@ public class ARConversationController : MonoBehaviour
         {
             b.interactable = false;
         }
+    }
+
+    private void OnApplicationPause(bool paused)
+    {
+        if (!paused && buyingTicket)
+            ConversationController.Instance.SendEventIntent("ScreenLock");
     }
 
     // Update is called once per frame
