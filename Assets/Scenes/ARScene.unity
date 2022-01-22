@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -616,6 +616,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1509404847461185233, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1760579096678702596, guid: 5d2f25396e36f403c8c2a8c7181aec81,
         type: 3}
       propertyPath: m_Layer
@@ -700,6 +705,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4632443208689340276, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4772208377806197023, guid: 5d2f25396e36f403c8c2a8c7181aec81,
         type: 3}
@@ -831,6 +841,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7631350001068115815, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7794627387216175049, guid: 5d2f25396e36f403c8c2a8c7181aec81,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -876,60 +891,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8359360187137798643, guid: 5d2f25396e36f403c8c2a8c7181aec81,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8359360187137798643, guid: 5d2f25396e36f403c8c2a8c7181aec81,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8359360187137798643, guid: 5d2f25396e36f403c8c2a8c7181aec81,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1019532196}
-    - target: {fileID: 8359360187137798643, guid: 5d2f25396e36f403c8c2a8c7181aec81,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8359360187137798643, guid: 5d2f25396e36f403c8c2a8c7181aec81,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ClickToCloseAlert
-      objectReference: {fileID: 0}
-    - target: {fileID: 8359360187137798643, guid: 5d2f25396e36f403c8c2a8c7181aec81,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Utils, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8359360187137798643, guid: 5d2f25396e36f403c8c2a8c7181aec81,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 746378224}
-    - target: {fileID: 8359360187137798643, guid: 5d2f25396e36f403c8c2a8c7181aec81,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 8378408575728399209, guid: 5d2f25396e36f403c8c2a8c7181aec81,
-        type: 3}
-      propertyPath: m_text
-      value: The ticket is like this
-      objectReference: {fileID: 0}
     - target: {fileID: 8824109830319022506, guid: 5d2f25396e36f403c8c2a8c7181aec81,
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9037301351310589029, guid: 5d2f25396e36f403c8c2a8c7181aec81,
-        type: 3}
-      propertyPath: m_text
-      value: This is a subscription to the various public transport services of Milan
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d2f25396e36f403c8c2a8c7181aec81, type: 3}
@@ -1239,6 +1204,8 @@ MonoBehaviour:
   tabacchiLoc:
     lat: 0
     lng: 0
+  stopLat: 0
+  stopLng: 0
 --- !u!4 &1019532193
 Transform:
   m_ObjectHideFlags: 0
@@ -1300,6 +1267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4d547aabc5134ffea929bde57c4b061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cnaTriggerBusToDestination: 0
+  isInsideBusStopArea: 0
   Instruction: {fileID: 1306750558}
   box_busticket: {fileID: 746378224}
   check_busticket: {fileID: 482990024}
@@ -1318,6 +1287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85e2e58129273e74786e0bdc5961d848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ARCamera: {fileID: 1470371345}
   CAText: {fileID: 1306750558}
   textButtonScript: {fileID: 732905404}
   CAButtons:
@@ -1326,6 +1296,7 @@ MonoBehaviour:
   - {fileID: 732905406}
   - {fileID: 732905405}
   subscriptionPopup: {fileID: 732905401}
+  ticketPopup: {fileID: 746378224}
   stopButtonPopup: {fileID: 732905403}
   ticketMachinePopup: {fileID: 732905402}
 --- !u!114 &1019532199

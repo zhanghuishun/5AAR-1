@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class ARConversationController : MonoBehaviour
 {
+    public GameObject ARCamera;
     public TextMeshProUGUI CAText;
     public TextButton textButtonScript;
     public Button[] CAButtons;
@@ -22,6 +23,9 @@ public class ARConversationController : MonoBehaviour
 
     private bool hasTicket = true;
     private bool buyingTicket = false;
+
+    
+    private int forwardOffset = 1;
 
     private Container<string> destination = new Container<string>();
 
@@ -62,6 +66,7 @@ public class ARConversationController : MonoBehaviour
             case Phases.FIND_BUS_STOP: FindBusStopLogic(); break;
             default: break;
         }
+
     }
 
     private void ShowSubscriptionPopup()
@@ -182,6 +187,15 @@ public class ARConversationController : MonoBehaviour
         {
             b.interactable = false;
         }
+
+        StartCoroutine(PlayFireworks());
+    }
+
+    private IEnumerator PlayFireworks()
+    {
+        Firework.Instance.Explosion(ARCamera.transform.position + ARCamera.transform.forward * forwardOffset);
+        yield return new WaitForSeconds(2);
+        Firework.Instance.Explosion(ARCamera.transform.position + ARCamera.transform.forward * forwardOffset);
     }
 
     private void OnApplicationPause(bool paused)
