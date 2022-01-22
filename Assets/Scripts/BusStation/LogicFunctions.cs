@@ -165,7 +165,7 @@ public class LogicFunctions : MonoBehaviour
 
         if (cnaTriggerBusToDestination == true)
         {
-            if (distanceFromLastStop.content < 300)
+            if (distanceFromLastStop.content < 200)
             {
                 ConversationController.Instance.SendEventIntent("LastStopAproaching");
                 cnaTriggerBusToDestination = false;
