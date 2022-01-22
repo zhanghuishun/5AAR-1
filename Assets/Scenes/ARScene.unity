@@ -596,6 +596,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 141969910649956943, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 584621367349600805, guid: 5d2f25396e36f403c8c2a8c7181aec81,
         type: 3}
       propertyPath: m_Layer
@@ -625,6 +630,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760579096678702596, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2168821018470958683, guid: 5d2f25396e36f403c8c2a8c7181aec81,
         type: 3}
@@ -690,6 +700,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840061975904862592, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3032933316611135833, guid: 5d2f25396e36f403c8c2a8c7181aec81,
         type: 3}
@@ -826,6 +841,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7178340261987174552, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178340261987174552, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 7205327859100858021, guid: 5d2f25396e36f403c8c2a8c7181aec81,
         type: 3}
       propertyPath: m_Layer
@@ -887,6 +912,11 @@ PrefabInstance:
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7906830235223476317, guid: 5d2f25396e36f403c8c2a8c7181aec81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920219438845461611, guid: 5d2f25396e36f403c8c2a8c7181aec81,
         type: 3}
       propertyPath: m_IsActive
       value: 0
