@@ -13,6 +13,7 @@ public class ARConversationController : MonoBehaviour
     public TextButton textButtonScript;
     public Button[] CAButtons;
     public GameObject subscriptionPopup;
+    public GameObject ticketPopup;
     public GameObject stopButtonPopup;
     public GameObject ticketMachinePopup;
     private ArrowNavigation navigation;
@@ -40,6 +41,10 @@ public class ARConversationController : MonoBehaviour
         InterfaceMethods.AddMethod("INSIDE_THE_BUS", InsideTheBusLogic);
         InterfaceMethods.AddMethod("GOT_OFF_THE_BUS", AlreadyGetOffTheBusLogic);
         InterfaceMethods.AddMethod("FINAL_REWARD", FinalActions);
+        InterfaceMethods.AddMethod("GET_OFF_INACTIVITY", () => ConversationController.Instance.DoSomethingOnInactivity(60 * 4, () => ConversationController.Instance.SendEventIntent("Inactivity")));
+        InterfaceMethods.AddMethod("TICKET_YES", ValidateTicket);
+        InterfaceMethods.AddMethod("TICKET_NO", WaitForStop);
+        InterfaceMethods.AddMethod("TICKET_HELP", ShowTicketPopup);
     }
 
     private void Start()
@@ -71,6 +76,11 @@ public class ARConversationController : MonoBehaviour
     private void ShowTicketMachinePopup()
     {
         ticketMachinePopup.SetActive(true);
+    }
+
+    private void ShowTicketPopup()
+    {
+        ticketPopup.SetActive(true);
     }
 
     private void BuyTicketLogic()
@@ -111,25 +121,42 @@ public class ARConversationController : MonoBehaviour
                LogicFunctions.AfterArrivingBusStopLogic()));
     }
 
-    private void TravelOnTheBusLogic()
-    {
-        
-    }
-
     private void InsideTheBusLogic()
     {
         LogicFunctions.cnaTriggerBusToDestination = true;
         LogicFunctions.isInsideBusStopArea = false;
-        if (hasTicket)
+
+        switch (PhaseController.phase)
         {
-            ConversationController.Instance.SendEventIntent("OnTheBusTicket");
-            ConversationController.Instance.DoSomethingOnInactivity(60 * 2, () => ConversationController.Instance.SendEventIntent("Inactivity"));
+            case Phases.BUY_TICKET:
+                if (hasTicket)
+                {
+                    ValidateTicket();
+                }
+                else
+                {
+                    WaitForStop();
+                }
+                break;
+            case Phases.FIND_BUS_STOP:
+                ConversationController.Instance.SendEventIntent("AskTicket");
+                break;
+            default: break;
         }
-        else
-        {
-            ConversationController.Instance.SendEventIntent("OnTheBusNoTicket");
-        }
+        
     }
+
+    private void ValidateTicket()
+    {
+        ConversationController.Instance.SendEventIntent("OnTheBusTicket");
+        ConversationController.Instance.DoSomethingOnInactivity(60 * 2, () => ConversationController.Instance.SendEventIntent("Inactivity"));
+    }
+
+    private void WaitForStop()
+    {
+        ConversationController.Instance.SendEventIntent("OnTheBusNoTicket");
+    }
+
     private void AlreadyGetOffTheBusLogic()
     {
         if(navigation.isAlreadyReachedDestination())

@@ -435,7 +435,11 @@ public class InterfaceMethods
         { "INSIDE_THE_BUS", () =>{ } },
         { "GOT_OFF_THE_BUS", () =>{ } },
         { "FINAL_REWARD", () =>{ } },
-        { "REPEAT", () =>{ } }
+        { "REPEAT", () =>{ } },
+        { "GET_OFF_INACTIVITY", () =>{ } },
+        { "TICKET_YES", () =>{ } },
+        { "TICKET_NO", () =>{ } },
+        { "TICKET_HELP", () =>{ } }
     };
 
     public static bool AddMethod(string interfaceName, Action method)
