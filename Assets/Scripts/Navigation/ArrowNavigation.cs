@@ -92,8 +92,9 @@ public class ArrowNavigation : MonoBehaviour
         Debug.Log(JsonUtility.ToJson(steps[0], true));
         Instruction.text = utils.RemoveSpecialCharacters(steps[count].html_instructions);
         textMeshProUGUI.text = "Distance here";
-        
+
         //StepLoop starts in 0.1s and repeating running every 0.5s
+        ResetTresholdReacheCounters();
         InvokeRepeating("StepsLoop", 0.1f, 0.5f);
     }
 
@@ -108,6 +109,18 @@ public class ArrowNavigation : MonoBehaviour
     private bool secondTimeTresholdReached = false;
     public int firstTimeTreshold = 4*60;
     public int secondTimeTreshold = 6*60;
+
+    private void ResetTresholdReacheCounters()
+    {
+        oldDistance = -1;
+        minDistanceReached = int.MaxValue;
+        timeCounter = 0;
+        firstDistanceTresholdReached = false;
+        secondDistanceTresholdReached = false;
+        firstTimeTresholdReached = false;
+        secondTimeTresholdReached = false;
+    }
+
     public void StepsLoop()
     {
         lat = GPSInstance.lat;
@@ -149,16 +162,18 @@ public class ArrowNavigation : MonoBehaviour
             else
             {
                 timeCounter = 0;
+                firstTimeTresholdReached = false;
+                secondTimeTresholdReached = false;
             }
         }
         oldDistance = distance;
 
-        if (!firstTimeTresholdReached && distance > minDistanceReached + firstDistanceTreshold)
+        if (!firstTimeTresholdReached && timeCounter > firstTimeTreshold)
         {
             firstTimeTresholdReached = true;
             ConversationController.Instance.SendEventIntent("NotMoving");
         }
-        else if (firstTimeTresholdReached && !secondTimeTresholdReached && distance > minDistanceReached + secondDistanceTreshold)
+        else if (firstTimeTresholdReached && !secondTimeTresholdReached && timeCounter > secondTimeTreshold)
         {
             secondTimeTresholdReached = true;
             ConversationController.Instance.SendEventIntent("NotMoving");
