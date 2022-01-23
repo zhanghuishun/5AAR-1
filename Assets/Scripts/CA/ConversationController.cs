@@ -444,7 +444,8 @@ public class InterfaceMethods
         { "GET_OFF_INACTIVITY", () =>{ } },
         { "TICKET_YES", () =>{ } },
         { "TICKET_NO", () =>{ } },
-        { "TICKET_HELP", () =>{ } }
+        { "TICKET_HELP", () =>{ } },
+        { "ARROW_FACILITATOR", () =>{ } }
     };
 
     public static bool AddMethod(string interfaceName, Action method)

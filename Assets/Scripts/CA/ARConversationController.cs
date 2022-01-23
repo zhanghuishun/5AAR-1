@@ -17,6 +17,7 @@ public class ARConversationController : MonoBehaviour
     public GameObject ticketPopup;
     public GameObject stopButtonPopup;
     public GameObject ticketMachinePopup;
+    public GameObject arrowFacilitator;
     private ArrowNavigation navigation;
     private LogicFunctions LogicFunctions;
     private GoogleMapAPIQuery GoogleAPIScript;
@@ -50,6 +51,7 @@ public class ARConversationController : MonoBehaviour
         InterfaceMethods.AddMethod("TICKET_YES", ValidateTicket);
         InterfaceMethods.AddMethod("TICKET_NO", WaitForStop);
         InterfaceMethods.AddMethod("TICKET_HELP", ShowTicketPopup);
+        InterfaceMethods.AddMethod("ARROW_FACILITATOR", ShowArrowFacilitator);
     }
 
     private void Start()
@@ -87,6 +89,18 @@ public class ARConversationController : MonoBehaviour
     private void ShowTicketPopup()
     {
         ticketPopup.SetActive(true);
+    }
+
+    private void ShowArrowFacilitator()
+    {
+        StartCoroutine(_ShowArrowFacilitator());
+    }
+
+    private IEnumerator _ShowArrowFacilitator()
+    {
+        arrowFacilitator.SetActive(true);
+        yield return new WaitForSecondsRealtime(5);
+        arrowFacilitator.SetActive(false);
     }
 
     private void BuyTicketLogic()
