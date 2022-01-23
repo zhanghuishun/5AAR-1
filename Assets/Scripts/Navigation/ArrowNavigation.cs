@@ -227,9 +227,7 @@ public class ArrowNavigation : MonoBehaviour
         float destLat = float.Parse(SettingsData.destinationCoordinates[0], CultureInfo.InvariantCulture);
         float destLng = float.Parse(SettingsData.destinationCoordinates[1], CultureInfo.InvariantCulture);
         //already reached
-        Debug.Log(lat+","+lng);
-        Debug.Log(destLat+","+destLng);
-        if(isCollide(0.0002f)){
+        if(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, destLat, destLng) < 20.0f){
             Debug.Log("collide");
             return true;
         }
