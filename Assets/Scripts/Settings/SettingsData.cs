@@ -18,8 +18,6 @@ public class SettingsData : MonoBehaviour
     public static float volume = 0.75f;
     public static string[] destinationCoordinates { get => new string[2] { selectedStop.lat.ToString(), selectedStop.lon.ToString() }; } // = new string[2] {"45.4827681", "9.2322856"}; // lambrate station,
     public static string[] tabacchiCoordinates = null;// {"45.480759", "9.224494"}; //tabacchi near BCL
-    public TMP_InputField tabacchiLatitude;
-    public TMP_InputField tabacchiLongitude;
 
     private static string selectedStopNameKey = "selectedStop";
     private static string tabacchiLonKey = "tabacchiLon";
@@ -41,8 +39,6 @@ public class SettingsData : MonoBehaviour
         if (PlayerPrefs.HasKey(tabacchiLonKey) && PlayerPrefs.HasKey(tabacchiLatKey))
         {
             tabacchiCoordinates = new string[2] { PlayerPrefs.GetString(tabacchiLonKey), PlayerPrefs.GetString(tabacchiLatKey) };
-            tabacchiLatitude.text = tabacchiCoordinates[0];
-            tabacchiLongitude.text = tabacchiCoordinates[1];
         }
 
         if (PlayerPrefs.HasKey(selectedStopNameKey))
@@ -74,7 +70,6 @@ public class SettingsData : MonoBehaviour
         if (tabacchiCoordinates != null)
         {
             SettingsData.tabacchiCoordinates = new string[2] { tabacchiCoordinates[0], tabacchiCoordinates[1] };
-
             PlayerPrefs.SetString(tabacchiLonKey, tabacchiCoordinates[0]);
             PlayerPrefs.SetString(tabacchiLatKey, tabacchiCoordinates[1]);
         }
