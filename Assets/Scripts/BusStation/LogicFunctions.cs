@@ -33,7 +33,7 @@ public class LogicFunctions : MonoBehaviour
         get
         {
             _distanceFromLastStop.content = Mathf.RoundToInt(utils.CalculateDistanceMeters(
-                GPSInstance.lat, GPSInstance.lng, float.Parse(SettingsData.destinationCoordinates[0]), float.Parse(SettingsData.destinationCoordinates[1])));
+                GPSInstance.lat, GPSInstance.lng, GoogleAPIScript.endStopLat, GoogleAPIScript.endStopLng));
             ; return _distanceFromLastStop;
         }
     }
@@ -64,7 +64,7 @@ public class LogicFunctions : MonoBehaviour
         
         canTriggerBusIsArriving = false;
         isInsideBusStopArea = false;
-        int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, GoogleAPIScript.stopLat, GoogleAPIScript.stopLng));
+        int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, GoogleAPIScript.startStopLat, GoogleAPIScript.startStopLng));
         Debug.Log("distance of user to the bus station"+stopDistance);
         if(stopDistance <= 20){
             isOnBusStop();
@@ -127,8 +127,8 @@ public class LogicFunctions : MonoBehaviour
     {
         if (isInsideBusStopArea == true)
         {
-            int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, GoogleAPIScript.stopLat, GoogleAPIScript.stopLng));
-            Debug.Log("lost distance"+stopDistance);
+            int stopDistance = Mathf.RoundToInt(utils.CalculateDistanceMeters(GPSInstance.lat, GPSInstance.lng, GoogleAPIScript.startStopLat, GoogleAPIScript.startStopLng));
+            Debug.Log("distance to the current bus stop"+stopDistance);
             if (stopDistance > 30 && isFarAwayFirstTime)
             {   
                 //start timer

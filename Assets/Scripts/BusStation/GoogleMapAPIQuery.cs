@@ -37,8 +37,10 @@ public class GoogleMapAPIQuery : MonoBehaviour
     public Container<string> departureTime = new Container<string>();
     private Container<int> _minutes = new Container<int>();
     public Container<int> minutes { get { _minutes.content = Mathf.RoundToInt((float)(datevalue2 - DateTime.Now).TotalMinutes); return _minutes; } }
-    public float stopLat;
-    public float stopLng;
+    public float startStopLat;
+    public float startStopLng;
+    public float endStopLat;
+    public float endStopLng;
 
     void Awake(){
 
@@ -82,6 +84,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
             try{
                 tabacchiLoc.lat = tabacchiResults[tabacchiIndex].geometry.location.lat;
                 tabacchiLoc.lng = tabacchiResults[tabacchiIndex].geometry.location.lng;
+                Debug.Log("alternative tabacchi shop loc: "+tabacchiLoc.lat + "," +tabacchiLoc.lng);
                 tabacchiIndex++;
                 }
             catch(System.Exception e){
@@ -173,9 +176,10 @@ public class GoogleMapAPIQuery : MonoBehaviour
                 }
             }
             //send parameters to LogicFunctions
-            stopLat = busInformation.departure_stop.location.lat;
-            stopLng = busInformation.departure_stop.location.lng;
-            Debug.Log(stopLat +","+stopLng);
+            startStopLat = busInformation.departure_stop.location.lat;
+            startStopLng = busInformation.departure_stop.location.lng;
+            endStopLat = busInformation.arrival_stop.location.lat;
+            endStopLng = busInformation.arrival_stop.location.lng;
             //send parameters to CA
             datevalue2 = utils.TimeParse(busInformation.departure_time.text);
             busName.content = busInformation.line.short_name;
