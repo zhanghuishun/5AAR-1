@@ -24,7 +24,8 @@ public class ConversationController : MonoBehaviour
     public bool textFieldsOverwritten { private set; get; }
     private Action afterWriteCallback = null;
 
-    private bool inactive = false;
+    //private bool inactive = false;
+    public List<Coroutine> inactivityCoroutines = new List<Coroutine>();
     private bool lastTextOverwritten = false;
 
     private string lastText;
@@ -75,7 +76,8 @@ public class ConversationController : MonoBehaviour
 
     public void SendTextIntent(string text, Action callback = null)
     {
-        inactive = false;
+        //inactive = false;
+        stopInactivityCoroutines();
         lastTextOverwritten = true;
         StartCoroutine(_SendTextIntent(text, callback));
     }
@@ -118,7 +120,8 @@ public class ConversationController : MonoBehaviour
 
     public void SendAudioIntent(AudioClip clip, Action callback = null)
     {
-        inactive = false;
+        //inactive = false;
+        stopInactivityCoroutines();
         lastTextOverwritten = true;
         StartCoroutine(_SendAudioIntent(clip, callback));
     }
@@ -162,7 +165,8 @@ public class ConversationController : MonoBehaviour
 
     public void SendEventIntent(string eventName, Dictionary<string, object> parameters, Action callback = null)
     {
-        inactive = false;
+        //inactive = false;
+        stopInactivityCoroutines();
         lastTextOverwritten = true;
         StartCoroutine(_SendEventIntent(eventName, parameters, callback));
     }
@@ -395,14 +399,24 @@ public class ConversationController : MonoBehaviour
 
     public void DoSomethingOnInactivity(float time, Action action)
     {
-        StartCoroutine(_DoSomethingOnInactivity(time, action));
+        inactivityCoroutines.Add(StartCoroutine(_DoSomethingOnInactivity(time, action)));
     }
 
     private IEnumerator _DoSomethingOnInactivity(float time, Action action)
     {
-        inactive = true;
+        //inactive = true;
         yield return new WaitForSecondsRealtime(time);
-        if (inactive) action.Invoke();
+        //if (inactive)
+        action.Invoke();
+    }
+
+    private void stopInactivityCoroutines()
+    {
+        if (inactivityCoroutines.Count > 0)
+        {
+            foreach (Coroutine c in inactivityCoroutines) StopCoroutine(c);
+            inactivityCoroutines = new List<Coroutine>();
+        }
     }
 
     private void LogError(DF2ErrorResponse errorResponse)
