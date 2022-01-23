@@ -99,7 +99,15 @@ public class ARConversationController : MonoBehaviour
     private IEnumerator _ShowArrowFacilitator()
     {
         arrowFacilitator.SetActive(true);
-        yield return new WaitForSecondsRealtime(5);
+        yield return new WaitForSecondsRealtime(0.5f);
+        arrowFacilitator.SetActive(false);
+        yield return new WaitForSecondsRealtime(0.5f);
+        arrowFacilitator.SetActive(true);
+        yield return new WaitForSecondsRealtime(0.5f);
+        arrowFacilitator.SetActive(false);
+        yield return new WaitForSecondsRealtime(0.5f);
+        arrowFacilitator.SetActive(true);
+        yield return new WaitForSecondsRealtime(3);
         arrowFacilitator.SetActive(false);
     }
 
