@@ -25,6 +25,7 @@ public class ConversationController : MonoBehaviour
     private Action afterWriteCallback = null;
 
     private bool inactive = false;
+    private bool lastTextOverwritten = false;
 
     private string lastText;
 
@@ -55,8 +56,9 @@ public class ConversationController : MonoBehaviour
     private IEnumerator RepeatAfterSeconds(int s)
     {
         string text = lastText;
+        lastTextOverwritten = false;
         yield return new WaitForSecondsRealtime(s);
-        if (text.Equals(lastText))
+        if (!lastTextOverwritten)
             StartCoroutine(_ChangeTextFields(text, true));
     }
 
@@ -74,6 +76,7 @@ public class ConversationController : MonoBehaviour
     public void SendTextIntent(string text, Action callback = null)
     {
         inactive = false;
+        lastTextOverwritten = true;
         StartCoroutine(_SendTextIntent(text, callback));
     }
 
@@ -116,6 +119,7 @@ public class ConversationController : MonoBehaviour
     public void SendAudioIntent(AudioClip clip, Action callback = null)
     {
         inactive = false;
+        lastTextOverwritten = true;
         StartCoroutine(_SendAudioIntent(clip, callback));
     }
 
@@ -159,6 +163,7 @@ public class ConversationController : MonoBehaviour
     public void SendEventIntent(string eventName, Dictionary<string, object> parameters, Action callback = null)
     {
         inactive = false;
+        lastTextOverwritten = true;
         StartCoroutine(_SendEventIntent(eventName, parameters, callback));
     }
 
@@ -319,8 +324,8 @@ public class ConversationController : MonoBehaviour
 
     public void ChangeTextFields(string text, Action callback = null)
     {
+        lastTextOverwritten = true;
         StartCoroutine(_ChangeTextFields(text, true, callback));
-
     }
 
     private IEnumerator _ChangeTextFields(string text, bool rememberText, Action callback = null)
