@@ -29,6 +29,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
     public transitDetails busInformation;
     [HideInInspector]
     public loc tabacchiLoc = new loc();
+    private loc lastTabacchiLoc = new loc();
     private List<result> tabacchiResults;
     private int tabacchiIndex = 0;
     //public TextAsset xmlRawFile;
@@ -68,24 +69,32 @@ public class GoogleMapAPIQuery : MonoBehaviour
             yield return new WaitForSecondsRealtime(4);
             //store tabacchi results into tabacchiResults
             yield return StartCoroutine(GetTabacchiJSON());
-            tabacchiIndex = 0;
-            if(SettingsData.tabacchiCoordinates[0] != "") {
+            if(utils.isValidCoordinates(SettingsData.tabacchiCoordinates[0], SettingsData.tabacchiCoordinates[1])) {
                 tabacchiLoc.lat = float.Parse(SettingsData.tabacchiCoordinates[0]);
                 tabacchiLoc.lng = float.Parse(SettingsData.tabacchiCoordinates[1]);
             }
             else{
-                tabacchiLoc.lat = tabacchiResults[tabacchiIndex].geometry.location.lat;//index = 0
-                tabacchiLoc.lng = tabacchiResults[tabacchiIndex].geometry.location.lng;
-                tabacchiIndex++;
+                tabacchiLoc.lat = tabacchiResults[0].geometry.location.lat;//index = 0
+                tabacchiLoc.lng = tabacchiResults[0].geometry.location.lng;
             }
         }
         //if it is not the first time, use tabacchi index to get result
         else {
             try{
-                tabacchiLoc.lat = tabacchiResults[tabacchiIndex].geometry.location.lat;
-                tabacchiLoc.lng = tabacchiResults[tabacchiIndex].geometry.location.lng;
+                lastTabacchiLoc.lat = tabacchiLoc.lat;
+                lastTabacchiLoc.lng = tabacchiLoc.lng;
+                Debug.Log("last tabacchi shop locs "+lastTabacchiLoc.lat + ","+ lastTabacchiLoc.lng);
+                while(tabacchiIndex < tabacchiResults.Count){
+                    tabacchiLoc.lat = tabacchiResults[tabacchiIndex].geometry.location.lat;
+                    tabacchiLoc.lng = tabacchiResults[tabacchiIndex].geometry.location.lng;
+                    if(utils.CalculateDistanceMeters(lastTabacchiLoc.lat, lastTabacchiLoc.lng, tabacchiLoc.lat, tabacchiLoc.lng) > 50.0f)
+                    {
+                        break;
+                    }
+                    tabacchiIndex++;
+                }
+                tabacchiIndex = 0;
                 Debug.Log("alternative tabacchi shop loc: "+tabacchiLoc.lat + "," +tabacchiLoc.lng);
-                tabacchiIndex++;
                 }
             catch(System.Exception e){
                 DF2Context[] newContext = new DF2Context[1];
@@ -122,7 +131,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
 		else {
 			// Show results as text
 			string result = www.downloadHandler.text;
-			Debug.Log (result);
+			//Debug.Log (result);
             //parse the result
             attribution attr = JsonUtility.FromJson<attribution>(result);
             //Debug.Log(JsonUtility.ToJson(attr, true));
@@ -206,7 +215,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
 		}
 		else {
 			string result = www.downloadHandler.text;
-            Debug.Log(result);
+            //Debug.Log(result);
             geoCoded g = JsonUtility.FromJson<geoCoded>(result);
 			leg l = g.routes [0].legs [0];
             //steps include walking part and bus part

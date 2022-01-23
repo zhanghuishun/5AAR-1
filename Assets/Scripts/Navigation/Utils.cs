@@ -77,4 +77,8 @@ public class Utils : MonoBehaviour
         Debug.Log("test");
         
     }
+    public bool isValidCoordinates(string s1, string s2)
+    {
+        return s1!= null && s1 != "" && s2 != null && s2 != "";
+    }
 }
