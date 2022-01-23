@@ -182,6 +182,7 @@ public class ArrowNavigation : MonoBehaviour
         //when arriving the dest, cancel this invokerepeating. 
         if (count == steps.Count)
         {
+            count = 0;
             Destroy(compass);
             panel.SetActive(false);
             //Destroy(CompassObject);
