@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1234,8 +1234,10 @@ MonoBehaviour:
   tabacchiLoc:
     lat: 0
     lng: 0
-  stopLat: 0
-  stopLng: 0
+  startStopLat: 0
+  startStopLng: 0
+  endStopLat: 0
+  endStopLng: 0
 --- !u!4 &1019532193
 Transform:
   m_ObjectHideFlags: 0
@@ -1265,6 +1267,8 @@ MonoBehaviour:
   panel: {fileID: 1006502879}
   safetyAlert: {fileID: 1072265736}
   CompassPerfab: {fileID: 100002, guid: c727ce61e2724410897958bc77ecf21c, type: 3}
+  compassFacilitator: {fileID: 3994579411924822716, guid: 6f0f67a08c5fa4a87becdb700abb6842,
+    type: 3}
   ARCompassIOS: {fileID: 1172372856}
   Instruction: {fileID: 1306750558}
   Firework: {fileID: 233253519}
