@@ -70,8 +70,8 @@ public class GoogleMapAPIQuery : MonoBehaviour
             //store tabacchi results into tabacchiResults
             yield return StartCoroutine(GetTabacchiJSON());
             if(utils.isValidCoordinates(SettingsData.tabacchiCoordinates[0], SettingsData.tabacchiCoordinates[1])) {
-                tabacchiLoc.lat = float.Parse(SettingsData.tabacchiCoordinates[0]);
-                tabacchiLoc.lng = float.Parse(SettingsData.tabacchiCoordinates[1]);
+                tabacchiLoc.lat = float.Parse(SettingsData.tabacchiCoordinates[0], CultureInfo.InvariantCulture);
+                tabacchiLoc.lng = float.Parse(SettingsData.tabacchiCoordinates[1], CultureInfo.InvariantCulture);
             }
             else{
                 tabacchiLoc.lat = tabacchiResults[0].geometry.location.lat;//index = 0
@@ -109,8 +109,8 @@ public class GoogleMapAPIQuery : MonoBehaviour
     public void RouteToBusStationQuery()
     {
         //get value from settings scene
-        float destLat = float.Parse(SettingsData.destinationCoordinates[0]);
-        float destLng = float.Parse(SettingsData.destinationCoordinates[1]);
+        float destLat = float.Parse(SettingsData.destinationCoordinates[0], CultureInfo.InvariantCulture);
+        float destLng = float.Parse(SettingsData.destinationCoordinates[1], CultureInfo.InvariantCulture);
         StartCoroutine (GetBusRouteJSON (destLat, destLng));//45.5168268f, 9.2166683f
     }
 
@@ -203,7 +203,7 @@ public class GoogleMapAPIQuery : MonoBehaviour
         origin = "origin=45.480198%2C9.2262149";
 #endif
         //TODO: set the dest
-        string dest = "destination=" + destLat +"%2C" + destLng;
+        string dest = "destination=" + destLat.ToString("G", CultureInfo.InvariantCulture) + "%2C" + destLng.ToString("G", CultureInfo.InvariantCulture);
 		string mode = "mode=walking";
 		string apiKey = "key="+APIKey;
 		string api = baseURL + origin + "&" + dest + "&" + mode + "&" + apiKey;
