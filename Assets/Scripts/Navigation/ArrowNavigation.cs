@@ -15,6 +15,7 @@ public class ArrowNavigation : MonoBehaviour
     private Utils utils;
     private Action afterDestinationCallback = null;
     [SerializeField] private GameObject CompassPerfab;
+    [SerializeField] private GameObject compassFacilitator;
     [SerializeField] private UnityARCompass.ARCompassIOS ARCompassIOS;
     [SerializeField] private TextMeshProUGUI Instruction;
     [SerializeField] private Firework Firework;
@@ -169,12 +170,14 @@ public class ArrowNavigation : MonoBehaviour
             count++;
             panel.SetActive(false);
             compass.SetActive(false);
+            compassFacilitator.SetActive(false);
             Firework.Instance.Explosion(ARCamera.transform.position + ARCamera.transform.forward * forwardOffset);
             //ConversationController.Instance.ChangeTextFields("you are arriving the checkpoint " + count + "/" + steps.Count);
             if (count < steps.Count)
             {
                 panel.SetActive(true);
                 compass.SetActive(true);
+                compassFacilitator.SetActive(true);
                 //Debug.Log(utils.RemoveSpecialCharacters(steps[count].html_instructions));
                 ConversationController.Instance.ChangeTextFields(utils.RemoveSpecialCharacters(steps[count].html_instructions));
             }            
@@ -227,8 +230,9 @@ public class ArrowNavigation : MonoBehaviour
             compass.transform.rotation = ARCompassIOS.TrueHeadingRotation;
             //the position is always on the front of camera with a offset
             compass.transform.position = ARCamera.transform.position + ARCamera.transform.forward * forwardOffset;
+            compassFacilitator.transform.position = compass.transform.position;
             //Debug.Log("compass rotation"+compass.transform.rotation);
-            
+
         }
         
     }
