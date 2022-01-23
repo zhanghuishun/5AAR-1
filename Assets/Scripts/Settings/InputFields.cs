@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -62,8 +63,8 @@ public class InputFields : MonoBehaviour
             try
             {
 
-                float lon = float.Parse(tabacchiLongitude.text);
-                float lat = float.Parse(tabacchiLatitude.text);
+                float lon = float.Parse(tabacchiLongitude.text, CultureInfo.InvariantCulture);
+                float lat = float.Parse(tabacchiLatitude.text, CultureInfo.InvariantCulture);
 
                 if (-180 <= lon && lon <= 180 && -90 <= lat && lat <= 90)
                 {
