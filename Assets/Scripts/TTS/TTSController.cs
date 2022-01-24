@@ -10,9 +10,8 @@ public class TTSController
     private static SpeechUtteranceParameters options = new SpeechUtteranceParameters();
 #endif
 
-    private static TextToSpeech ttsAndroid = new TextToSpeech(defaultLanguage);
 #if UNITY_ANDROID
-    private static TextToSpeech ttsAndroid = new TextToSpeech();
+    private static TextToSpeech ttsAndroid = new TextToSpeech(defaultLanguage);
 #endif
 
     public static void Speak(string text)

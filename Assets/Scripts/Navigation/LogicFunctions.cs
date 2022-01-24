@@ -178,7 +178,6 @@ public class LogicFunctions : MonoBehaviour
             checked_sign.SetActive(true);
             //TODO: wait for seconds for user
             StartCoroutine(WaitForSecondsAndDisableBox(1));
-            ticketChecked = false;
         }
     }
 }
