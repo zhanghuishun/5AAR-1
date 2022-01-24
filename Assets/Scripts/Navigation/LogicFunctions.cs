@@ -174,6 +174,7 @@ public class LogicFunctions : MonoBehaviour
         }
         if (ticketChecked == true)
         {
+            ticketChecked = false;
             checked_sign.SetActive(true);
             //TODO: wait for seconds for user
             StartCoroutine(WaitForSecondsAndDisableBox(1));
