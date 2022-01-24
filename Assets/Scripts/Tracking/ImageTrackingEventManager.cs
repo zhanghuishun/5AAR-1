@@ -42,17 +42,16 @@ using UnityEngine.XR.ARFoundation;
                 ARController.GetComponent<LogicFunctions>().ticketChecked = true;
                 }
             }
-            foreach (ARTrackedImage trackedImg in eventArgs.updated)
-            {
-                if (trackedImg.trackingState == TrackingState.Tracking) {
-                    Debug.Log("arrow regenerated");
-                    if(ARController.GetComponent<LogicFunctions>().ticketChecked == false){
-                        ARController.GetComponent<LogicFunctions>().ticketChecked = true;
-                    }
-                }else{
-                    Debug.Log("arrow lost");
-                }
-            }
+            // foreach (ARTrackedImage trackedImg in eventArgs.updated)
+            // {
+            //     if (trackedImg.trackingState == TrackingState.Tracking) {
+            //         if(ARController.GetComponent<LogicFunctions>().ticketChecked == false){
+            //             Debug.Log();
+            //         }
+            //     }else{
+            //         Debug.Log("arrow lost");
+            //     }
+            // }
             
         }
     }
