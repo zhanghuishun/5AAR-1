@@ -1,6 +1,7 @@
 # 5AAR
  Project for the Advanced User Interfaces course at polimi
-
+ 
+<!--
 ## Functions
 
 ### Settings Scene
@@ -16,7 +17,7 @@
 5. add arrow toward the temp destination
 6. remind the arrival time of the bus
 
-<!--
+
 #### TODO: 
 
 - [ ] image recognition of ticket
