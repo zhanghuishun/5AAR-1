@@ -16,7 +16,7 @@
 5. add arrow toward the temp destination
 6. remind the arrival time of the bus
 
-[comment]: <
+<!--
 #### TODO: 
 
 - [ ] image recognition of ticket
@@ -33,5 +33,5 @@ create a config file under ```Asset``` folder in the format below
 </keys>
 
 ```
->
+-->
 
