@@ -1,6 +1,19 @@
 # 5AAR
  Project for the Advanced User Interfaces course at polimi
  
+ ## Introduction
+Next Stop was born as a 5AAR(B) group project of the Advanced User Interface course for the academic year 2021-2022 in Polimi. It is part of the bigger 5A project, which aims at improving the independence of autistic people in daily tasks through the use of Extended Reality(XR).
+
+It is a tool developed for high functioning persons with autism that aims at helping them take public transportation, in particular buses, in Milan. This app uses Augmented Reality and Conversational Agent combined with a practical and straightforward UI design. 
+
+## Functionalities
+The main tasks that the application aids the user with are:
+- Buying a bus ticket from a Tabacchi shop
+- Navigate to the bus stop
+- Get on the correct bus
+- Get off at the correct stop
+
+
 <!--
 ## Functions
 
