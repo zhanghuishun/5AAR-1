@@ -2,7 +2,7 @@
  Project for the Advanced User Interfaces course at polimi
 
  ## Demo link
- https://youtu.be/xrvsRW0pi5E
+ [Next Stop -- Bus Assistant for autism people](https://youtu.be/MUxE-s-N0KM)
  
  ## Introduction
 Next Stop was born as a 5AAR(B) group project of the Advanced User Interface course for the academic year 2021-2022 in Polimi. It is part of the bigger 5A project, which aims at improving the independence of autistic people in daily tasks through the use of Extended Reality(XR).
